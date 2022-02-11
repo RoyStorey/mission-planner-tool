@@ -1,11 +1,11 @@
 import postgreSQLClient from "../postgres";
 
-const getMissions = async (req, res) => {
+const getCountryCodes = async (req, res) => {
   const client = await postgreSQLClient.connect();
   try {
     const query = `
-    SELECT *
-    FROM missions
+    SELECT alpha3
+    FROM country_codes
   `;
 
     const { rows } = await client.query(query);
@@ -20,4 +20,4 @@ const getMissions = async (req, res) => {
   }
 };
 
-export default getMissions;
+export default getCountryCodes;

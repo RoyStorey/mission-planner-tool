@@ -13,7 +13,9 @@ const getLegs = async (req, res) => {
     client.release();
     res.json(rows);
   } catch (error) {
-    console.log(error);
+    res.status(400).send({
+      message: error.message,
+    });
     client.release();
   }
 };

@@ -2,8 +2,10 @@ import dayjs from "dayjs";
 import Promise from "bluebird";
 import saveMission from "../api/saveMission";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import utc from "dayjs/plugin/utc";
 import saveLeg from "../api/saveLeg";
 dayjs.extend(customParseFormat);
+dayjs.extend(utc);
 
 const confirmMissions = async (req, res) => {
   const { body: missions } = req;
@@ -21,7 +23,9 @@ const confirmMissions = async (req, res) => {
     });
     res.json({ success: true });
   } catch (error) {
-    res.json({ error });
+    res.status(400).send({
+      message: error.message,
+    });
   }
 };
 
@@ -36,25 +40,19 @@ const processLegs = (missions) => {
   const listOfLegs = unreducedLegs.reduce((a, b) => a.concat(b));
 
   const listOfLegsWithFixedArrivalDates = listOfLegs.map((leg) => {
-    const arrivalDate = dayjs(leg.arrDate, "DD-MMM");
-    const arrivalMonth = arrivalDate.month();
-
-    const currentDate = dayjs();
-    const currentMonth = currentDate.month();
-    const currentYear = currentDate.year();
-
-    const fixedArrivalDate =
-      arrivalMonth < currentMonth
-        ? dayjs(`${leg.arrDate}-${currentYear + 1}`, "DD-MMM-YYYY")
-        : dayjs(`${leg.arrDate}-${currentYear}`, "DD-MMM-YYYY");
-    const fixedArrivalDateString = fixedArrivalDate.format("YYYY-MM-DD");
-
-    const fixedDDZuluDate = dayjs(leg.ddzulu, "DD-MM-YY").format("YYYY-MM-DD");
+    const departureDate = dayjs.utc(
+      `${leg.ddzulu} ${leg.etdz}`,
+      "MM/DD/YYYY HH:mm"
+    );
+    const arrivalDate = dayjs.utc(
+      `${leg.arrDate} ${leg.etaz}`,
+      "MM/DD/YYYY HH:mm"
+    );
 
     return {
       ...leg,
-      ddzulu: fixedDDZuluDate,
-      arrDate: fixedArrivalDateString,
+      ddzulu: departureDate.toISOString(),
+      arrDate: arrivalDate.toISOString(),
     };
   });
 

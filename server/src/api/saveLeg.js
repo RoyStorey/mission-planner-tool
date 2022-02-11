@@ -21,22 +21,18 @@ const saveLeg = async ({
   try {
     const query = `
     INSERT INTO legs
-    (dh,"from",dd_zulu,etd_z,etd_l,"to",airport,country,arrival_date,eta_z,eta_l,ete,duty_day,gnd_time,mission_number) 
-    values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+    (dh,"from",dd_zulu,"to",airport,country,arrival_date,ete,duty_day,gnd_time,mission_number) 
+    values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
   `;
 
     const { rows } = await client.query(query, [
       DH,
       from,
       ddzulu,
-      etdz,
-      etdl,
       to,
       airport,
       country,
       arrDate,
-      etaz,
-      etal,
       ete,
       dutyDay,
       groundTime,

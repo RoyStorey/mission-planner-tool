@@ -7,7 +7,7 @@
       <n-text class="logo"> 89th CS MPT </n-text>
       <n-divider style="height: 2.5em" vertical />
     </n-grid-item>
-    <n-grid-item class="align-center justify-center" span="0 800:3">
+    <n-grid-item class="align-center justify-center" span="0 800:4">
       <n-input-group>
         <n-input placeholder="mission number, airport, operator assigned..." />
         <n-button type="primary">
@@ -17,7 +17,7 @@
         </n-button>
       </n-input-group>
     </n-grid-item>
-    <n-grid-item class="align-center align-end" span="8 800:5">
+    <n-grid-item class="align-center align-end" span="8 800:4">
       <n-menu
         v:model:value="activeKey"
         mode="horizontal"
@@ -53,7 +53,7 @@ const renderIcon = (icon) => () => h(NIcon, null, { default: () => h(icon) });
 
 const navigationOptions = [
   {
-    label: () => h(resolveComponent("router-link"), { to: "/" }, "Home"),
+    label: () => h(resolveComponent("router-link"), { to: "/" }, () => "Home"),
     key: "home",
     icon: renderIcon(HomeOutline),
   },
@@ -67,7 +67,7 @@ const navigationOptions = [
           h(
             resolveComponent("router-link"),
             { to: "/import/mag-pdf" },
-            "MAG PDF"
+            () => "MAG PDF"
           ),
         key: "magpdf",
         icon: renderIcon(Document),
@@ -77,7 +77,7 @@ const navigationOptions = [
           h(
             resolveComponent("router-link"),
             { to: "/import/mag-pdf" },
-            "Intel PDF"
+            () => "Intel PDF"
           ),
         key: "intelpdf",
         icon: renderIcon(Document),
@@ -86,7 +86,7 @@ const navigationOptions = [
   },
   {
     label: () =>
-      h(resolveComponent("router-link"), { to: "/settings" }, "Settings"),
+      h(resolveComponent("router-link"), { to: "/settings" }, () => "Settings"),
     key: "settings",
     icon: renderIcon(CogOutline),
   },

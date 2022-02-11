@@ -8,20 +8,7 @@
     </n-h1>
     <n-grid :cols="4" :x-gap="10" style="margin-bottom: 1em" item-responsive>
       <n-grid-item span="2 600:1">
-        <n-card>
-          <n-statistic label="Upcoming Missions" :value="2">
-            <template #prefix>
-              <n-icon>
-                <airplane />
-              </n-icon>
-              <div style="float: right">
-                <n-icon size="20">
-                  <open-outline />
-                </n-icon>
-              </div>
-            </template>
-          </n-statistic>
-        </n-card>
+        <upcoming-missions-stat />
       </n-grid-item>
       <n-grid-item span="2 600:1">
         <n-card>
@@ -44,23 +31,14 @@
         </n-card>
       </n-grid-item>
       <n-grid-item span="2 600:1">
-        <n-card title="Upcoming Missions (7 Days)">
-          <n-data-table :columns="columns" :data="data" :pagination="true" />
-          <template #action>
-            View All
-            <div style="float: right">
-              <n-icon size="20">
-                <open-outline />
-              </n-icon>
-            </div>
-          </template>
-        </n-card>
+        <upcoming-missions />
       </n-grid-item>
     </n-grid>
   </div>
 </template>
 
 <script>
+import { onMounted } from "vue";
 import {
   NH1,
   NIcon,
@@ -68,46 +46,26 @@ import {
   NGridItem,
   NCard,
   NStatistic,
-  NDataTable,
   NCalendar,
+  useLoadingBar,
 } from "naive-ui";
-import { Cube, Airplane, TimeSharp, OpenOutline } from "@vicons/ionicons5";
-import { CalendarBadge } from "../components";
-
-const createColumns = () => [
-  {
-    title: "#",
-    key: "number",
-  },
-  {
-    title: "Date",
-    key: "date",
-  },
-  {
-    title: "Time",
-    key: "time",
-  },
-];
-
-const data = [
-  {
-    number: "455455",
-    date: "lajdsflkasjdf",
-    time: "1550Z - 1650Z",
-  },
-  {
-    number: "455455",
-    date: "lajdsflkasjdf",
-    time: "1550Z - 1650Z",
-  },
-];
+import { Cube, TimeSharp } from "@vicons/ionicons5";
+import {
+  CalendarBadge,
+  UpcomingMissions,
+  UpcomingMissionsStat,
+} from "../components";
 
 export default {
   setup() {
-    return {
-      data,
-      columns: createColumns(),
-    };
+    const loadingBar = useLoadingBar();
+    loadingBar.start();
+
+    onMounted(() => {
+      setTimeout(() => {
+        loadingBar.finish();
+      }, 1000);
+    });
   },
   components: {
     NH1,
@@ -117,12 +75,11 @@ export default {
     NGridItem,
     NCard,
     NStatistic,
-    Airplane,
     TimeSharp,
-    NDataTable,
     NCalendar,
     CalendarBadge,
-    OpenOutline,
+    UpcomingMissions,
+    UpcomingMissionsStat,
   },
 };
 </script>
