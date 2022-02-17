@@ -34,7 +34,7 @@
     <n-card v-if="!missions.value?.length" title="Upload File">
       <n-upload
         :max="1"
-        action="{{process.env.VUE_APP_API}}/processTXT"
+        :action="url"
         :customRequest="handleUpload"
         accept=".txt"
         :on-change="handleAddFile"
@@ -207,6 +207,7 @@ export default {
       formatData,
       removeRow,
       loadingSaved,
+      url: `${process.env.VUE_APP_API}/processTXT`,
     };
   },
   methods: {
