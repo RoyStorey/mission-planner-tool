@@ -34,7 +34,7 @@
     <n-card v-if="!missions.value?.length" title="Upload File">
       <n-upload
         :max="1"
-        action="http://localhost:3001/processTXT"
+        action="{{process.VUE_APP_API}}/processTXT"
         :customRequest="handleUpload"
         accept=".txt"
         :on-change="handleAddFile"
