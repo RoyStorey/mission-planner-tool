@@ -7,19 +7,35 @@
       :pagination="pagination"
     />
     <template #action>
-      View All
-      <div style="float: right">
-        <n-icon size="20">
-          <open-outline />
-        </n-icon>
-      </div>
+      <router-link :to="{ path: '/missions' }" style="text-decoration: none">
+        <n-popover :show-arrow="false" trigger="hover">
+          <template #trigger>
+            <n-a>
+              View All
+              <div style="float: right">
+                <n-icon size="20">
+                  <open-outline />
+                </n-icon>
+              </div>
+            </n-a>
+          </template>
+          <span>View all missions</span>
+        </n-popover>
+      </router-link>
     </template>
   </n-card>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
-import { NCard, NDataTable, NIcon, useNotification } from "naive-ui";
+import {
+  NCard,
+  NDataTable,
+  NIcon,
+  useNotification,
+  NPopover,
+  NA,
+} from "naive-ui";
 import { OpenOutline } from "@vicons/ionicons5";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -94,6 +110,8 @@ export default {
     NDataTable,
     NIcon,
     OpenOutline,
+    NA,
+    NPopover,
   },
 };
 </script>

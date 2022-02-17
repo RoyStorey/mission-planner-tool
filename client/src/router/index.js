@@ -25,6 +25,22 @@ const routes = [
       title: "Settings",
     },
   },
+  {
+    path: "/missions",
+    name: "Missions",
+    component: () => import("../views/MissionsPage.vue"),
+    meta: {
+      title: "Missions",
+    },
+  },
+  {
+    path: "/missions/:missionId",
+    name: "Mission",
+    component: () => import("../views/MissionPage.vue"),
+    meta: {
+      title: "Mission",
+    },
+  },
 ];
 
 const router = createRouter({
