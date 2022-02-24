@@ -3,7 +3,7 @@ import { Duplex } from "stream";
 import lookupAirport from "../api/lookupAirport";
 import { v4 as uuidv4 } from "uuid";
 import getCountryISO3 from "country-iso-2-to-3";
-import config from "../config";
+import getConfig from "../api/getConfig";
 
 const bufferToStream = (buffer) => {
   let tmp = new Duplex();
@@ -14,6 +14,7 @@ const bufferToStream = (buffer) => {
 
 const processTXT = async (req, res) => {
   try {
+    const config = await getConfig();
     const fileContents = req.file.buffer;
     const fileStream = bufferToStream(fileContents);
 
@@ -62,8 +63,8 @@ const processTXT = async (req, res) => {
           const countryISO3 = getCountryISO3(iso_country);
           const groundTime = splitLine[13]?.split("+")[0];
           const processLeg =
-            groundTime >= config.groundTime ||
-            config.countryCodes.includes(countryISO3);
+            groundTime >= config.ground_time ||
+            config.country_codes.includes(countryISO3);
           if (!processLeg) continue;
 
           const currentLeg = {
@@ -91,8 +92,8 @@ const processTXT = async (req, res) => {
         const countryISO3 = getCountryISO3(iso_country);
         const groundTime = splitLine[12]?.split("+")[0];
         const processLeg =
-          groundTime >= config.groundTime ||
-          config.countryCodes.includes(countryISO3);
+          groundTime >= config.ground_time ||
+          config.country_codes.includes(countryISO3);
         if (!processLeg) continue;
 
         const currentLeg = {

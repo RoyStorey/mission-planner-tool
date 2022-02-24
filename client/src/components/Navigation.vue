@@ -9,8 +9,12 @@
     </n-grid-item>
     <n-grid-item class="align-center justify-center" span="0 800:4">
       <n-input-group>
-        <n-input placeholder="mission number, airport, operator assigned..." />
-        <n-button type="primary">
+        <n-input
+          v-model:value="searchQuery"
+          @keyup.enter="search"
+          placeholder="mission number, airport, from, to..."
+        />
+        <n-button @click="search" type="primary">
           <n-icon size="18">
             <search-sharp />
           </n-icon>
@@ -19,7 +23,7 @@
     </n-grid-item>
     <n-grid-item class="align-center align-end" span="8 800:4">
       <n-menu
-        v:model:value="activeKey"
+        :value="activeKey"
         mode="horizontal"
         :options="navigationOptions"
       />
@@ -28,7 +32,8 @@
 </template>
 
 <script>
-import { ref, h, resolveComponent } from "vue";
+import { ref, h, resolveComponent, watch } from "vue";
+import { useRoute } from "vue-router";
 import {
   NGrid,
   NGridItem,
@@ -47,6 +52,8 @@ import {
   HomeOutline,
   CogOutline,
   Document,
+  Pencil,
+  BarChartOutline,
 } from "@vicons/ionicons5";
 
 const renderIcon = (icon) => () => h(NIcon, null, { default: () => h(icon) });
@@ -58,6 +65,12 @@ const navigationOptions = [
     icon: renderIcon(HomeOutline),
   },
   {
+    label: () =>
+      h(resolveComponent("router-link"), { to: "/missions" }, () => "Missions"),
+    key: "missions",
+    icon: renderIcon(BarChartOutline),
+  },
+  {
     label: "Import",
     key: "import",
     icon: renderIcon(CloudUploadOutline),
@@ -66,20 +79,20 @@ const navigationOptions = [
         label: () =>
           h(
             resolveComponent("router-link"),
-            { to: "/import/mag-pdf" },
-            () => "MAG PDF"
+            { to: "/import/single-mission" },
+            () => "Manual Entry"
           ),
-        key: "magpdf",
-        icon: renderIcon(Document),
+        key: "manualentry",
+        icon: renderIcon(Pencil),
       },
       {
         label: () =>
           h(
             resolveComponent("router-link"),
             { to: "/import/mag-pdf" },
-            () => "Intel PDF"
+            () => "MAG PDF"
           ),
-        key: "intelpdf",
+        key: "magpdf",
         icon: renderIcon(Document),
       },
     ],
@@ -94,12 +107,42 @@ const navigationOptions = [
 
 export default {
   setup() {
+    const route = useRoute();
     const activeKey = ref(null);
+    const searchQuery = ref("");
+
+    watch(
+      () => route.path,
+      (path) => {
+        activeKey.value =
+          navigationOptions.find((option) => path.includes(option.key))?.key ??
+          "home";
+      }
+    );
+
+    watch(
+      () => route.query,
+      (query) => {
+        searchQuery.value = query.query ?? "";
+      }
+    );
 
     return {
       activeKey,
       navigationOptions,
+      searchQuery,
     };
+  },
+  methods: {
+    search() {
+      if (!this.searchQuery) this.$router.push("/missions");
+      else
+        this.$router.push(
+          `/missions?query=${this.searchQuery}${
+            this.$route.query.date ? `&date=${this.$route.query.date}` : ""
+          }`
+        );
+    },
   },
   components: {
     NGridItem,

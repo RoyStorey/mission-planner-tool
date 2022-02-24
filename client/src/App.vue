@@ -8,7 +8,7 @@
           </n-layout-header>
           <n-grid class="content" :cols="12" item-responsive>
             <n-grid-item offset="0 800:2" span="12 800:8">
-              <router-view />
+              <router-view :key="$route.fullPath" />
             </n-grid-item>
           </n-grid>
         </n-layout>

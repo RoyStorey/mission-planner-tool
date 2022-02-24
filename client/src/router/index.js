@@ -18,6 +18,14 @@ const routes = [
     },
   },
   {
+    path: "/import/single-mission",
+    name: "ImportSingleMission",
+    component: () => import("../views/SingleMissionPage.vue"),
+    meta: {
+      title: "Manual Entry",
+    },
+  },
+  {
     path: "/settings",
     name: "Settings",
     component: () => import("../views/SettingsPage.vue"),
@@ -34,7 +42,7 @@ const routes = [
     },
   },
   {
-    path: "/missions/:missionId",
+    path: "/mission/:missionId",
     name: "Mission",
     component: () => import("../views/MissionPage.vue"),
     meta: {

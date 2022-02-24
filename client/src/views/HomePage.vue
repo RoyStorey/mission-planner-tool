@@ -11,21 +11,17 @@
         <upcoming-missions-stat />
       </n-grid-item>
       <n-grid-item span="2 600:1">
-        <n-card>
-          <n-statistic label="Days Since Last Mission" :value="108">
-            <template #prefix>
-              <n-icon>
-                <time-sharp />
-              </n-icon>
-            </template>
-          </n-statistic>
-        </n-card>
+        <days-since-last-mission />
       </n-grid-item>
     </n-grid>
     <n-grid :cols="2" :x-gap="10" :y-gap="10" item-responsive>
       <n-grid-item span="2 600:1">
         <n-card title="Calendar View">
-          <n-calendar style="max-height: 500px" #="{ year, month, date }">
+          <n-calendar
+            style="max-height: 500px"
+            #="{ year, month, date }"
+            :on-update:value="selectDate"
+          >
             <calendar-badge :year="year" :month="month" :date="date" />
           </n-calendar>
         </n-card>
@@ -45,16 +41,19 @@ import {
   NGrid,
   NGridItem,
   NCard,
-  NStatistic,
   NCalendar,
   useLoadingBar,
 } from "naive-ui";
-import { Cube, TimeSharp } from "@vicons/ionicons5";
+import { Cube } from "@vicons/ionicons5";
 import {
   CalendarBadge,
   UpcomingMissions,
   UpcomingMissionsStat,
+  DaysSinceLastMission,
 } from "../components";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 export default {
   setup() {
@@ -67,6 +66,12 @@ export default {
       }, 1000);
     });
   },
+  methods: {
+    selectDate(timestamp) {
+      const selectedDay = dayjs.utc(timestamp).format("MM/DD/YYYY");
+      this.$router.push(`/missions?date=${selectedDay}`);
+    },
+  },
   components: {
     NH1,
     NIcon,
@@ -74,12 +79,11 @@ export default {
     NGrid,
     NGridItem,
     NCard,
-    NStatistic,
-    TimeSharp,
     NCalendar,
     CalendarBadge,
     UpcomingMissions,
     UpcomingMissionsStat,
+    DaysSinceLastMission,
   },
 };
 </script>

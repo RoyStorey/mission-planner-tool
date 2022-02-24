@@ -10,6 +10,7 @@
         </n-breadcrumb-item>
       </n-breadcrumb>
     </n-h1>
+    <operators-assigned :missionData="missionData" />
     <n-card title="Mission Details">
       <template #header-extra>
         <n-popover v-if="!editEnabled" :show-arrow="false" trigger="hover">
@@ -103,59 +104,21 @@
         </n-grid>
       </n-form>
     </n-card>
-    <n-grid style="margin: 1em 0" :cols="4">
-      <n-grid-item :span="1">
-        <n-card title="Add Entry">
-          <n-form
-            :rules="entryRules"
-            :label-width="80"
-            :model="entryValue"
-            size="medium"
-            ref="entryRef"
-          >
-            <n-form-item label="Entry" path="entry">
-              <n-input
-                type="textarea"
-                clearable
-                v-model:value="entryValue.entry"
-                @keyup.enter="addEntry"
-              />
-            </n-form-item>
-            <n-button
-              type="primary"
-              style="float: right"
-              :loading="loadingEntry"
-              @click="addEntry"
-              >Save</n-button
-            >
-          </n-form>
-        </n-card>
-      </n-grid-item>
-      <n-grid-item :span="3" style="padding-left: 1em">
-        <n-h2>Mission Timeline</n-h2>
-        <n-timeline id="timeline" style="max-height: 350px; overflow: auto">
-          <n-timeline-item type="success" content="Mission start." />
-          <n-timeline-item
-            v-bind:key="entry.id"
-            v-for="entry in entries"
-            :title="entry.entry"
-            :time="dayjs.utc(entry.time).format('MM/DD/YYYY HH:mm')"
-          />
-        </n-timeline>
-      </n-grid-item>
-    </n-grid>
-    <n-card title="Export Mission">
+    <mission-timeline
+      :missionData="missionData"
+      @updateExportText="updateExportText"
+    />
+    <n-card title="Export Mission" style="margin-bottom: 1em">
       <n-input type="textarea" v-model:value="finalText" />
     </n-card>
   </div>
 </template>
 
 <script>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import {
   NH1,
-  NH2,
   NCard,
   NBreadcrumb,
   NBreadcrumbItem,
@@ -172,35 +135,29 @@ import {
   NButton,
   NGrid,
   NSpace,
-  NGridItem,
-  NTimeline,
-  NTimelineItem,
-  NFormItem,
+  useNotification,
 } from "naive-ui";
 import { CreateOutline, ArrowForward } from "@vicons/ionicons5";
+import { OperatorsAssigned, MissionTimeline } from "../components";
 import axios from "axios";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(utc);
+dayjs.extend(customParseFormat);
 
 export default {
   setup() {
     const route = useRoute();
+    const notification = useNotification();
     const { missionId } = route.params;
     const missionData = ref({});
     const editEnabled = ref(false);
     const formRef = ref(null);
-    const entryRef = ref(null);
     const loadingEdit = ref(false);
     const loadingDelete = ref(false);
-    const loadingEntry = ref(false);
     const formValue = ref({});
-    const entryValue = ref({});
-
-    const entries = ref([]);
-    const finalText = computed(
-      () => entries.value && entries.value.map((entry) => entry.entry).join(" ")
-    );
+    const finalText = ref(null);
 
     onMounted(() => {
       axios
@@ -218,19 +175,12 @@ export default {
           };
         })
         .catch((error) => {
-          console.log(error);
+          notification.error({
+            content: "An error occured",
+            meta: error.response.data.message,
+            duration: 5000,
+          });
         });
-
-      axios
-        .get(`${process.env.VUE_APP_API}/getEntriesForLeg`, {
-          params: {
-            leg_id: missionId,
-          },
-        })
-        .then((data) => {
-          entries.value = data.data;
-        })
-        .catch((error) => console.log(error));
     });
 
     return {
@@ -239,21 +189,9 @@ export default {
       editEnabled,
       formRef,
       formValue,
-      entryRef,
-      entryValue,
       loadingEdit,
       loadingDelete,
-      loadingEntry,
-      entries,
       finalText,
-      entryRules: {
-        entry: [
-          {
-            required: true,
-            message: "Please input your entry",
-          },
-        ],
-      },
       rules: {
         dd_zulu: [
           {
@@ -285,6 +223,16 @@ export default {
       },
     };
   },
+  watch: {
+    entries() {
+      this.$nextTick(() =>
+        this.scroll.scrollTo({
+          top: document.querySelector(".n-scrollbar-content").scrollHeight,
+          behavior: "smooth",
+        })
+      );
+    },
+  },
   methods: {
     toggleEdit() {
       this.editEnabled = !this.editEnabled;
@@ -303,7 +251,11 @@ export default {
           this.editEnabled = false;
         })
         .catch((error) => {
-          console.log(error);
+          this.notification.error({
+            content: "An error occured",
+            meta: error.response.data.message,
+            duration: 5000,
+          });
         });
     },
     deleteMission() {
@@ -316,37 +268,19 @@ export default {
           this.$router.push("/missions");
         })
         .catch((error) => {
-          console.log(error);
+          this.notification.error({
+            content: "An error occured",
+            meta: error.response.data.message,
+            duration: 5000,
+          });
         });
     },
-    addEntry() {
-      this.loadingEntry = true;
-      axios
-        .post(`${process.env.VUE_APP_API}/addEntryForLeg`, {
-          leg_id: this.missionData.id,
-          entry: this.entryValue.entry,
-          date: dayjs.utc(this.entryValue.time).toISOString(),
-        })
-        .then((data) => {
-          this.loadingEntry = false;
-          this.entries.push({
-            id: data.data.id,
-            entry: this.entryValue.entry.replace("\n", ""),
-            date: dayjs.utc(this.entryValue.time).toISOString(),
-          });
-          this.entryValue.entry = "";
-          const container = this.$el.querySelector("#timeline");
-          container.scrollTop = container.scrollHeight;
-        })
-        .catch((error) => {
-          this.loadingEntry = false;
-          console.log(error);
-        });
+    updateExportText(value) {
+      this.finalText = value;
     },
   },
   components: {
     NH1,
-    NH2,
     NCard,
     NBreadcrumb,
     NBreadcrumbItem,
@@ -365,10 +299,8 @@ export default {
     NButton,
     ArrowForward,
     NSpace,
-    NGridItem,
-    NTimeline,
-    NTimelineItem,
-    NFormItem,
+    MissionTimeline,
+    OperatorsAssigned,
   },
 };
 </script>

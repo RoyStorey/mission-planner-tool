@@ -1,17 +1,14 @@
 import postgreSQLClient from "../postgres";
 
-const saveMission = async (missionNumber) => {
+const getConfig = async () => {
   const client = await postgreSQLClient.connect();
   try {
     const query = `
-    INSERT INTO missions
-    (mission_number)
-    values
-    ($1)
-    ON CONFLICT DO NOTHING
+    SELECT *
+    FROM config
   `;
 
-    const { rows } = await client.query(query, [missionNumber]);
+    const { rows } = await client.query(query);
 
     client.release();
     return rows[0];
@@ -21,4 +18,4 @@ const saveMission = async (missionNumber) => {
   }
 };
 
-export default saveMission;
+export default getConfig;

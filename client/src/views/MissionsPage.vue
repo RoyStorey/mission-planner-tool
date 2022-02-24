@@ -6,7 +6,7 @@
       </n-icon>
       Missions
     </n-h1>
-    <n-card>
+    <n-card title="Mission List">
       <n-data-table
         remote
         :columns="columns"
@@ -25,6 +25,7 @@ import { onMounted, ref, reactive } from "vue";
 import router from "../router";
 import { NH1, NIcon, NCard, NDataTable } from "naive-ui";
 import { Airplane } from "@vicons/ionicons5";
+import { useRoute } from "vue-router";
 import axios from "axios";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -71,13 +72,14 @@ const createColumns = () => {
   ];
 };
 
-const query = (page, pageSize = 10) => {
+const query = (page, pageSize = 10, filter) => {
   return new Promise((resolve) => {
     axios
       .get(`${process.env.VUE_APP_API}/getMissions`, {
         params: {
           page,
           pageSize,
+          filter,
         },
       })
       .then((data) => {
@@ -91,6 +93,7 @@ const query = (page, pageSize = 10) => {
 
 export default {
   setup() {
+    const route = useRoute();
     const dataRef = ref([]);
     const loading = ref(false);
     const paginationReactive = reactive({
@@ -98,28 +101,32 @@ export default {
       pageCount: 1,
       pageSize: 10,
       prefix({ itemCount }) {
-        return `${itemCount} Missions.`;
+        return `${itemCount} Mission${itemCount > 1 ? "s" : ""}`;
       },
     });
 
     onMounted(() => {
       loading.value = true;
-      query(paginationReactive.page, paginationReactive.pageSize).then(
-        (data) => {
-          dataRef.value = data.rows.map((leg) => ({
+      query(
+        paginationReactive.page,
+        paginationReactive.pageSize,
+        route.query
+      ).then((data) => {
+        dataRef.value =
+          data.rows?.map((leg) => ({
             ...leg,
             dd_zulu: dayjs.utc(leg.dd_zulu).format("MM/DD/YYYY"),
             etdz: dayjs.utc(leg.dd_zulu).format("HH:mm"),
             arrival_date: dayjs.utc(leg.arrival_date).format("MM/DD/YYYY"),
             etaz: dayjs.utc(leg.arrival_date).format("HH:mm"),
-          }));
-          paginationReactive.pageCount = Math.ceil(
-            data.count / paginationReactive.pageSize
-          );
-          paginationReactive.itemCount = Number(data.count);
-          loading.value = false;
-        }
-      );
+          })) || [];
+
+        paginationReactive.pageCount = Math.ceil(
+          data.count / paginationReactive.pageSize
+        );
+        paginationReactive.itemCount = Number(data.count);
+        loading.value = false;
+      });
     });
 
     return {
@@ -131,7 +138,7 @@ export default {
         return {
           style: "cursor: pointer;",
           onClick: () => {
-            router.push(`/missions/${row.id}`);
+            router.push(`/mission/${row.id}`);
           },
         };
       },
