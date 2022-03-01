@@ -109,7 +109,24 @@
       @updateExportText="updateExportText"
     />
     <n-card title="Export Mission" style="margin-bottom: 1em">
-      <n-input type="textarea" v-model:value="finalText" />
+      <n-grid :span="24" :x-gap="24">
+        <n-form-item-gi :span="24" label="Mission Text">
+          <n-input
+            v-model:value="finalText"
+            type="textarea"
+            readonly
+            style="width: 100%"
+          />
+        </n-form-item-gi>
+      </n-grid>
+      <n-button
+        :loading="loadingMissionExport"
+        style="float: right"
+        type="primary"
+        @click="exportMission"
+      >
+        Export
+      </n-button>
     </n-card>
   </div>
 </template>
@@ -139,12 +156,33 @@ import {
 } from "naive-ui";
 import { CreateOutline, ArrowForward } from "@vicons/ionicons5";
 import { OperatorsAssigned, MissionTimeline } from "../components";
+import createReport from "docx-templates";
 import axios from "axios";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+
 dayjs.extend(utc);
 dayjs.extend(customParseFormat);
+
+const saveDataToFile = (data, fileName, mimeType) => {
+  const blob = new Blob([data], { type: mimeType });
+  const url = window.URL.createObjectURL(blob);
+  downloadURL(url, fileName, mimeType);
+  setTimeout(() => {
+    window.URL.revokeObjectURL(url);
+  }, 1000);
+};
+
+const downloadURL = (data, fileName) => {
+  const a = document.createElement("a");
+  a.href = data;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.style = "display: none";
+  a.click();
+  a.remove();
+};
 
 export default {
   setup() {
@@ -158,6 +196,7 @@ export default {
     const loadingDelete = ref(false);
     const formValue = ref({});
     const finalText = ref(null);
+    const loadingMissionExport = ref(false);
 
     onMounted(() => {
       axios
@@ -220,6 +259,7 @@ export default {
             },
           },
         ],
+        loadingMissionExport,
       },
     };
   },
@@ -277,6 +317,31 @@ export default {
     },
     updateExportText(value) {
       this.finalText = value;
+    },
+    async exportMission() {
+      this.loadingMissionExport = true;
+      const template = await fetch("/MISREP.docx").then((res) =>
+        res.arrayBuffer()
+      );
+      const report = await createReport({
+        template,
+        data: {
+          msnNumber: this.missionData.mission_number,
+          date: `${dayjs(this.missionData.dd_zulu).format(
+            "MMMM DD, YYYY"
+          )} to ${dayjs(this.missionData.arrival_date).format(
+            "MMMM DD, YYYY"
+          )}`,
+          finalText: this.finalText,
+        },
+      });
+
+      saveDataToFile(
+        report,
+        "report.docx",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      );
+      this.loadingMissionExport = false;
     },
   },
   components: {

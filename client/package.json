@@ -12,6 +12,7 @@
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.7",
+    "docx-templates": "^4.9.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12"
   },
