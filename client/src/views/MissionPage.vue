@@ -320,9 +320,9 @@ export default {
     },
     async exportMission() {
       this.loadingMissionExport = true;
-      const template = await fetch("/MISREP.docx").then((res) =>
-        res.arrayBuffer()
-      );
+      const template = await fetch(
+        process.env.NODE_ENV === "development" ? "./" : "/mpt/" + "MISREP.docx"
+      ).then((res) => res.arrayBuffer());
       const report = await createReport({
         template,
         data: {
