@@ -209,7 +209,6 @@ export default {
           missionData.value = data.data[0];
           formValue.value = {
             ...data.data[0],
-            operators: null,
             dd_zulu: dayjs.utc(data.data[0].dd_zulu).valueOf(),
             arrival_date: dayjs.utc(data.data[0].arrival_date).valueOf(),
           };
@@ -283,6 +282,7 @@ export default {
       axios
         .post(`${process.env.VUE_APP_API}/updateMission`, {
           ...this.formValue,
+          operators: null,
           dd_zulu: dayjs.utc(this.formValue.dd_zulu).toISOString(),
           arrival_date: dayjs.utc(this.formValue.arrival_date).toISOString(),
         })
