@@ -209,6 +209,7 @@ export default {
           missionData.value = data.data[0];
           formValue.value = {
             ...data.data[0],
+            operators: null,
             dd_zulu: dayjs.utc(data.data[0].dd_zulu).valueOf(),
             arrival_date: dayjs.utc(data.data[0].arrival_date).valueOf(),
           };
