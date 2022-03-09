@@ -19,7 +19,9 @@
             <n-date-picker
               v-model:value="formValue.dd_zulu"
               type="datetime"
+              format="MM/dd/yyyy HHmm"
               style="width: 100%"
+              :update-value-on-close="updateValueOnClose"
             />
           </n-form-item-gi>
           <n-form-item-gi
@@ -31,6 +33,8 @@
               v-model:value="formValue.arrival_date"
               type="datetime"
               style="width: 100%"
+              format="MM/dd/yyyy HHmm"
+              :update-value-on-close="updateValueOnClose"
             />
           </n-form-item-gi>
           <n-form-item-gi
@@ -44,7 +48,7 @@
             <n-input v-model:value="formValue.from" />
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="To" path="to">
-            <n-input v-model:value="formValue.to" />
+            <n-input v-model:value="formValue.to" :on-change="fetchAirport" />
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="Airport" path="airport">
             <n-input v-model:value="formValue.airport" />
@@ -105,7 +109,21 @@ export default {
       }, 1000);
     });
 
+    const fetchAirport = (from) => {
+      axios
+        .post(`${process.env.VUE_APP_API}/getAirport`, {
+          iata: from.toUpperCase(),
+        })
+        .then((data) => {
+          const { name } = data.data;
+          formValue.value.airport = name || "";
+        })
+        .catch((error) => console.log(error));
+    };
+
     return {
+      fetchAirport,
+      updateValueOnClose: ref(true),
       formRef,
       formValue,
       loading,
@@ -147,6 +165,8 @@ export default {
       axios
         .post(`${process.env.VUE_APP_API}/saveLeg`, {
           ...this.formValue,
+          from: this.formValue.from.toUpperCase(),
+          to: this.formValue.to.toUpperCase(),
           dd_zulu: dayjs.utc(this.formValue.dd_zulu).toISOString(),
           arrival_date: dayjs.utc(this.formValue.arrival_date).toISOString(),
         })
@@ -168,6 +188,11 @@ export default {
           });
           this.loading = false;
         });
+    },
+  },
+  watch: {
+    formValue(old, newValue) {
+      console.log(old, newValue);
     },
   },
   components: {

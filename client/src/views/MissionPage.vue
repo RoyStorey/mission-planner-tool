@@ -73,6 +73,8 @@
               v-model:value="formValue.dd_zulu"
               type="datetime"
               style="width: 100%"
+              format="MM/dd/yyyy HHmm"
+              :update-value-on-close="updateValueOnClose"
             />
           </n-form-item-gi>
           <n-form-item-gi
@@ -84,13 +86,15 @@
               v-model:value="formValue.arrival_date"
               type="datetime"
               style="width: 100%"
+              format="MM/dd/yyyy HHmm"
+              :update-value-on-close="updateValueOnClose"
             />
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="From" path="from">
             <n-input v-model:value="formValue.from" />
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="To" path="to">
-            <n-input v-model:value="formValue.to" />
+            <n-input v-model:value="formValue.to" :on-change="fetchAirport" />
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="Airport" path="airport">
             <n-input v-model:value="formValue.airport" />
@@ -222,7 +226,21 @@ export default {
         });
     });
 
+    const fetchAirport = (from) => {
+      axios
+        .post(`${process.env.VUE_APP_API}/getAirport`, {
+          iata: from.toUpperCase(),
+        })
+        .then((data) => {
+          const { name } = data.data;
+          formValue.value.airport = name || "";
+        })
+        .catch((error) => console.log(error));
+    };
+
     return {
+      fetchAirport,
+      updateValueOnClose: ref(true),
       missionData,
       dayjs,
       editEnabled,
@@ -283,11 +301,17 @@ export default {
         .post(`${process.env.VUE_APP_API}/updateMission`, {
           ...this.formValue,
           operators: null,
+          from: this.formValue.from.toUpperCase(),
+          to: this.formValue.to.toUpperCase(),
           dd_zulu: dayjs.utc(this.formValue.dd_zulu).toISOString(),
           arrival_date: dayjs.utc(this.formValue.arrival_date).toISOString(),
         })
         .then(() => {
-          this.missionData = this.formValue;
+          this.missionData = {
+            ...this.formValue,
+            from: this.formValue.from.toUpperCase(),
+            to: this.formValue.to.toUpperCase(),
+          };
           this.loadingEdit = false;
           this.editEnabled = false;
         })

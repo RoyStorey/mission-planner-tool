@@ -6,6 +6,7 @@ import addOperator from "./addOperator";
 import confirmMissions from "./confirmMissions";
 import deleteOperator from "./deleteOperator";
 import deleteEntry from "./deleteEntry";
+import getAirport from "./getAirport";
 import getConfig from "./getConfig";
 import getEntriesForLeg from "./getEntriesForLeg";
 import getMissions from "./getMissions";
@@ -24,6 +25,7 @@ import updateMission from "./updateMission";
 const upload = multer({ storage: multer.memoryStorage() }); // dest: "uploads/" for pdfs
 const routes = express.Router();
 
+routes.post("/getAirport", getAirport);
 routes.post("/processTXT", upload.single("file"), processTXT);
 routes.post("/confirmMissions", confirmMissions);
 routes.post("/updateMission", updateMission);
