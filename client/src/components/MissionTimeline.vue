@@ -187,6 +187,7 @@ export default {
                 .toISOString(),
             })
             .then((data) => {
+              console.log(data.data);
               this.loadingEntry = false;
               this.entries = [
                 ...this.entries,
@@ -203,6 +204,7 @@ export default {
                     .toISOString(),
                 },
               ];
+              console.log(this.entries);
               this.entryValue.entry = "";
               this.entryValue.time = dayjs.utc().format("HH:mm");
             })
@@ -220,6 +222,7 @@ export default {
     },
     deleteEntry(entry) {
       const { id } = entry;
+      console.log(entry);
       axios
         .post(`${process.env.VUE_APP_API}/deleteEntry`, { id })
         .then(() => {

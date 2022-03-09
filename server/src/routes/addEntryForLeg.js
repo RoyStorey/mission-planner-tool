@@ -14,7 +14,7 @@ const addEntryForLeg = async (req, res) => {
     const { rows } = await client.query(query, [entry, date, leg_id]);
 
     client.release();
-    res.json(rows);
+    res.json(rows[0]);
   } catch (error) {
     res.status(400).send({
       message: error.message,
