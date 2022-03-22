@@ -23,17 +23,18 @@
     </n-grid-item>
     <n-grid-item class="align-center align-end" span="8 800:4">
       <n-menu
-        :value="activeKey"
         mode="horizontal"
+        v-model:value="defaultKey"
         :options="navigationOptions"
+        @update:value="handleUpdateValue"
       />
     </n-grid-item>
   </n-grid>
 </template>
 
 <script>
-import { ref, h, resolveComponent, watch } from "vue";
-import { useRoute } from "vue-router";
+import { ref, h, watch, computed } from "vue";
+import { useRoute, RouterLink } from "vue-router";
 import {
   NGrid,
   NGridItem,
@@ -58,15 +59,17 @@ import {
 
 const renderIcon = (icon) => () => h(NIcon, null, { default: () => h(icon) });
 
+const renderRouterLink = (path, label) => () =>
+  h(RouterLink, { to: path }, label);
+
 const navigationOptions = [
   {
-    label: () => h(resolveComponent("router-link"), { to: "/" }, () => "Home"),
+    label: renderRouterLink("/", "Home"),
     key: "home",
     icon: renderIcon(HomeOutline),
   },
   {
-    label: () =>
-      h(resolveComponent("router-link"), { to: "/missions" }, () => "Missions"),
+    label: renderRouterLink("/missions", "Missions"),
     key: "missions",
     icon: renderIcon(BarChartOutline),
   },
@@ -76,30 +79,19 @@ const navigationOptions = [
     icon: renderIcon(CloudUploadOutline),
     children: [
       {
-        label: () =>
-          h(
-            resolveComponent("router-link"),
-            { to: "/import/single-mission" },
-            () => "Manual Entry"
-          ),
+        label: renderRouterLink("/import/single-mission", "Manual Entry"),
         key: "manualentry",
         icon: renderIcon(Pencil),
       },
       {
-        label: () =>
-          h(
-            resolveComponent("router-link"),
-            { to: "/import/mag-pdf" },
-            () => "MAG PDF"
-          ),
+        label: renderRouterLink("/import/mag-pdf", "MAG PDF"),
         key: "magpdf",
         icon: renderIcon(Document),
       },
     ],
   },
   {
-    label: () =>
-      h(resolveComponent("router-link"), { to: "/settings" }, () => "Settings"),
+    label: renderRouterLink("/settings", "Settings"),
     key: "settings",
     icon: renderIcon(CogOutline),
   },
@@ -108,17 +100,9 @@ const navigationOptions = [
 export default {
   setup() {
     const route = useRoute();
-    const activeKey = ref(null);
     const searchQuery = ref("");
-
-    watch(
-      () => route.path,
-      (path) => {
-        activeKey.value =
-          navigationOptions.find((option) => path.includes(option.key))?.key ??
-          "home";
-      }
-    );
+    const param = computed(() => route.path);
+    const defaultKey = ref(null);
 
     watch(
       () => route.query,
@@ -128,9 +112,13 @@ export default {
     );
 
     return {
-      activeKey,
+      param,
+      defaultKey,
       navigationOptions,
       searchQuery,
+      handleUpdateValue(key) {
+        defaultKey.value = key;
+      },
     };
   },
   methods: {
@@ -142,6 +130,16 @@ export default {
             this.$route.query.date ? `&date=${this.$route.query.date}` : ""
           }`
         );
+    },
+  },
+  watch: {
+    param(newVal, oldVal) {
+      if (!oldVal) return;
+      const find =
+        this.navigationOptions.find((o) => {
+          return newVal.includes(o.key);
+        })?.key ?? "home";
+      this.defaultKey = find;
     },
   },
   components: {
