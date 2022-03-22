@@ -6,9 +6,9 @@ dayjs.extend(utc);
 const getMissions = async (req, res) => {
   const client = await postgreSQLClient.connect();
 
-  const { pageSize, page } = req.query;
+  const { pageSize, page, filter: passedFilter } = req.query;
   const offset = pageSize * (page - 1);
-  const filter = JSON.parse(req.query.filter);
+  const filter = passedFilter ? JSON.parse(req.query.filter) : null;
 
   const specificDateSelected = filter?.date
     ? {
