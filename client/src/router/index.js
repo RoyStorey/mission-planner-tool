@@ -49,6 +49,14 @@ const routes = [
       title: "Mission",
     },
   },
+  {
+    path: "/reports/export-legs",
+    name: "ExportLegs",
+    component: () => import("../views/ExportLegs.vue"),
+    meta: {
+      title: "Export Legs",
+    },
+  },
 ];
 
 const router = createRouter({

@@ -40,6 +40,49 @@
       />
     </div>
   </n-collapse-item>
+  <n-modal v-model:show="showEditOperator">
+    <n-card
+      style="width: 600px"
+      title="Edit Operator"
+      :bordered="false"
+      size="huge"
+      role="dialog"
+      aria-modal="true"
+    >
+      <n-form
+        :label-width="80"
+        :model="editOperatorFormValue"
+        :rules="operatorRules"
+        size="large"
+        ref="editOperatorFormRef"
+      >
+        <n-form-item label="Name" path="name">
+          <n-input
+            v-model:value="editOperatorFormValue.name"
+            placeholder="Name"
+            class="input"
+          />
+        </n-form-item>
+      </n-form>
+      <template #footer>
+        <n-space>
+          <n-button
+            type="primary"
+            @click="editOperator"
+            :loading="loadEditOperator"
+            >Save</n-button
+          >
+          <n-button @click="closeModal">Cancel</n-button>
+          <n-popconfirm @positive-click="deleteOperator">
+            <template #trigger>
+              <n-button type="error">Delete</n-button>
+            </template>
+            Are you sure you want to delete this operator?
+          </n-popconfirm>
+        </n-space>
+      </template>
+    </n-card>
+  </n-modal>
 </template>
 
 <script>
@@ -54,36 +97,36 @@ import {
   NInput,
   NDataTable,
   useNotification,
+  NModal,
+  NCard,
+  NSpace,
 } from "naive-ui";
-import { Trash, Add } from "@vicons/ionicons5";
+import { Add, Pencil } from "@vicons/ionicons5";
 import axios from "axios";
 
-const renderIcon = (icon) => {
-  return () => h(NIcon, { size: "15" }, { default: () => h(icon) });
-};
-
-const createColumns = (deleteOperator) => [
+const createColumns = (openEditModal) => [
   {
-    title: "Delete",
-    key: "delete",
+    title: "Edit",
+    key: "edit",
     render(row) {
       return h(
-        NPopconfirm,
+        NIcon,
         {
-          onPositiveClick: () => {
-            deleteOperator(row);
+          size: 15,
+          style: "cursor: pointer;",
+          onClick: () => {
+            openEditModal(row);
           },
         },
         {
-          trigger: () =>
-            h(renderIcon(Trash), {
-              style: "cursor: pointer;",
-            }),
-          default: () => "Are you sure you want to delete this operator?",
+          default: () => h(Pencil),
+          onClick: () => {
+            console.log(row);
+          },
         }
       );
     },
-    width: 100,
+    width: "50px",
   },
   {
     title: "Name",
@@ -103,6 +146,13 @@ export default {
     });
     const loadingOperators = ref(false);
     const loadAddOperator = ref(false);
+    const selectedOperator = ref(null);
+    const showEditOperator = ref(false);
+    const editOperatorFormRef = ref(null);
+    const editOperatorFormValue = ref({
+      name: "",
+    });
+    const loadEditOperator = ref(false);
 
     onMounted(() => {
       loadingOperators.value = true;
@@ -116,27 +166,19 @@ export default {
         .catch((error) => console.log(error));
     });
 
-    const deleteOperator = (row) => {
-      axios
-        .post(`${process.env.VUE_APP_API}/deleteOperator`, {
-          id: row.id,
-        })
-        .then(() => {
-          operatorOptions.value = operatorOptions.value.filter(
-            (option) => option.id !== row.id
-          );
-        })
-        .catch((error) => {
-          notification.error({
-            content: "An error occured deleting this operator!",
-            meta: error.response.data.message,
-            duration: 5000,
-          });
-        });
+    const openEditModal = (row) => {
+      editOperatorFormValue.value.name = row.name;
+      selectedOperator.value = row.id;
+      showEditOperator.value = true;
     };
 
     return {
+      loadEditOperator,
+      showEditOperator,
+      selectedOperator,
       notification,
+      editOperatorFormValue,
+      editOperatorFormRef,
       operatorFormRef,
       operatorFormValue,
       operatorOptions,
@@ -150,7 +192,7 @@ export default {
       },
       loadAddOperator,
       loadingOperators,
-      columns: createColumns(deleteOperator),
+      columns: createColumns(openEditModal),
       pagination: {
         pageSize: 10,
       },
@@ -188,6 +230,71 @@ export default {
         }
       });
     },
+    editOperator() {
+      this.editOperatorFormRef.validate((errors) => {
+        if (!errors) {
+          this.loadEditOperator = true;
+
+          axios
+            .post(`${process.env.VUE_APP_API}/updateOperator`, {
+              id: this.selectedOperator,
+              name: this.editOperatorFormValue.name,
+            })
+            .then(() => {
+              this.operatorOptions.value = this.operatorOptions.value.map(
+                (option) => {
+                  if (option.id === this.selectedOperator) {
+                    return {
+                      id: option.id,
+                      name: this.editOperatorFormValue.name,
+                    };
+                  }
+                  return option;
+                }
+              );
+
+              this.loadEditOperator = false;
+              this.closeModal();
+            })
+            .catch((error) => {
+              console.log(error);
+              this.loadEditOperator = false;
+              this.notification.error({
+                content: "An error occured editing this operator!",
+                meta: error.response.data.message,
+                duration: 5000,
+              });
+            });
+        }
+      });
+    },
+    deleteOperator() {
+      axios
+        .post(`${process.env.VUE_APP_API}/deleteOperator`, {
+          id: this.selectedOperator,
+        })
+        .then(() => {
+          this.operatorOptions.value = this.operatorOptions.value.filter(
+            (option) => {
+              console.log(option.id, this.selectedOperator);
+              return option.id !== this.selectedOperator;
+            }
+          );
+
+          this.showEditOperator = false;
+        })
+        .catch((error) => {
+          this.notification.error({
+            content: "An error occured deleting this operator!",
+            meta: error.response.data.message,
+            duration: 5000,
+          });
+        });
+    },
+    closeModal() {
+      this.selectedOperator = null;
+      this.showEditOperator = false;
+    },
   },
   components: {
     NCollapseItem,
@@ -198,6 +305,10 @@ export default {
     NIcon,
     Add,
     NDataTable,
+    NModal,
+    NCard,
+    NSpace,
+    NPopconfirm,
   },
 };
 </script>

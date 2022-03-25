@@ -55,6 +55,8 @@ import {
   Document,
   Pencil,
   BarChartOutline,
+  NewspaperOutline,
+  AirplaneOutline,
 } from "@vicons/ionicons5";
 
 const renderIcon = (icon) => () => h(NIcon, null, { default: () => h(icon) });
@@ -87,6 +89,18 @@ const navigationOptions = [
         label: renderRouterLink("/import/mag-pdf", "MAG PDF"),
         key: "magpdf",
         icon: renderIcon(Document),
+      },
+    ],
+  },
+  {
+    label: "Reports",
+    key: "reports",
+    icon: renderIcon(NewspaperOutline),
+    children: [
+      {
+        label: renderRouterLink("/reports/export-legs", "Export Legs"),
+        key: "exportlegs",
+        icon: renderIcon(AirplaneOutline),
       },
     ],
   },

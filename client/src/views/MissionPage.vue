@@ -50,7 +50,7 @@
           {{ missionData?.to }} ({{ missionData?.airport }})
         </n-descriptions-item>
         <n-descriptions-item label="Dead Head">
-          {{ missionData?.dh ? "YES" : "NO" }}
+          {{ missionData?.dh === "true" ? "YES" : "NO" }}
         </n-descriptions-item>
         <n-descriptions-item label="Mission Number">
           {{ missionData?.mission_number }}
@@ -103,7 +103,11 @@
             <n-input v-model:value="formValue.gnd_time" />
           </n-form-item-gi>
           <n-form-item-gi :span="4" label="Dead Head" path="dh">
-            <n-switch v-model:value="formValue.dh" />
+            <n-switch
+              v-model:value="formValue.dh"
+              checked-value="true"
+              unchecked-value="false"
+            />
           </n-form-item-gi>
         </n-grid>
       </n-form>
@@ -210,11 +214,12 @@ export default {
           },
         })
         .then((data) => {
-          missionData.value = data.data[0];
+          console.log(data);
+          missionData.value = data.data;
           formValue.value = {
-            ...data.data[0],
-            dd_zulu: dayjs.utc(data.data[0].dd_zulu).valueOf(),
-            arrival_date: dayjs.utc(data.data[0].arrival_date).valueOf(),
+            ...data.data,
+            dd_zulu: dayjs.utc(data.data.dd_zulu).valueOf(),
+            arrival_date: dayjs.utc(data.data.arrival_date).valueOf(),
           };
         })
         .catch((error) => {

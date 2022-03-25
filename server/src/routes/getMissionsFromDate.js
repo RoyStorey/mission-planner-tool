@@ -1,20 +1,22 @@
 import postgreSQLClient from "../postgres";
 
-const getLeg = async (req, res) => {
+const getMissionsFromDate = async (req, res) => {
+  const { startDate, endDate } = req.query;
   const client = await postgreSQLClient.connect();
-  const { id } = req.query;
 
   try {
     const query = `
     SELECT *
     FROM legs
-    WHERE id = $1
+    WHERE dd_zulu >= $1
+    AND dd_zulu <= $2
+    ORDER BY dd_zulu DESC
   `;
 
-    const { rows } = await client.query(query, [id]);
+    const { rows } = await client.query(query, [startDate, endDate]);
 
     client.release();
-    res.json(rows[0]);
+    res.json(rows);
   } catch (error) {
     res.status(400).send({
       message: error.message,
@@ -23,4 +25,4 @@ const getLeg = async (req, res) => {
   }
 };
 
-export default getLeg;
+export default getMissionsFromDate;

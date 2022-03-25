@@ -17,6 +17,12 @@
               @keyup.enter="addEntry"
             />
           </n-form-item>
+          <n-form-item label="Date" path="date">
+            <n-date-picker
+              :default-value="dayjs().valueOf()"
+              v-model:value="entryValue.date"
+            />
+          </n-form-item>
           <n-form-item label="Time" path="time">
             <n-time-picker
               type="textarea"
@@ -79,6 +85,7 @@ import {
   NA,
   NIcon,
   useNotification,
+  NDatePicker,
 } from "naive-ui";
 import { Trash } from "@vicons/ionicons5";
 import axios from "axios";
@@ -179,9 +186,9 @@ export default {
               entry: this.entryValue.entry,
               date: dayjs
                 .utc(
-                  `${dayjs
-                    .utc(this.missionData.dd_zulu)
-                    .format("MM/DD/YYYY")} ${this.entryValue.time}`,
+                  `${dayjs.utc(this.entryValue.date).format("MM/DD/YYYY")} ${
+                    this.entryValue.time
+                  }`,
                   "MM/DD/YYYY HH:mm"
                 )
                 .toISOString(),
@@ -196,13 +203,16 @@ export default {
                   date: dayjs
                     .utc(
                       `${dayjs
-                        .utc(this.missionData.dd_zulu)
+                        .utc(this.entryValue.date)
                         .format("MM/DD/YYYY")} ${this.entryValue.time}`,
                       "MM/DD/YYYY HH:mm"
                     )
                     .toISOString(),
                 },
-              ];
+              ].sort(
+                (a, b) =>
+                  dayjs.utc(a.date).valueOf() - dayjs.utc(b.date).valueOf()
+              );
               this.entryValue.entry = "";
               this.entryValue.time = dayjs.utc().format("HH:mm");
             })
@@ -248,6 +258,7 @@ export default {
     NTimeline,
     NTimelineItem,
     NPopconfirm,
+    NDatePicker,
     NIcon,
     NA,
     Trash,
