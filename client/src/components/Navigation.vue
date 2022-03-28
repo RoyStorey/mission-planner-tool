@@ -1,13 +1,13 @@
 <template>
   <n-grid :cols="12" style="height: 100%" item-responsive>
-    <n-grid-item class="align-center" span="4">
+    <n-grid-item class="align-center" span="2">
       <n-icon size="28">
         <globe-outline />
       </n-icon>
       <n-text class="logo"> 89th CS MPT </n-text>
       <n-divider style="height: 2.5em" vertical />
     </n-grid-item>
-    <n-grid-item class="align-center justify-center" span="0 800:4">
+    <n-grid-item class="align-center justify-center" span="0 800:3">
       <n-input-group>
         <n-input
           v-model:value="searchQuery"
@@ -21,7 +21,7 @@
         </n-button>
       </n-input-group>
     </n-grid-item>
-    <n-grid-item class="align-center align-end" span="8 800:4">
+    <n-grid-item class="align-center align-end" span="8 800:7">
       <n-menu
         mode="horizontal"
         v-model:value="defaultKey"
