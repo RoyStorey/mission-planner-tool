@@ -57,6 +57,14 @@ const routes = [
       title: "Export Legs",
     },
   },
+  {
+    path: "/reports/misrep",
+    name: "Misrep",
+    component: () => import("../views/MISREP.vue"),
+    meta: {
+      title: "MISREP",
+    },
+  },
 ];
 
 const router = createRouter({

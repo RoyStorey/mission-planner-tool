@@ -57,6 +57,7 @@ import {
   BarChartOutline,
   NewspaperOutline,
   AirplaneOutline,
+  DocumentOutline,
 } from "@vicons/ionicons5";
 
 const renderIcon = (icon) => () => h(NIcon, null, { default: () => h(icon) });
@@ -101,6 +102,11 @@ const navigationOptions = [
         label: renderRouterLink("/reports/export-legs", "Export Legs"),
         key: "exportlegs",
         icon: renderIcon(AirplaneOutline),
+      },
+      {
+        label: renderRouterLink("/reports/misrep", "Generate MISREP"),
+        key: "generatemisrep",
+        icon: renderIcon(DocumentOutline),
       },
     ],
   },

@@ -351,7 +351,9 @@ export default {
     async exportMission() {
       this.loadingMissionExport = true;
       const template = await fetch(
-        process.env.NODE_ENV === "development" ? "./" : "/mpt/" + "MISREP.docx"
+        process.env.NODE_ENV === "development"
+          ? "./"
+          : "/mpt/" + "LEGMISREP.docx"
       ).then((res) => res.arrayBuffer());
       const report = await createReport({
         template,
