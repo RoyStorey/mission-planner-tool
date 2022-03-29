@@ -9,7 +9,7 @@ const getLegsByMission = async (req, res) => {
     SELECT *
     FROM legs
     WHERE mission_number = $1
-    ORDER BY dd_zulu DESC
+    ORDER BY dd_zulu ASC
   `;
 
     const { rows } = await client.query(query, [mission]);
