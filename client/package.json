@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "build && sudo ./deploy.sh"
+    "deploy": "npm run build && sudo ./deploy.sh"
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.12.0",
