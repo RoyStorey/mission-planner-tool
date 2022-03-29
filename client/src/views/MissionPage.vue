@@ -352,7 +352,7 @@ export default {
       this.loadingMissionExport = true;
       const template = await fetch(
         process.env.NODE_ENV === "development"
-          ? "./"
+          ? "./LEGMISREP.docx"
           : "/mpt/" + "LEGMISREP.docx"
       ).then((res) => res.arrayBuffer());
       const report = await createReport({
