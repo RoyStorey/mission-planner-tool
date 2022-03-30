@@ -6,7 +6,7 @@
       </n-icon>
       Missions
     </n-h1>
-    <n-card title="Mission List">
+    <n-card :title="title">
       <n-data-table
         remote
         :columns="columns"
@@ -104,6 +104,7 @@ export default {
         return `${itemCount} Mission${itemCount > 1 ? "s" : ""}`;
       },
     });
+    const title = ref("Showing all missions");
 
     onMounted(() => {
       loading.value = true;
@@ -121,6 +122,16 @@ export default {
             etaz: dayjs.utc(leg.arrival_date).format("HH:mm"),
           })) || [];
 
+        if (route.query?.date) {
+          title.value = `Showing missions for ${dayjs
+            .utc(route.query.date)
+            .format("MMMM DD, YYYY")}`;
+        }
+
+        if (route.query?.query) {
+          title.value = `Showing missions for '${route.query.query}'`;
+        }
+
         paginationReactive.pageCount = Math.ceil(
           data.count / paginationReactive.pageSize
         );
@@ -130,6 +141,7 @@ export default {
     });
 
     return {
+      title,
       data: dataRef,
       pagination: paginationReactive,
       loading,

@@ -9,6 +9,14 @@
           size="medium"
           ref="entryRef"
         >
+          <n-form-item label="Common Entry">
+            <n-select
+              v-model:value="preformattedResponse"
+              filterable
+              :options="preformattedResponses"
+              clearable
+            />
+          </n-form-item>
           <n-form-item label="Entry" path="entry">
             <n-input
               type="textarea"
@@ -86,6 +94,7 @@ import {
   NIcon,
   useNotification,
   NDatePicker,
+  NSelect,
 } from "naive-ui";
 import { Trash } from "@vicons/ionicons5";
 import axios from "axios";
@@ -94,6 +103,49 @@ import utc from "dayjs/plugin/utc";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(utc);
 dayjs.extend(customParseFormat);
+
+const preformattedResponses = [
+  {
+    value:
+      "The team arrived at __Z and began running the pre-mission checklist.",
+    label: "Pre-mission checklist",
+  },
+  {
+    value: "All systems FMC/PMC (add more info for PMC)",
+    label: "Systems FMC/PMC",
+  },
+  {
+    label: "Logs requested",
+    value: "The logs were requested from the CSO.",
+  },
+  {
+    value:
+      "The CSO agreed to provide the log files at the earliest convenience.",
+    label: "Logs agreed",
+  },
+  {
+    value: "There was no response from the CSO regarding logs.",
+    label: "No reponse for logs",
+  },
+  {
+    value: "The aircraft went wheels up at __Z.",
+    label: "Wheels up",
+  },
+  {
+    value:
+      "The aircraft went wheels down at __Z. This completes the mission for today.",
+    label: "Wheels down/Mission Complete",
+  },
+  {
+    value:
+      "The aircraft went wheels down at __Z. Starting mission debrief/updating mission tracker on Teams.",
+    label: "Wheels down/Debrief",
+  },
+  {
+    value: "Logs were received from the CSO at __Z.",
+    label: "Logs received",
+  },
+].sort((a, b) => a.label.localeCompare(b.label));
 
 export default {
   emits: ["updateExportText"],
@@ -108,6 +160,7 @@ export default {
     const entries = ref([]);
     const loadingEntry = ref(false);
     const scroll = ref(null);
+    const preformattedResponse = ref(null);
 
     watch(
       () => props.missionData,
@@ -134,6 +187,8 @@ export default {
     onMounted(() => {});
 
     return {
+      preformattedResponses,
+      preformattedResponse,
       dayjs,
       scroll,
       entryRef,
@@ -173,6 +228,15 @@ export default {
           behavior: "smooth",
         });
       });
+    },
+    preformattedResponse(response) {
+      if (response) {
+        this.entryValue.entry = response;
+      }
+
+      if (response === null) {
+        this.entryValue.entry = "";
+      }
     },
   },
   methods: {
@@ -214,6 +278,7 @@ export default {
                   dayjs.utc(a.date).valueOf() - dayjs.utc(b.date).valueOf()
               );
               this.entryValue.entry = "";
+              this.preformattedResponse = null;
               this.entryValue.time = dayjs.utc().format("HH:mm");
             })
             .catch((error) => {
@@ -262,6 +327,7 @@ export default {
     NIcon,
     NA,
     Trash,
+    NSelect,
   },
 };
 </script>
