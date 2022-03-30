@@ -23,6 +23,7 @@
               clearable
               v-model:value="entryValue.entry"
               @keyup.enter="addEntry"
+              :rows="6"
             />
           </n-form-item>
           <n-form-item label="Date" path="date">
