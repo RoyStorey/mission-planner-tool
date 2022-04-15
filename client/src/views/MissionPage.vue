@@ -68,7 +68,14 @@
         v-else
       >
         <n-grid :span="24" :x-gap="24">
-          <n-form-item-gi :span="12" label="Departure Date (z)" path="dd_zulu">
+          <n-form-item-gi
+            :span="4"
+            label="Mission Number"
+            path="mission_number"
+          >
+            <n-input type="text" v-model:value="formValue.mission_number" />
+          </n-form-item-gi>
+          <n-form-item-gi :span="10" label="Departure Date (z)" path="dd_zulu">
             <n-date-picker
               v-model:value="formValue.dd_zulu"
               type="datetime"
@@ -78,7 +85,7 @@
             />
           </n-form-item-gi>
           <n-form-item-gi
-            :span="12"
+            :span="10"
             label="Arrival Date (z)"
             path="arrival_date"
           >
