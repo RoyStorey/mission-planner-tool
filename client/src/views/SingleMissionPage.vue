@@ -129,6 +129,9 @@ export default {
       loading,
       notification,
       rules: {
+        mission_number: [
+          { required: true, message: "Mission Number is required" },
+        ],
         dd_zulu: [
           {
             required: true,
@@ -161,33 +164,39 @@ export default {
   },
   methods: {
     saveMission() {
-      this.loading = true;
-      axios
-        .post(`${process.env.VUE_APP_API}/saveLeg`, {
-          ...this.formValue,
-          from: this.formValue.from.toUpperCase(),
-          to: this.formValue.to.toUpperCase(),
-          dd_zulu: dayjs.utc(this.formValue.dd_zulu).toISOString(),
-          arrival_date: dayjs.utc(this.formValue.arrival_date).toISOString(),
-        })
-        .then((data) => {
-          const { id } = data.data;
-          this.loading = false;
-          this.notification.success({
-            content: "Mission saved successfully.",
-            duration: 5000,
-          });
+      this.formRef.validate((errors) => {
+        if (!errors) {
+          this.loading = true;
+          axios
+            .post(`${process.env.VUE_APP_API}/saveLeg`, {
+              ...this.formValue,
+              from: this.formValue.from.toUpperCase(),
+              to: this.formValue.to.toUpperCase(),
+              dd_zulu: dayjs.utc(this.formValue.dd_zulu).toISOString(),
+              arrival_date: dayjs
+                .utc(this.formValue.arrival_date)
+                .toISOString(),
+            })
+            .then((data) => {
+              const { id } = data.data;
+              this.loading = false;
+              this.notification.success({
+                content: "Mission saved successfully.",
+                duration: 5000,
+              });
 
-          setTimeout(() => this.$router.push(`/mission/${id}`), 1000);
-        })
-        .catch((error) => {
-          this.notification.error({
-            content: "An error occured",
-            meta: error.response.data.message,
-            duration: 5000,
-          });
-          this.loading = false;
-        });
+              setTimeout(() => this.$router.push(`/mission/${id}`), 1000);
+            })
+            .catch((error) => {
+              this.notification.error({
+                content: "An error occured",
+                meta: error.response.data.message,
+                duration: 5000,
+              });
+              this.loading = false;
+            });
+        }
+      });
     },
   },
   watch: {
