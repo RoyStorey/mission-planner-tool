@@ -10,6 +10,7 @@ import getAirport from "./getAirport";
 import getActualMissions from "./getActualMissions";
 import getConfig from "./getConfig";
 import getEntriesForLeg from "./getEntriesForLeg";
+import getMOTD from "./getMOTD";
 import getMissions from "./getMissions";
 import getMissionsOnDate from "./getMissionsOnDate";
 import getMissionsUpcoming from "./getMissionsUpcoming";
@@ -25,6 +26,7 @@ import saveLegRoute from "./saveLeg";
 import saveConfig from "./saveConfig";
 import updateMission from "./updateMission";
 import updateOperator from "./updateOperator";
+import updateMOTD from "./updateMOTD";
 
 const upload = multer({ storage: multer.memoryStorage() }); // dest: "uploads/" for pdfs
 const routes = express.Router();
@@ -41,6 +43,7 @@ routes.post("/saveLeg", saveLegRoute);
 routes.post("/saveConfig", saveConfig);
 routes.post("/deleteEntry", deleteEntry);
 routes.post("/updateOperator", updateOperator);
+routes.post("/updateMOTD", updateMOTD);
 routes.get("/getActualMissions", getActualMissions);
 routes.get("/getLegsByMission", getLegsByMission);
 routes.get("/getConfig", getConfig);
@@ -54,5 +57,6 @@ routes.get("/getCountryCodes", getCountryCodes);
 routes.get("/getLegs", getLegs);
 routes.get("/getLeg", getLeg);
 routes.get("/getEntriesForLeg", getEntriesForLeg);
+routes.get("/getMOTD", getMOTD);
 
 export default routes;

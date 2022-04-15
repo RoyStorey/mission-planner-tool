@@ -2,6 +2,7 @@ export { default as CalendarBadge } from "./CalendarBadge.vue";
 export { default as DaysSinceLastMission } from "./DaysSinceLastMission.vue";
 export { default as MissionIndicatorSettings } from "./MissionIndicatorSettings.vue";
 export { default as MissionTimeline } from "./MissionTimeline.vue";
+export { default as MessageOfTheDay } from "./MessageOfTheDay.vue";
 export { default as Navigation } from "./Navigation";
 export { default as OperatorsAssigned } from "./OperatorsAssigned.vue";
 export { default as OperatorSettings } from "./OperatorSettings.vue";

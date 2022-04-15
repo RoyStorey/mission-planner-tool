@@ -13,6 +13,9 @@
       <n-grid-item span="2 600:1">
         <days-since-last-mission />
       </n-grid-item>
+      <n-grid-item span="2">
+        <message-of-the-day />
+      </n-grid-item>
     </n-grid>
     <n-grid :cols="2" :x-gap="10" :y-gap="10" item-responsive>
       <n-grid-item span="2 600:1">
@@ -50,6 +53,7 @@ import {
   UpcomingMissions,
   UpcomingMissionsStat,
   DaysSinceLastMission,
+  MessageOfTheDay,
 } from "../components";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -84,6 +88,7 @@ export default {
     UpcomingMissions,
     UpcomingMissionsStat,
     DaysSinceLastMission,
+    MessageOfTheDay,
   },
 };
 </script>
