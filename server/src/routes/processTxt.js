@@ -31,11 +31,14 @@ const processTXT = async (req, res) => {
       legs: [],
     };
 
+    let previousGroundTime = "";
+
     let processingBegin = false;
 
     for await (const line of rl) {
       if (line.includes("Mission #:")) {
         currentMission.missionNumber = line.split(/\s/g)[3].trim();
+        previousGroundTime = "";
         continue;
       }
 
@@ -63,8 +66,10 @@ const processTXT = async (req, res) => {
           const countryISO3 = getCountryISO3(iso_country);
           const groundTime = splitLine[13]?.split("+")[0];
           const processLeg =
-            groundTime >= config.ground_time ||
+            previousGroundTime >= config.ground_time ||
             config.country_codes.includes(countryISO3);
+          previousGroundTime = groundTime;
+
           if (!processLeg) continue;
 
           const currentLeg = {
@@ -92,8 +97,9 @@ const processTXT = async (req, res) => {
         const countryISO3 = getCountryISO3(iso_country);
         const groundTime = splitLine[12]?.split("+")[0];
         const processLeg =
-          groundTime >= config.ground_time ||
+          previousGroundTime >= config.ground_time ||
           config.country_codes.includes(countryISO3);
+        previousGroundTime = groundTime;
         if (!processLeg) continue;
 
         const currentLeg = {
