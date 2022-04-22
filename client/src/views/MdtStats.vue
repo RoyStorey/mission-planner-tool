@@ -47,7 +47,6 @@
       </n-grid-item>
       <n-grid-item span="8">
         <n-data-table
-          remote
           :columns="columns"
           :loading="loading"
           :pagination="pagination"
