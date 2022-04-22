@@ -65,6 +65,14 @@ const routes = [
       title: "MISREP",
     },
   },
+  {
+    path: "/reports/mdt-stats",
+    name: "MdtStats",
+    component: () => import("../views/MdtStats.vue"),
+    meta: {
+      title: "MDT Stats",
+    },
+  },
 ];
 
 const router = createRouter({

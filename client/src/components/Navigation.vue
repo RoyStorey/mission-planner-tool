@@ -58,12 +58,13 @@ import {
   NewspaperOutline,
   AirplaneOutline,
   DocumentOutline,
+  StatsChartOutline,
 } from "@vicons/ionicons5";
 
 const renderIcon = (icon) => () => h(NIcon, null, { default: () => h(icon) });
 
 const renderRouterLink = (path, label) => () =>
-  h(RouterLink, { to: path }, label);
+  h(RouterLink, { to: path }, () => label);
 
 const navigationOptions = [
   {
@@ -107,6 +108,11 @@ const navigationOptions = [
         label: renderRouterLink("/reports/misrep", "Generate MISREP"),
         key: "generatemisrep",
         icon: renderIcon(DocumentOutline),
+      },
+      {
+        label: renderRouterLink("/reports/mdt-stats", "MDT Stats"),
+        key: "mdtStats",
+        icon: renderIcon(StatsChartOutline),
       },
     ],
   },
