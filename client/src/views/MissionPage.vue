@@ -278,7 +278,7 @@ export default {
         arrival_date: [
           {
             required: true,
-            message: "Please select a time",
+            message: "Please select a date",
             validator: (rule, value) => {
               if (value) {
                 const date = dayjs(value);

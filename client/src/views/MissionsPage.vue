@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, h } from "vue";
 import router from "../router";
-import { NH1, NIcon, NCard, NDataTable } from "naive-ui";
+import { NH1, NIcon, NCard, NDataTable, NTooltip } from "naive-ui";
 import { Airplane } from "@vicons/ionicons5";
 import { useRoute } from "vue-router";
 import axios from "axios";
@@ -60,16 +60,56 @@ const createColumns = () => {
     {
       title: "From",
       key: "from",
+      render(row) {
+        return h(
+          NTooltip,
+          {
+            trigger: "hover",
+            placement: "top",
+          },
+          {
+            trigger: () => row.from,
+            default: () => row.from_country,
+          }
+        );
+      },
     },
     {
       title: "To",
       key: "to",
+      render(row) {
+        return h(
+          NTooltip,
+          {
+            trigger: "hover",
+            placement: "top",
+          },
+          {
+            trigger: () => row.to,
+            default: () => row.to_country,
+          }
+        );
+      },
     },
     {
       title: "GRND Time",
       key: "gnd_time",
     },
   ];
+};
+
+const getCountry = async (airport) => {
+  try {
+    const data = await axios.post(`${process.env.VUE_APP_API}/getAirport`, {
+      iata: airport,
+    });
+
+    const iso_country = data?.data?.iso_country;
+
+    return iso_country || "UNKNOWN";
+  } catch (error) {
+    return "UNKNOWN";
+  }
 };
 
 const query = (page, pageSize = 10, filter) => {
@@ -112,15 +152,20 @@ export default {
         paginationReactive.page,
         paginationReactive.pageSize,
         route.query
-      ).then((data) => {
-        dataRef.value =
-          data.rows?.map((leg) => ({
-            ...leg,
-            dd_zulu: dayjs.utc(leg.dd_zulu).format("MM/DD/YYYY"),
-            etdz: dayjs.utc(leg.dd_zulu).format("HH:mm"),
-            arrival_date: dayjs.utc(leg.arrival_date).format("MM/DD/YYYY"),
-            etaz: dayjs.utc(leg.arrival_date).format("HH:mm"),
-          })) || [];
+      ).then(async (data) => {
+        if (data.rows)
+          dataRef.value = await Promise.all(
+            data.rows?.map(async (leg) => ({
+              ...leg,
+              dd_zulu: dayjs.utc(leg.dd_zulu).format("MM/DD/YYYY"),
+              etdz: dayjs.utc(leg.dd_zulu).format("HH:mm"),
+              arrival_date: dayjs.utc(leg.arrival_date).format("MM/DD/YYYY"),
+              etaz: dayjs.utc(leg.arrival_date).format("HH:mm"),
+              from_country: await getCountry(leg.from),
+              to_country: await getCountry(leg.to),
+            }))
+          );
+        else dataRef.value = [];
 
         if (route.query?.date) {
           title.value = `Showing missions for ${dayjs
