@@ -72,7 +72,7 @@ const createColumns = () => {
             placement: "top",
           },
           {
-            trigger: () => row.from,
+            trigger: () => row.to,
             default: () => row.country,
           }
         );
