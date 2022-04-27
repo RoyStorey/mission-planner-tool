@@ -281,11 +281,10 @@ export default {
             message: "Please select a time",
             validator: (rule, value) => {
               if (value) {
-                const time = dayjs(value, "HH:mm");
-
-                if (time.isValid()) return true;
+                const date = dayjs(value);
+                if (date.isValid()) return true;
               }
-              return new Error("Please select a valid time.");
+              return new Error("Please select a valid date.");
             },
           },
         ],
