@@ -1,7 +1,17 @@
 import postgreSQLClient from "../postgres";
+import lookupAirport from "../api/lookupAirport";
+import getCountryISO3 from "country-iso-2-to-3";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
+
+const getCountryCode = (iata) =>
+  new Promise((resolve) => {
+    lookupAirport(iata).then((countryCode) => {
+      if (countryCode) resolve(getCountryISO3(countryCode.iso_country));
+      resolve("UNK");
+    });
+  });
 
 const getMissions = async (req, res) => {
   const client = await postgreSQLClient.connect();
@@ -121,8 +131,17 @@ const getMissions = async (req, res) => {
         : [offset, pageSize]
     );
 
+    const modifiedRows = await Promise.all(
+      rows[0].rows.map(async (row) => ({
+        ...row,
+        to_country: await getCountryCode(row.to),
+        from_country: await getCountryCode(row.from),
+      }))
+    );
+
     client.release();
-    res.json({ rows, count });
+
+    res.json({ rows: [{ rows: modifiedRows, count: rows[0].count }] });
   } catch (error) {
     res.status(400).send({
       message: error.message,

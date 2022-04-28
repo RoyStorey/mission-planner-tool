@@ -60,6 +60,19 @@ const createColumns = () => {
     {
       title: "From",
       key: "from",
+      render(row) {
+        return h(
+          NTooltip,
+          {
+            trigger: "hover",
+            placement: "top",
+          },
+          {
+            trigger: () => row.from,
+            default: () => row.from_country,
+          }
+        );
+      },
     },
     {
       title: "To",
@@ -73,7 +86,7 @@ const createColumns = () => {
           },
           {
             trigger: () => row.to,
-            default: () => row.country,
+            default: () => row.to_country,
           }
         );
       },
