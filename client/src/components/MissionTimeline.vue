@@ -51,7 +51,7 @@
     </n-grid-item>
     <n-grid-item :span="3" style="padding-left: 1em">
       <n-h2>Mission Timeline</n-h2>
-      <n-scrollbar ref="scroll" style="height: 275px">
+      <n-scrollbar ref="scroll" style="height: 503px">
         <n-timeline>
           <n-timeline-item type="success" content="Mission start." />
           <n-timeline-item
