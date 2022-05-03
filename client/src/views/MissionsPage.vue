@@ -188,9 +188,9 @@ export default {
             dataRef.value = data.rows.map((leg) => ({
               ...leg,
               dd_zulu: dayjs.utc(leg.dd_zulu).format("MM/DD/YYYY"),
-              etdz: dayjs.utc(leg.etdz).format("HH:mm"),
+              etdz: dayjs.utc(leg.dd_zulu).format("HH:mm"),
               arrival_date: dayjs.utc(leg.arrival_date).format("MM/DD/YYYY"),
-              etaz: dayjs.utc(leg.etaz).format("HH:mm"),
+              etaz: dayjs.utc(leg.arrival_date).format("HH:mm"),
             }));
             paginationReactive.pageCount = Math.ceil(
               data.count / paginationReactive.pageSize
