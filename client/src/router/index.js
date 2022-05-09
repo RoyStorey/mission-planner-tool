@@ -73,6 +73,14 @@ const routes = [
       title: "MDT Stats",
     },
   },
+  {
+    path: "/reports/operator-stats",
+    name: "OperatorStats",
+    component: () => import("../views/OperatorStats.vue"),
+    meta: {
+      title: "Operator Stats",
+    },
+  },
 ];
 
 const router = createRouter({

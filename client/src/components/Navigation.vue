@@ -59,6 +59,7 @@ import {
   AirplaneOutline,
   DocumentOutline,
   StatsChartOutline,
+  AccessibilityOutline,
 } from "@vicons/ionicons5";
 
 const renderIcon = (icon) => () => h(NIcon, null, { default: () => h(icon) });
@@ -113,6 +114,11 @@ const navigationOptions = [
         label: renderRouterLink("/reports/mdt-stats", "MDT Stats"),
         key: "mdtStats",
         icon: renderIcon(StatsChartOutline),
+      },
+      {
+        label: renderRouterLink("/reports/operator-stats", "Operator Stats"),
+        key: "operatorStats",
+        icon: renderIcon(AccessibilityOutline),
       },
     ],
   },
