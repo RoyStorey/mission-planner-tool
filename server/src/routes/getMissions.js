@@ -131,13 +131,16 @@ const getMissions = async (req, res) => {
         : [offset, pageSize]
     );
 
-    const modifiedRows = await Promise.all(
-      rows[0].rows.map(async (row) => ({
-        ...row,
-        to_country: await getCountryCode(row.to),
-        from_country: await getCountryCode(row.from),
-      }))
-    );
+    const modifiedRows =
+      rows[0].rows?.length > 0
+        ? await Promise.all(
+            rows[0].rows.map(async (row) => ({
+              ...row,
+              to_country: await getCountryCode(row.to),
+              from_country: await getCountryCode(row.from),
+            }))
+          )
+        : [];
 
     client.release();
 
