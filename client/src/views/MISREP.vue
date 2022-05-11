@@ -164,10 +164,22 @@ export default {
               }
             );
 
+            const { data: leg } = await axios.get(
+              `${process.env.VUE_APP_API}/getLeg`,
+              {
+                params: {
+                  id: legId,
+                },
+              }
+            );
+
             const finalText = entries.length
               ? entries.map((entry) => entry.entry).join(" ")
               : "No Data";
             return {
+              from: leg.from,
+              to: leg.to,
+              date: dayjs.utc(leg.dd_zulu).format("MM/DD/YYYY"),
               number: i + 1,
               finalText,
             };
