@@ -166,14 +166,16 @@ export default {
       this.formRef.validate((errors) => {
         if (!errors) {
           this.loading = true;
+          const utcOffset = dayjs().utcOffset();
           axios
             .post(`${process.env.VUE_APP_API}/saveLeg`, {
               ...this.formValue,
               from: this.formValue.from.toUpperCase(),
               to: this.formValue.to.toUpperCase(),
-              dd_zulu: dayjs.utc(this.formValue.dd_zulu).toISOString(),
+              dd_zulu: dayjs.utc(this.formValue.dd_zulu).utcOffset(utcOffset).toISOString(),
               arrival_date: dayjs
                 .utc(this.formValue.arrival_date)
+                .utcOffset(utcOffset)
                 .toISOString(),
             })
             .then((data) => {
