@@ -60,7 +60,7 @@ export default {
       axios
         .post(`${process.env.VUE_APP_API}/updateMission`, {
           id: this.missionData.id,
-          operators: this.assignedOperators,
+          operators: this.assignedOperators ?? [],
         })
         .catch((error) => {
           this.notification.error({
