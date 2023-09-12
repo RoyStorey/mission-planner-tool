@@ -12,6 +12,7 @@ const updateMission = async (req, res) => {
     arrival_date,
     gnd_time,
     mission_number,
+    dvcode,
     operators,
   } = req.body;
 
@@ -22,8 +23,8 @@ const updateMission = async (req, res) => {
     WHERE id = $2`
       : `
     UPDATE legs
-    SET dh = $1, "from" = $2, dd_zulu = $3, "to" = $4, airport = $5, arrival_date = $6, gnd_time = $7, mission_number = $8
-    WHERE id = $9
+    SET dh = $1, "from" = $2, dd_zulu = $3, "to" = $4, airport = $5, arrival_date = $6, gnd_time = $7, mission_number = $8, dvcode = $9
+    WHERE id = $10
   `;
 
     const { rows } = await client.query(
@@ -39,6 +40,7 @@ const updateMission = async (req, res) => {
             arrival_date,
             gnd_time,
             mission_number,
+            dvcode,
             id,
           ]
     );

@@ -95,6 +95,10 @@ const createColumns = () => {
       title: "GRND Time",
       key: "gnd_time",
     },
+    {
+      title: "DV Code",
+      key: "dvcode",
+    },
   ];
 };
 

@@ -59,6 +59,9 @@
           <n-form-item-gi :span="4" label="Dead Head" path="dh">
             <n-switch v-model:value="formValue.dh" />
           </n-form-item-gi>
+          <n-form-item-gi :span="4" label="DV Code" path="dvcode">
+            <n-input v-model:value="formValue.dvcode" />
+          </n-form-item-gi>
         </n-grid>
         <n-button
           style="float: right"

@@ -10,12 +10,12 @@ dayjs.extend(utc);
 const confirmMissions = async (req, res) => {
   const { body: missions } = req;
 
-  const listOfMissions = missions.map((mission) => mission.missionNumber);
+  const listOfMissions = missions.map((mission) => [mission.missionNumber, mission.dvcode]);
   const listOfLegs = processLegs(missions);
 
   try {
-    Promise.map(listOfMissions, async (missionNumber) => {
-      await saveMission(missionNumber);
+    Promise.map(listOfMissions, async (missionNumber, dvcode) => {
+      await saveMission(missionNumber, dvcode);
     });
 
     Promise.map(listOfLegs, async (leg) => {
@@ -34,6 +34,7 @@ const processLegs = (missions) => {
     mission.legs.map((leg) => ({
       ...leg,
       missionNumber: mission.missionNumber,
+      // dvcode:mission.dvcode,
     }))
   );
 
@@ -48,6 +49,7 @@ const processLegs = (missions) => {
       `${leg.arrDate} ${leg.etaz}`,
       "MM/DD/YYYY HH:mm"
     );
+    console.log(...leg)
 
     return {
       ...leg,

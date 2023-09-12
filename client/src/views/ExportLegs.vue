@@ -81,7 +81,7 @@ export default {
       const endDate = dayjs.utc(this.range[1]).endOf("day").toISOString();
 
       axios
-        .get(`${process.env.VUE_APP_API}/getMissionsFromDate`, {
+        .get(`${process.env.MPT_API}/getMissionsFromDate`, {
           params: {
             startDate,
             endDate,

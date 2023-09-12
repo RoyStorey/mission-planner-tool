@@ -28,19 +28,31 @@ const processTXT = async (req, res) => {
     let currentMission = {
       key: uuidv4(),
       missionNumber: "",
+      dvcode:"",
       legs: [],
     };
 
     let previousGroundTime = "";
 
+    let previousLine = "";
+
     let processingBegin = false;
 
     for await (const line of rl) {
+      // if(line.includes(/\b[A-Za-z0-9]{3}\b/)){
+        // currentMission.dvcode = line
+        // console.log(line)
+        // continue;
+      // }
+
       if (line.includes("Mission #:")) {
         currentMission.missionNumber = line.split(/\s/g)[3].trim();
         previousGroundTime = "";
+        dvcode = previousLine;
         continue;
       }
+
+      previousLine=line.replace(/\t+/g, '')
 
       if (line.includes("DD Zulu")) {
         processingBegin = true;
@@ -49,7 +61,7 @@ const processTXT = async (req, res) => {
 
       if (line.trim().includes("Planned Pax Count")) {
         listOfMissions.push(currentMission);
-        currentMission = { key: uuidv4(), missionNumber: "", legs: [] };
+        currentMission = { key: uuidv4(), missionNumber: "", dvcode:"", legs: [] };
         processingBegin = false;
         continue;
       }

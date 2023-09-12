@@ -58,6 +58,9 @@
         <n-descriptions-item label="Ground Time">
           {{ missionData?.gnd_time }}
         </n-descriptions-item>
+        <n-descriptions-item label="DV Code">
+          {{ missionData?.dvcode }}
+        </n-descriptions-item>
       </n-descriptions>
       <n-form
         :rules="rules"
@@ -108,6 +111,9 @@
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="Ground Time" path="gnd_time">
             <n-input v-model:value="formValue.gnd_time" />
+          </n-form-item-gi>
+          <n-form-item-gi :span="5" label="Ground Time" path="dvcode">
+            <n-input v-model:value="formValue.dvcode" />
           </n-form-item-gi>
           <n-form-item-gi :span="4" label="Dead Head" path="dh">
             <n-switch

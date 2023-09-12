@@ -14,6 +14,7 @@ const saveLegRoute = async (req, res) => {
     duty_day,
     gnd_time,
     mission_number,
+    dvcode,
   } = req.body;
 
   try {
@@ -30,6 +31,7 @@ const saveLegRoute = async (req, res) => {
       from,
       groundTime: gnd_time,
       missionNumber: mission_number,
+      dvcode,
       to,
     });
     res.json(result);

@@ -15,6 +15,7 @@ const saveLeg = async ({
   from,
   groundTime,
   missionNumber,
+  dvcode,
   to,
 }) => {
   const client = await postgreSQLClient.connect();
@@ -52,7 +53,8 @@ const saveLeg = async ({
       duty_day = $9,
       gnd_time = $10,
       mission_number = $11
-      WHERE id = $12
+      dvcode = $12
+      WHERE id = $13
       RETURNING id;
       `;
 
@@ -68,6 +70,7 @@ const saveLeg = async ({
         dutyDay,
         groundTime,
         missionNumber,
+        dvcode,
         existingId,
       ]);
 
@@ -76,8 +79,8 @@ const saveLeg = async ({
     } else {
       const query = `
     INSERT INTO legs
-    (dh,"from",dd_zulu,"to",airport,country,arrival_date,ete,duty_day,gnd_time,mission_number) 
-    values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+    (dh,"from",dd_zulu,"to",airport,country,arrival_date,ete,duty_day,gnd_time,mission_number,dvcode) 
+    values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
     RETURNING id;
   `;
 
@@ -93,6 +96,7 @@ const saveLeg = async ({
         dutyDay,
         groundTime,
         missionNumber,
+        dvcode,
       ]);
       client.release();
       return rows[0];

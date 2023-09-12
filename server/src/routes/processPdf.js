@@ -32,6 +32,7 @@ function render_page(pageData) {
       ete: null,
       dutyDay: null,
       groundTime: null,
+      dvcode:null,
     };
     let previousString = "";
     let currentCol = 0;
@@ -92,7 +93,7 @@ function render_page(pageData) {
               currentCol += 1;
               break;
             case 6:
-              currentLeg.airport = currentString;
+              currentLeg.airport = previousLeg.airport;
               currentCol += 1;
               break;
             case 7:
@@ -124,6 +125,7 @@ function render_page(pageData) {
               currentCol = 0;
               rowStarted = false;
               currentMission.legs.push(currentLeg);
+              previousLeg = currentLeg;
               break;
           }
         }

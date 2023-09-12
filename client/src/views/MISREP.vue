@@ -101,7 +101,7 @@ export default {
       loadingMissions.value = true;
 
       axios
-        .get(`${process.env.VUE_APP_API}/getActualMissions`)
+        .get(`${process.env.MPT_API}/getActualMissions`)
         .then((data) => {
           loadingMissions.value = false;
           missions.value = data.data.map((mission) => ({
@@ -135,7 +135,7 @@ export default {
       this.error = null;
       try {
         const { data: legs } = await axios.get(
-          `${process.env.VUE_APP_API}/getLegsByMission`,
+          `${process.env.MPT_API}/getLegsByMission`,
           {
             params: {
               mission: this.selectedMission,
@@ -156,7 +156,7 @@ export default {
         const docxLegInfo = Promise.all(
           legIds.map(async (legId, i) => {
             const { data: entries } = await axios.get(
-              `${process.env.VUE_APP_API}/getEntriesForLeg`,
+              `${process.env.MPT_API}/getEntriesForLeg`,
               {
                 params: {
                   leg_id: legId,
@@ -165,7 +165,7 @@ export default {
             );
 
             const { data: leg } = await axios.get(
-              `${process.env.VUE_APP_API}/getLeg`,
+              `${process.env.MPT_API}/getLeg`,
               {
                 params: {
                   id: legId,

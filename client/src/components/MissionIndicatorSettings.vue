@@ -81,7 +81,7 @@ export default {
       loadingCountryCodes.value = true;
 
       axios
-        .get(`${process.env.VUE_APP_API}/getCountryCodes`)
+        .get(`${process.env.MPT_API}/getCountryCodes`)
         .then((data) => {
           loadingCountryCodes.value = false;
           countryCodeOptions.value = data.data.map((option) => ({
@@ -91,7 +91,7 @@ export default {
         })
         .catch((error) => console.log(error));
 
-      axios.get(`${process.env.VUE_APP_API}/getConfig`).then((data) => {
+      axios.get(`${process.env.MPT_API}/getConfig`).then((data) => {
         missionIndicatorFormValue.value.countries = data.data.country_codes;
         missionIndicatorFormValue.value.groundTime = data.data.ground_time;
       });
@@ -127,7 +127,7 @@ export default {
           this.missionIndicatorAddLoad = true;
 
           axios
-            .post(`${process.env.VUE_APP_API}/saveConfig`, {
+            .post(`${process.env.MPT_API}/saveConfig`, {
               ...this.missionIndicatorFormValue,
             })
             .then(() => {
