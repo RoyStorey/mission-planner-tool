@@ -41,7 +41,7 @@ export default {
 
     onMounted(() => {
       axios
-        .get(`${process.env.VUE_APP_API}/getMOTD`)
+        .get(`/mpt-api/getMOTD`)
         .then((data) => {
           motd.value = data.data.text;
         })
@@ -65,7 +65,7 @@ export default {
     },
     saveMOTD() {
       axios
-        .post(`${process.env.VUE_APP_API}/updateMOTD`, {
+        .post(`/mpt-api/updateMOTD`, {
           text: this.motd,
         })
         .then(() => {

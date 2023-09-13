@@ -105,7 +105,7 @@ const createColumns = () => {
 const query = (page, pageSize = 10, filter) => {
   return new Promise((resolve) => {
     axios
-      .get(`${process.env.VUE_APP_API}/getMissions`, {
+      .get(`/mpt-api/getMissions`, {
         params: {
           page,
           pageSize,

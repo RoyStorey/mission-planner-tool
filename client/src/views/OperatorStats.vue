@@ -158,7 +158,7 @@ export default {
 
       loadingOperators.value = true;
       axios
-        .get(`${process.env.VUE_APP_API}/getOperators`)
+        .get(`/mpt-api/getOperators`)
         .then((data) => {
           loadingOperators.value = false;
           operatorOptions.value = data.data.map((operator) => ({
@@ -172,7 +172,7 @@ export default {
     const loadMissions = (startDate, endDate, operator) => {
       loading.value = true;
       axios
-        .get(`${process.env.VUE_APP_API}/getMissionsFromDateForOperator`, {
+        .get(`/mpt-api/getMissionsFromDateForOperator`, {
           params: {
             startDate,
             endDate,

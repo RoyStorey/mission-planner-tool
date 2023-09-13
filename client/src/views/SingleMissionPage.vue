@@ -114,7 +114,7 @@ export default {
 
     const fetchAirport = (from) => {
       axios
-        .post(`${process.env.VUE_APP_API}/getAirport`, {
+        .post(`/mpt-api/getAirport`, {
           iata: from.toUpperCase(),
         })
         .then((data) => {
@@ -171,7 +171,7 @@ export default {
           this.loading = true;
           const utcOffset = dayjs().utcOffset();
           axios
-            .post(`${process.env.VUE_APP_API}/saveLeg`, {
+            .post(`/mpt-api/saveLeg`, {
               ...this.formValue,
               from: this.formValue.from.toUpperCase(),
               to: this.formValue.to.toUpperCase(),

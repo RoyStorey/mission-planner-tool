@@ -16,7 +16,7 @@ export default {
     onMounted(() => {
       const providedDate = dayjs(`${props.year}-${props.month}-${props.date}`);
       axios
-        .get(`${process.env.VUE_APP_API}/getMissionsOnDate`, {
+        .get(`/mpt-api/getMissionsOnDate`, {
           params: {
             date: providedDate.format("MM/DD/YYYY"),
           },
@@ -40,7 +40,7 @@ export default {
           `${newValue[0]}-${newValue[1]}-${newValue[2]}`
         );
         axios
-          .get(`${process.env.VUE_APP_API}/getMissionsOnDate`, {
+          .get(`/mpt-api/getMissionsOnDate`, {
             params: {
               date: providedDate.format("MM/DD/YYYY"),
             },

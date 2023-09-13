@@ -71,7 +71,7 @@ export default {
       loading.value = true;
       console.log(process.env.VUE_APP_API)
       axios
-        .get(`${process.env.VUE_APP_API}/getMissionsUpcoming`, {
+        .get(`/mpt-api/getMissionsUpcoming`, {
           params: {
             date: dayjs().format("MM/DD/YYYY"),
             type: "home",

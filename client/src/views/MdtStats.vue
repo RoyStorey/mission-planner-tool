@@ -149,7 +149,7 @@ export default {
     const loadMissions = (startDate, endDate) => {
       loading.value = true;
       axios
-        .get(`${process.env.VUE_APP_API}/getMissionsFromDate`, {
+        .get(`/mpt-api/getMissionsFromDate`, {
           params: {
             startDate,
             endDate,

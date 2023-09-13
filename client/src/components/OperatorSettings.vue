@@ -158,7 +158,7 @@ export default {
       loadingOperators.value = true;
 
       axios
-        .get(`${process.env.VUE_APP_API}/getOperators`)
+        .get(`/mpt-api/getOperators`)
         .then((data) => {
           loadingOperators.value = false;
           operatorOptions.value = data.data;
@@ -205,7 +205,7 @@ export default {
           this.loadAddOperator = true;
 
           axios
-            .post(`${process.env.VUE_APP_API}/addOperator`, {
+            .post(`/mpt-api/addOperator`, {
               name: this.operatorFormValue.name,
             })
             .then((data) => {
@@ -236,7 +236,7 @@ export default {
           this.loadEditOperator = true;
 
           axios
-            .post(`${process.env.VUE_APP_API}/updateOperator`, {
+            .post(`/mpt-api/updateOperator`, {
               id: this.selectedOperator,
               name: this.editOperatorFormValue.name,
             })
@@ -270,7 +270,7 @@ export default {
     },
     deleteOperator() {
       axios
-        .post(`${process.env.VUE_APP_API}/deleteOperator`, {
+        .post(`/mpt-api/deleteOperator`, {
           id: this.selectedOperator,
         })
         .then(() => {

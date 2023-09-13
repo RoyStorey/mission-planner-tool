@@ -207,7 +207,7 @@ export default {
       formatData,
       removeRow,
       loadingSaved,
-      url: `${process.env.VUE_APP_API}/processTXT`,
+      url: `/mpt-api/processTXT`,
     };
   },
   methods: {

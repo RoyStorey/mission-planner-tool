@@ -26,7 +26,7 @@ export default {
 
     onMounted(() => {
       axios
-        .get(`${process.env.VUE_APP_API}/getMostRecentMission`, {
+        .get(`/mpt-api/getMostRecentMission`, {
           params: {
             date: dayjs.utc().toISOString(),
           },

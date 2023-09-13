@@ -221,7 +221,7 @@ export default {
 
     onMounted(() => {
       axios
-        .get(`${process.env.VUE_APP_API}/getLeg`, {
+        .get(`/mpt-api/getLeg`, {
           params: {
             id: missionId,
           },
@@ -246,7 +246,7 @@ export default {
 
     const fetchAirport = (from) => {
       axios
-        .post(`${process.env.VUE_APP_API}/getAirport`, {
+        .post(`/mpt-api/getAirport`, {
           iata: from.toUpperCase(),
         })
         .then((data) => {
@@ -315,7 +315,7 @@ export default {
     updateMission() {
       this.loadingEdit = true;
       axios
-        .post(`${process.env.VUE_APP_API}/updateMission`, {
+        .post(`/mpt-api/updateMission`, {
           ...this.formValue,
           operators: null,
           from: this.formValue.from.toUpperCase(),
@@ -343,7 +343,7 @@ export default {
     deleteMission() {
       this.loadingDelete = true;
       axios
-        .post(`${process.env.VUE_APP_API}/deleteMission`, {
+        .post(`/mpt-api/deleteMission`, {
           id: this.missionData.id,
         })
         .then(() => {
