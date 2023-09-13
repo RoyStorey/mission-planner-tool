@@ -112,7 +112,7 @@
           <n-form-item-gi :span="5" label="Ground Time" path="gnd_time">
             <n-input v-model:value="formValue.gnd_time" />
           </n-form-item-gi>
-          <n-form-item-gi :span="5" label="Ground Time" path="dvcode">
+          <n-form-item-gi :span="5" label="DV Code" path="dvcode">
             <n-input v-model:value="formValue.dvcode" />
           </n-form-item-gi>
           <n-form-item-gi :span="4" label="Dead Head" path="dh">
