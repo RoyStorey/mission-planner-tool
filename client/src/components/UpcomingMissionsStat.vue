@@ -45,7 +45,7 @@ export default {
 
     onMounted(() => {
       axios
-        .get(`${process.env.MPT_API}/getMissionsUpcoming`, {
+        .get(`${process.env.VUE_APP_API}/getMissionsUpcoming`, {
           params: {
             date: dayjs().format("MM/DD/YYYY"),
             type: "stat",

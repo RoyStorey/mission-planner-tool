@@ -37,7 +37,7 @@ export default {
     onMounted(() => {
       loadingOperators.value = true;
       axios
-        .get(`${process.env.MPT_API}/getOperators`)
+        .get(`${process.env.VUE_APP_API}/getOperators`)
         .then((data) => {
           loadingOperators.value = false;
           operatorOptions.value = data.data.map((operator) => ({
@@ -58,7 +58,7 @@ export default {
   methods: {
     updateAssignedOperators() {
       axios
-        .post(`${process.env.MPT_API}/updateMission`, {
+        .post(`${process.env.VUE_APP_API}/updateMission`, {
           id: this.missionData.id,
           operators: this.assignedOperators ?? [],
         })

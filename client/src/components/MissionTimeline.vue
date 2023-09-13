@@ -167,7 +167,7 @@ export default {
       () => props.missionData,
       (data) => {
         axios
-          .get(`${process.env.MPT_API}/getEntriesForLeg`, {
+          .get(`${process.env.VUE_APP_API}/getEntriesForLeg`, {
             params: {
               leg_id: data.id,
             },
@@ -246,7 +246,7 @@ export default {
         if (!errors) {
           this.loadingEntry = true;
           axios
-            .post(`${process.env.MPT_API}/addEntryForLeg`, {
+            .post(`${process.env.VUE_APP_API}/addEntryForLeg`, {
               leg_id: this.missionData.id,
               entry: this.entryValue.entry,
               date: dayjs
@@ -297,7 +297,7 @@ export default {
     deleteEntry(entry) {
       const { id } = entry;
       axios
-        .post(`${process.env.MPT_API}/deleteEntry`, { id })
+        .post(`${process.env.VUE_APP_API}/deleteEntry`, { id })
         .then(() => {
           this.entries = this.entries.filter((e) => e.id !== id);
         })
