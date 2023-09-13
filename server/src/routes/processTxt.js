@@ -38,17 +38,21 @@ const processTXT = async (req, res) => {
 
     let processingBegin = false;
 
+    let currentDVCode = '';
+
     for await (const line of rl) {
       // if(line.includes(/\b[A-Za-z0-9]{3}\b/)){
         // currentMission.dvcode = line
         // console.log(line)
         // continue;
       // }
+      console.log(line)
 
       if (line.includes("Mission #:")) {
         currentMission.missionNumber = line.split(/\s/g)[3].trim();
         previousGroundTime = "";
-        dvcode = previousLine;
+        currentMission.dvcode = previousLine;
+        currentDVCode = currentMission.dvcode;
         continue;
       }
 
@@ -130,6 +134,7 @@ const processTXT = async (req, res) => {
           ete: splitLine[10],
           dutyDay: splitLine[11],
           groundTime: splitLine[12],
+          dvcode: currentDVCode,
         };
         currentMission.legs.push(currentLeg);
         continue;

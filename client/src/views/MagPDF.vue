@@ -80,7 +80,7 @@
       </template>
       <div v-for="(mission, index) in missions.value" :key="index">
         <n-h2>
-          <n-text type="primary"> Mission #{{ mission.missionNumber  +  mission.dvcode}} </n-text>
+          <n-text type="primary"> Mission #{{ mission.missionNumber }} </n-text>
         </n-h2>
         <n-data-table
           :columns="columns"

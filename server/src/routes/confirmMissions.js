@@ -49,7 +49,6 @@ const processLegs = (missions) => {
       `${leg.arrDate} ${leg.etaz}`,
       "MM/DD/YYYY HH:mm"
     );
-    console.log(...leg)
 
     return {
       ...leg,

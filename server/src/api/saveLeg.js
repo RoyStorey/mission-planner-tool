@@ -52,7 +52,7 @@ const saveLeg = async ({
       ete = $8,
       duty_day = $9,
       gnd_time = $10,
-      mission_number = $11
+      mission_number = $11,
       dvcode = $12
       WHERE id = $13
       RETURNING id;
@@ -79,8 +79,19 @@ const saveLeg = async ({
     } else {
       const query = `
     INSERT INTO legs
-    (dh,"from",dd_zulu,"to",airport,country,arrival_date,ete,duty_day,gnd_time,mission_number,dvcode) 
-    values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+      (dh,
+      "from",
+      dd_zulu,
+      "to",
+      airport,
+      country,
+      arrival_date,
+      ete,
+      duty_day,
+      gnd_time,
+      mission_number,
+      dvcode) 
+      values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
     RETURNING id;
   `;
 
