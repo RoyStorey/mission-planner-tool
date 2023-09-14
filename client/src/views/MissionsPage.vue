@@ -38,6 +38,10 @@ const createColumns = () => {
       key: "mission_number",
     },
     {
+      title: "DV Code",
+      key: "dvcode",
+    },
+    {
       title: "Airport",
       key: "airport",
     },
@@ -94,10 +98,6 @@ const createColumns = () => {
     {
       title: "GRND Time",
       key: "gnd_time",
-    },
-    {
-      title: "DV Code",
-      key: "dvcode",
     },
   ];
 };
