@@ -34,6 +34,7 @@ const processTXT = async (req, res) => {
 
     let previousGroundTime = "";
 
+
     let previousLine = "";
 
     let processingBegin = false;
@@ -41,12 +42,6 @@ const processTXT = async (req, res) => {
     let currentDVCode = '';
 
     for await (const line of rl) {
-      // if(line.includes(/\b[A-Za-z0-9]{3}\b/)){
-        // currentMission.dvcode = line
-        // console.log(line)
-        // continue;
-      // }
-      console.log(line)
 
       if (line.includes("Mission #:")) {
         currentMission.missionNumber = line.split(/\s/g)[3].trim();
@@ -78,34 +73,6 @@ const processTXT = async (req, res) => {
         if (splitLine.length <= 5) continue;
 
         if (splitLine[0] === "DH") {
-          // const { iso_country } = (await lookupAirport(splitLine[1])) || "";
-          // const countryISO3 = getCountryISO3(iso_country);
-          // const groundTime = splitLine[13]?.split("+")[0];
-          // const processLeg =
-          //   previousGroundTime >= config.ground_time ||
-          //   config.country_codes.includes(countryISO3);
-          // previousGroundTime = groundTime;
-
-          // if (!processLeg) continue;
-
-          // const currentLeg = {
-          //   key: uuidv4(),
-          //   DH: splitLine[0],
-          //   from: splitLine[1],
-          //   ddzulu: splitLine[2],
-          //   etdz: splitLine[3],
-          //   etdl: splitLine[4],
-          //   to: splitLine[5],
-          //   airport: splitLine[6],
-          //   country: splitLine[7],
-          //   arrDate: splitLine[8],
-          //   etaz: splitLine[9],
-          //   etal: splitLine[10],
-          //   ete: splitLine[11],
-          //   dutyDay: splitLine[12],
-          //   groundTime: splitLine[13],
-          // };
-          // currentMission.legs.push(currentLeg);
           continue;
         }
 
@@ -118,6 +85,10 @@ const processTXT = async (req, res) => {
         previousGroundTime = groundTime;
         if (!processLeg) continue;
 
+        const arrayLength = currentMission.legs.length
+        const lastLeg = currentMission.legs[arrayLength]
+
+
         const currentLeg = {
           key: uuidv4(),
           DH: null,
@@ -126,7 +97,8 @@ const processTXT = async (req, res) => {
           etdz: splitLine[2],
           etdl: splitLine[3],
           to: splitLine[4],
-          airport: splitLine[5],
+          destAirport: splitLine[5],
+          airport: lastLeg.destAirport ? lastLeg.destAirport : 'Joint Base Andrews',
           country: splitLine[6],
           arrDate: splitLine[7],
           etaz: splitLine[8],
