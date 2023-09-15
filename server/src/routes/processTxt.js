@@ -86,7 +86,7 @@ const processTXT = async (req, res) => {
         if (!processLeg) continue;
 
         const arrayLength = currentMission.legs.length
-        let lastLeg = {};
+        let lastLeg = {destAirport: 'Joint Base Andrews'};
 
         if (currentMission.legs.length >= 0){
           lastLeg = currentMission.legs[arrayLength]
