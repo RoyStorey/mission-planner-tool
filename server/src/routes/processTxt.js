@@ -98,7 +98,7 @@ const processTXT = async (req, res) => {
         } else {
           lastLeg = {
             destAirport: initialMissionAirport.toUpperCase(),
-            groundTime: "",
+            destGroundTime: "",
           };
         }
 
