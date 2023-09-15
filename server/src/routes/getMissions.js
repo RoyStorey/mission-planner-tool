@@ -27,7 +27,7 @@ const getMissions = async (req, res) => {
       }
     : null;
 
-  const specificSearchQuery = filter?.query ? filter.query : null;
+  const specificSearchQuery = filter?.query ? "%" + filter.query + "%" : null;
 
   try {
     const query =
