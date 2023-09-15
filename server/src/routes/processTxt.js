@@ -119,7 +119,7 @@ const processTXT = async (req, res) => {
           ete: splitLine[10],
           dutyDay: splitLine[11],
           destGroundTime: splitLine[12],
-          groundTime: lastLeg.groundTime,
+          groundTime: lastLeg.destGroundTime,
           dvcode: currentDVCode,
         };
         currentMission.legs.push(currentLeg);
