@@ -92,9 +92,11 @@ const processTXT = async (req, res) => {
 
         const arrayLength = Object.keys(currentMission.legs).length;
 
-        if (lastLeg) {
+        if (currentMission.legs.length > 0) {
           lastLeg = currentMission.legs[arrayLength - 1];
           console.log(lastLeg);
+        } else {
+          lastLeg = { destAirport: "Joint Base Andrews" };
         }
 
         const currentLeg = {
