@@ -28,21 +28,19 @@ const processTXT = async (req, res) => {
     let currentMission = {
       key: uuidv4(),
       missionNumber: "",
-      dvcode:"",
+      dvcode: "",
       legs: [],
     };
 
     let previousGroundTime = "";
 
-
     let previousLine = "";
 
     let processingBegin = false;
 
-    let currentDVCode = '';
+    let currentDVCode = "";
 
     for await (const line of rl) {
-
       if (line.includes("Mission #:")) {
         currentMission.missionNumber = line.split(/\s/g)[3].trim();
         previousGroundTime = "";
@@ -51,7 +49,7 @@ const processTXT = async (req, res) => {
         continue;
       }
 
-      previousLine=line.replace(/\t+/g, '')
+      previousLine = line.replace(/\t+/g, "");
 
       if (line.includes("DD Zulu")) {
         processingBegin = true;
@@ -60,7 +58,12 @@ const processTXT = async (req, res) => {
 
       if (line.trim().includes("Planned Pax Count")) {
         listOfMissions.push(currentMission);
-        currentMission = { key: uuidv4(), missionNumber: "", dvcode:"", legs: [] };
+        currentMission = {
+          key: uuidv4(),
+          missionNumber: "",
+          dvcode: "",
+          legs: [],
+        };
         processingBegin = false;
         continue;
       }
@@ -85,11 +88,13 @@ const processTXT = async (req, res) => {
         previousGroundTime = groundTime;
         if (!processLeg) continue;
 
-        const arrayLength = currentMission.legs.length
-        let lastLeg = {destAirport: 'Joint Base Andrews'};
+        let lastLeg = {};
 
-        if (currentMission.legs.length > 0){
-          lastLeg = currentMission.legs[arrayLength]
+        const arrayLength = Object.keys(currentMission.legs).length;
+
+        if (lastLeg) {
+          lastLeg = currentMission.legs[arrayLength - 1];
+          console.log(lastLeg);
         }
 
         const currentLeg = {
@@ -100,7 +105,7 @@ const processTXT = async (req, res) => {
           etdz: splitLine[2],
           etdl: splitLine[3],
           to: splitLine[4],
-          destAirport: splitLine[5] ? splitLine[5] : 'Joint Base Andrews',
+          destAirport: splitLine[5],
           airport: lastLeg.destAirport,
           country: splitLine[6],
           arrDate: splitLine[7],
@@ -108,6 +113,7 @@ const processTXT = async (req, res) => {
           etal: splitLine[9],
           ete: splitLine[10],
           dutyDay: splitLine[11],
+          // destGroundTime:splitLine[12]
           groundTime: splitLine[12],
           dvcode: currentDVCode,
         };
