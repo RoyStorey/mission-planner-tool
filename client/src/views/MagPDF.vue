@@ -135,7 +135,7 @@ const createColumns = ({ removeLeg }) => [
     },
   },
   {
-    title: "Airport",
+    title: "Dep. Airport",
     key: "airport",
   },
   {
@@ -163,8 +163,12 @@ const createColumns = ({ removeLeg }) => [
     key: "to",
   },
   {
-    title: "GRND Time",
+    title: "Dep. GRND Time",
     key: "groundTime",
+  },
+  {
+    title: "DV Code",
+    key: "dvcode",
   },
 ];
 

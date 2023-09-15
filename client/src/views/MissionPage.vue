@@ -55,7 +55,7 @@
         <n-descriptions-item label="Mission Number">
           {{ missionData?.mission_number }}
         </n-descriptions-item>
-        <n-descriptions-item label="Ground Time">
+        <n-descriptions-item label="Dep. Ground Time">
           {{ missionData?.gnd_time }}
         </n-descriptions-item>
         <n-descriptions-item label="DV Code">
@@ -106,10 +106,10 @@
           <n-form-item-gi :span="5" label="To" path="to">
             <n-input v-model:value="formValue.to" :on-change="fetchAirport" />
           </n-form-item-gi>
-          <n-form-item-gi :span="5" label="Airport" path="airport">
+          <n-form-item-gi :span="5" label="Dep. Airport" path="airport">
             <n-input v-model:value="formValue.airport" />
           </n-form-item-gi>
-          <n-form-item-gi :span="5" label="Ground Time" path="gnd_time">
+          <n-form-item-gi :span="5" label="Dep. Ground Time" path="gnd_time">
             <n-input v-model:value="formValue.gnd_time" />
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="DV Code" path="dvcode">

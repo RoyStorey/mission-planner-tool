@@ -42,7 +42,7 @@ const createColumns = () => {
       key: "dvcode",
     },
     {
-      title: "Airport",
+      title: "Dep. Airport",
       key: "airport",
     },
     {
@@ -96,7 +96,7 @@ const createColumns = () => {
       },
     },
     {
-      title: "GRND Time",
+      title: "Dep. GRND Time",
       key: "gnd_time",
     },
   ];
