@@ -86,8 +86,11 @@ const processTXT = async (req, res) => {
         if (!processLeg) continue;
 
         const arrayLength = currentMission.legs.length
-        const lastLeg = currentMission.legs[arrayLength]
+        let lastLeg = {};
 
+        if (currentMission.legs.length >= 0){
+        lastLeg = currentMission.legs[arrayLength]
+        }
 
         const currentLeg = {
           key: uuidv4(),
