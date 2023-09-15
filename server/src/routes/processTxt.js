@@ -79,8 +79,8 @@ const processTXT = async (req, res) => {
           continue;
         }
 
-        const { iso_country } = (await lookupAirport(splitLine[0])) || "";
-        console.log(iso_country);
+        const { iso_country, name } = (await lookupAirport(splitLine[0])) || "";
+        console.log(name);
         const countryISO3 = getCountryISO3(iso_country);
         const groundTime = splitLine[12]?.split("+")[0];
         const processLeg =
@@ -95,7 +95,6 @@ const processTXT = async (req, res) => {
 
         if (currentMission.legs.length > 0) {
           lastLeg = currentMission.legs[arrayLength - 1];
-          console.log(lastLeg);
         } else {
           lastLeg = {
             destAirport: splitLine[0],
