@@ -80,7 +80,7 @@ const processTXT = async (req, res) => {
         }
 
         const { iso_country, name } = (await lookupAirport(splitLine[0])) || "";
-        console.log(name);
+        const initialMissionAirport = name;
         const countryISO3 = getCountryISO3(iso_country);
         const groundTime = splitLine[12]?.split("+")[0];
         const processLeg =
@@ -97,7 +97,7 @@ const processTXT = async (req, res) => {
           lastLeg = currentMission.legs[arrayLength - 1];
         } else {
           lastLeg = {
-            destAirport: splitLine[0],
+            destAirport: initialMissionAirport,
             groundTime: "",
           };
         }
