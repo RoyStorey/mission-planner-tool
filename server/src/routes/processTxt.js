@@ -86,7 +86,7 @@ const processTXT = async (req, res) => {
         if (!processLeg) continue;
 
         const arrayLength = currentMission.legs.length
-        let lastLeg = {destAirport:'Joint Base Andrews'};
+        let lastLeg = {};
 
         if (currentMission.legs.length >= 0){
           lastLeg = currentMission.legs[arrayLength]
@@ -100,8 +100,8 @@ const processTXT = async (req, res) => {
           etdz: splitLine[2],
           etdl: splitLine[3],
           to: splitLine[4],
-          destAirport: splitLine[5],
-          airport: lastLeg.destAirport ? lastLeg.destAirport : 'Joint Base Andrews',
+          destAirport: splitLine[5] ? splitLine[5] : 'Joint Base Andrews',
+          airport: lastLeg.destAirport,
           country: splitLine[6],
           arrDate: splitLine[7],
           etaz: splitLine[8],
