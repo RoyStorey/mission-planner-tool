@@ -187,21 +187,23 @@ export default {
       handlePageChange(currentPage) {
         if (!loading.value) {
           loading.value = true;
-          query(currentPage, paginationReactive.pageSize).then((data) => {
-            paginationReactive.page = currentPage;
-            dataRef.value = data.rows.map((leg) => ({
-              ...leg,
-              dd_zulu: dayjs.utc(leg.dd_zulu).format("MM/DD/YYYY"),
-              etdz: dayjs.utc(leg.dd_zulu).format("HH:mm"),
-              arrival_date: dayjs.utc(leg.arrival_date).format("MM/DD/YYYY"),
-              etaz: dayjs.utc(leg.arrival_date).format("HH:mm"),
-            }));
-            paginationReactive.pageCount = Math.ceil(
-              data.count / paginationReactive.pageSize
-            );
-            paginationReactive.itemCount = data.count;
-            loading.value = false;
-          });
+          query(currentPage, paginationReactive.pageSize, route.query).then(
+            (data) => {
+              paginationReactive.page = currentPage;
+              dataRef.value = data.rows.map((leg) => ({
+                ...leg,
+                dd_zulu: dayjs.utc(leg.dd_zulu).format("MM/DD/YYYY"),
+                etdz: dayjs.utc(leg.dd_zulu).format("HH:mm"),
+                arrival_date: dayjs.utc(leg.arrival_date).format("MM/DD/YYYY"),
+                etaz: dayjs.utc(leg.arrival_date).format("HH:mm"),
+              }));
+              paginationReactive.pageCount = Math.ceil(
+                data.count / paginationReactive.pageSize
+              );
+              paginationReactive.itemCount = data.count;
+              loading.value = false;
+            }
+          );
         }
       },
     };
