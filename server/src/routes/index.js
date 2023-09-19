@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
 import processTXT from "./processTxt";
+import processPDF from "./processPdf";
 import addEntryForLeg from "./addEntryForLeg";
 import addOperator from "./addOperator";
 import confirmMissions from "./confirmMissions";
@@ -34,7 +35,7 @@ const routes = express.Router();
 
 routes.post("/getAirport", getAirport);
 // routes.post("/processTXT", upload.single("file"), processTXT);
-routes.post("/processPDF", upload.single("file"), processTXT);
+routes.post("/processPDF", upload.single("file"), processPDF);
 routes.post("/confirmMissions", confirmMissions);
 routes.post("/updateMission", updateMission);
 routes.post("/deleteMission", deleteMission);
