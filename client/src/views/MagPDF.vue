@@ -36,7 +36,7 @@
         :max="1"
         :action="url"
         :customRequest="handleUpload"
-        accept=".txt"
+        accept=".pdf"
         :on-change="handleAddFile"
         :file-list="fileList"
         :on-update:file-list="handleFileListUpdate"
@@ -211,7 +211,7 @@ export default {
       formatData,
       removeRow,
       loadingSaved,
-      url: `/mpt-api/processTXT`,
+      url: `/mpt-api/processPDF`,
     };
   },
   methods: {

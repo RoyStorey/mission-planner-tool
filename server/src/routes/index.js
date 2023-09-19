@@ -29,11 +29,12 @@ import updateMission from "./updateMission";
 import updateOperator from "./updateOperator";
 import updateMOTD from "./updateMOTD";
 
-const upload = multer({ storage: multer.memoryStorage() }); // dest: "uploads/" for pdfs
+const upload = multer({ dest: "uploads/" }); // dest: "uploads/" for pdfs
 const routes = express.Router();
 
 routes.post("/getAirport", getAirport);
-routes.post("/processTXT", upload.single("file"), processTXT);
+// routes.post("/processTXT", upload.single("file"), processTXT);
+routes.post("/processPDF", upload.single("file"), processTXT);
 routes.post("/confirmMissions", confirmMissions);
 routes.post("/updateMission", updateMission);
 routes.post("/deleteMission", deleteMission);

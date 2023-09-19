@@ -2,6 +2,7 @@ import fs from "fs";
 import pdf from "pdf-parse";
 
 let listOfMissions = [];
+let previousLeg = {};
 
 function render_page(pageData) {
   let render_options = {
@@ -32,7 +33,7 @@ function render_page(pageData) {
       ete: null,
       dutyDay: null,
       groundTime: null,
-      dvcode:null,
+      dvcode: null,
     };
     let previousString = "";
     let currentCol = 0;
@@ -40,12 +41,10 @@ function render_page(pageData) {
 
     for (let item of textContent.items) {
       const { str: currentString } = item;
-
       if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
         // We know that we are at the start of a page
         pageStarted = true;
         pageNumber += 1;
-        console.log(pageNumber + " page started ");
         continue;
       }
 
@@ -145,7 +144,8 @@ const processPDF = async (req, res) => {
   try {
     let dataBuffer = fs.readFileSync(req.file.path);
     const data = await pdf(dataBuffer, options);
-    res.json(listOfMissions);
+    console.log(listOfMissions);
+    return res.json(listOfMissions);
   } catch (error) {
     console.log(error, "ERROR");
     res.sendStatus(500);
