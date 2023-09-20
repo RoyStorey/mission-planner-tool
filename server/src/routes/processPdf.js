@@ -15,7 +15,6 @@ function render_page(pageData) {
 
     let currentMission = {
       missionNumber: "",
-      dvcode: "",
       legs: [],
     };
     let currentLeg = {
@@ -33,7 +32,7 @@ function render_page(pageData) {
       ete: null,
       dutyDay: null,
       groundTime: null,
-      dvcode:'dvcodeTEST',
+      dvcode:null,
     };
     let previousString = "";
     let currentCol = 0;
@@ -55,7 +54,7 @@ function render_page(pageData) {
         // also end of page
         currentMission.missionNumber = currentString.split(":")[1].trim();
         listOfMissions.push(currentMission);
-        currentMission = { missionNumber: "", dvcode: "", legs: [] };
+        currentMission = { missionNumber: "", legs: [] };
         pageStarted = false;
       }
 
@@ -146,7 +145,7 @@ const processPDF = async (req, res) => {
   try {
     let dataBuffer = fs.readFileSync(req.file.path);
     const data = await pdf(dataBuffer, options);
-    return res.json(listOfMissions);
+    res.json(listOfMissions);
   } catch (error) {
     console.log(error, "ERROR");
     res.sendStatus(500);
