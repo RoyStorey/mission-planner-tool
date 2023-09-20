@@ -16,6 +16,7 @@ function render_page(pageData) {
 
     let currentMission = {
       missionNumber: "",
+      dvcode: "",
       legs: [],
     };
     let currentLeg = {
@@ -46,7 +47,6 @@ function render_page(pageData) {
         // We know that we are at the start of a page
         pageStarted = true;
         pageNumber += 1;
-        console.log(pageNumber + " page started ");
         continue;
       }
 
@@ -55,7 +55,7 @@ function render_page(pageData) {
         // also end of page
         currentMission.missionNumber = currentString.split(":")[1].trim();
         listOfMissions.push(currentMission);
-        currentMission = { missionNumber: "", legs: [] };
+        currentMission = { missionNumber: "", dvcode: "", legs: [] };
         pageStarted = false;
       }
 
