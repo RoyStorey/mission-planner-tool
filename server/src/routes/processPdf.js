@@ -123,6 +123,7 @@ function render_page(pageData) {
               currentCol += 1;
               break;
             case 6:
+              currentLeg.airport = previousLeg.destAirport,
               currentLeg.destAirport = currentString;
               currentCol += 1;
               break;
@@ -153,9 +154,11 @@ function render_page(pageData) {
             case 13:
               let timeRegex = /^\d+\+\d+$/;
               if(timeRegex.test(currentString)){
+                currentLeg.groundTime = previousLeg.destGroundTime,
                 currentLeg.destGroundTime = currentString;
               }
               else{
+                currentLeg.groundTime = previousLeg.destGroundTime,
                 currentLeg.destGroundTime = '';
               }
               currentCol = 0;
