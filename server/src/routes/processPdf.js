@@ -2,7 +2,25 @@ import fs from "fs";
 import pdf from "pdf-parse";
 
 let listOfMissions = [];
-let previousLeg = {};
+let previousLeg = {
+  DH: null,
+  from: null,
+  ddzulu: null,
+  etdz: null,
+  etdl: null,
+  to: null,
+  destAirport: null,
+  airport: "",
+  country: null,
+  arrDate: null,
+  etaz: null,
+  etal: null,
+  ete: null,
+  dutyDay: null,
+  destGroundTime:null,
+  groundTime: "",
+  dvcode:null,
+};
 
 function render_page(pageData) {
   let render_options = {
@@ -26,14 +44,16 @@ function render_page(pageData) {
       etdz: null,
       etdl: null,
       to: null,
-      airport: null,
+      destAirport: null,
+      airport: previousLeg.destAirport,
       country: null,
       arrDate: null,
       etaz: null,
       etal: null,
       ete: null,
       dutyDay: null,
-      groundTime: null,
+      destGroundTime: null,
+      groundTime: previousLeg.destGroundTime,
       dvcode:null,
     };
     let previousString = "";
@@ -103,7 +123,7 @@ function render_page(pageData) {
               currentCol += 1;
               break;
             case 6:
-              currentLeg.airport = currentString;
+              currentLeg.destAirport = currentString;
               currentCol += 1;
               break;
             case 7:
@@ -133,10 +153,10 @@ function render_page(pageData) {
             case 13:
               let timeRegex = /^\d+\+\d+$/;
               if(timeRegex.test(currentString)){
-                currentLeg.groundTime = currentString;
+                currentLeg.destGroundTime = currentString;
               }
               else{
-                currentLeg.groundTime = '';
+                currentLeg.destGroundTime = '';
               }
               currentCol = 0;
               rowStarted = false;
