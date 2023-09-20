@@ -62,7 +62,6 @@ function render_page(pageData) {
 
     for (let item of textContent.items) {
       const { str: currentString } = item;
-      console.log(currentString)
 
       if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
         // We know that we are at the start of a page
@@ -98,6 +97,7 @@ function render_page(pageData) {
 
               let airportCodeRegex = /^[A-Z]{4}$/;
               let concattedAirportArray = currentString.split("  ")
+              console.log(concattedAirportArray)
 
               if(concattedAirportArray.length == 1 && airportCodeRegex.test(concattedAirportArray[0])){
                 currentLeg.from = concattedAirportArray[0];
