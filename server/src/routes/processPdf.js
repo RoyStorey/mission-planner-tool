@@ -2,7 +2,6 @@ import fs from "fs";
 import pdf from "pdf-parse";
 
 let listOfMissions = [];
-let previousLeg = {};
 
 function render_page(pageData) {
   let render_options = {
@@ -16,6 +15,7 @@ function render_page(pageData) {
 
     let currentMission = {
       missionNumber: "",
+      dvcode: "",
       legs: [],
     };
     let currentLeg = {
@@ -33,7 +33,7 @@ function render_page(pageData) {
       ete: null,
       dutyDay: null,
       groundTime: null,
-      dvcode: null,
+      dvcode:'dvcodeTEST',
     };
     let previousString = "";
     let currentCol = 0;
@@ -41,10 +41,12 @@ function render_page(pageData) {
 
     for (let item of textContent.items) {
       const { str: currentString } = item;
+
       if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
         // We know that we are at the start of a page
         pageStarted = true;
         pageNumber += 1;
+        console.log(pageNumber + " page started ");
         continue;
       }
 
@@ -53,7 +55,7 @@ function render_page(pageData) {
         // also end of page
         currentMission.missionNumber = currentString.split(":")[1].trim();
         listOfMissions.push(currentMission);
-        currentMission = { missionNumber: "", legs: [] };
+        currentMission = { missionNumber: "", dvcode: "", legs: [] };
         pageStarted = false;
       }
 
@@ -92,7 +94,7 @@ function render_page(pageData) {
               currentCol += 1;
               break;
             case 6:
-              currentLeg.airport = previousLeg.airport;
+              currentLeg.airport = currentString;
               currentCol += 1;
               break;
             case 7:
@@ -144,7 +146,7 @@ const processPDF = async (req, res) => {
   try {
     let dataBuffer = fs.readFileSync(req.file.path);
     const data = await pdf(dataBuffer, options);
-    return res.json(listOfMissions);
+    res.json(listOfMissions);
   } catch (error) {
     console.log(error, "ERROR");
     res.sendStatus(500);
