@@ -76,7 +76,6 @@ function render_page(pageData) {
               if (previousString === "DH") currentLeg.DH = previousString;
               let airportCodeRegex = /^[A-Z]{4}$/;
               if(!airportCodeRegex.test(currentString)){
-                currentCol +=1;
                 break
               }
               else{
