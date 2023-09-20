@@ -97,16 +97,22 @@ function render_page(pageData) {
               if (previousString === "DH") currentLeg.DH = previousString;
 
               let airportCodeRegex = /^[A-Z]{4}$/;
-              let concattedAirportArray = currentString.split(" ")
+              let concattedAirportArray = currentString.split("  ")
 
               if(concattedAirportArray.length == '1' && airportCodeRegex.test(concattedAirportArray[0])){
                 currentLeg.from = concattedAirportArray[0];
                 currentCol += 1;
                 break
               }
-              if(concattedAirportArray.length == '2' && airportCodeRegex.test(concattedAirportArray[0])){
+              else if(concattedAirportArray.length == '2' && airportCodeRegex.test(concattedAirportArray[0])){
                 currentLeg.from = concattedAirportArray[0];
                 currentLeg.ddzulu = concattedAirportArray[1]
+                currentCol += 2;
+                break
+              }
+              else if(concattedAirportArray.length == '3' && airportCodeRegex.test(concattedAirportArray[1])){
+                currentLeg.from = concattedAirportArray[1];
+                currentLeg.ddzulu = concattedAirportArray[2]
                 currentCol += 2;
                 break
               }
