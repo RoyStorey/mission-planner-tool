@@ -93,7 +93,7 @@ function render_page(pageData) {
               currentCol += 1;
               break;
             case 6:
-              currentLeg.airport = currentString;
+              currentLeg.airport = previousLeg.airport;
               currentCol += 1;
               break;
             case 7:
