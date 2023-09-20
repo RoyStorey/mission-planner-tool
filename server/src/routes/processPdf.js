@@ -122,7 +122,13 @@ function render_page(pageData) {
               currentCol += 1;
               break;
             case 13:
-              currentLeg.groundTime = currentString;
+              let timeRegex = /^\d+\+\d+$/;
+              if(timeRegex.test(currentString)){
+                currentLeg.groundTime = currentString;
+              }
+              else{
+                currentLeg.groundTime = '';
+              }
               currentCol = 0;
               rowStarted = false;
               currentMission.legs.push(currentLeg);
