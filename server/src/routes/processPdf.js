@@ -62,6 +62,7 @@ function render_page(pageData) {
 
     for (let item of textContent.items) {
       const { str: currentString } = item;
+      console.log(item)
 
       if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
         // We know that we are at the start of a page
@@ -92,7 +93,6 @@ function render_page(pageData) {
         }
         if (rowStarted) {
           switch (currentCol) {
-
             case 1:
               if (previousString === "DH") currentLeg.DH = previousString;
 
