@@ -161,10 +161,6 @@ function render_page(pageData) {
                 currentLeg.groundTime = previousLeg.destGroundTime,
                 currentLeg.destGroundTime = '';
               }
-              currentCol += 1;
-              break;
-            case 14:
-              currentLeg.dvcode = currentString;
               currentCol = 0;
               rowStarted = false;
               currentMission.legs.push(currentLeg);
