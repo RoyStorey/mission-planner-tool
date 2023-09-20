@@ -72,8 +72,10 @@ function render_page(pageData) {
         }
         if (rowStarted) {
           switch (currentCol) {
+
             case 1:
               if (previousString === "DH") currentLeg.DH = previousString;
+
               let airportCodeRegex = /^[A-Z]{4}$/;
               if(airportCodeRegex.test(currentString)){
                 currentLeg.from = currentString;
@@ -83,6 +85,7 @@ function render_page(pageData) {
               else{
                 break;
               }
+
             case 2:
               currentLeg.ddzulu = currentString;
               currentCol += 1;
@@ -100,7 +103,7 @@ function render_page(pageData) {
               currentCol += 1;
               break;
             case 6:
-              currentLeg.airport = previousLeg.airport;
+              currentLeg.airport = currentString;
               currentCol += 1;
               break;
             case 7:
