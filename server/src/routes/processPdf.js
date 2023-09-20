@@ -97,7 +97,7 @@ function render_page(pageData) {
 
               let airportCodeRegex = /^[A-Z]{4}$/;
               let concattedAirportArray = currentString.split("  ")
-              console.log(concattedAirportArray)
+              console.log(concattedAirportArray, currentString)
 
               if(concattedAirportArray.length == 1 && airportCodeRegex.test(concattedAirportArray[0])){
                 currentLeg.from = concattedAirportArray[0];
