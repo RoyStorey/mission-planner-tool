@@ -194,12 +194,11 @@ function render_page(pageData) {
                 currentCol += concattedArray.length;
                 break
               }
-              else{
+              else if(concattedArray.length === 1){
                 currentLeg.ete = concattedArray[0];
                 currentCol += 1;
                 break
               }
-
             case 12:
               console.log("Current leg after processing: ", currentLeg)
               currentLeg.dutyDay = currentString;
@@ -215,10 +214,10 @@ function render_page(pageData) {
               else{
                 currentLeg.groundTime = previousLeg.destGroundTime,
                 currentLeg.destGroundTime = '';
-              }
+              }              
+              currentMission.legs.push(currentLeg);
               currentCol = 0;
               rowStarted = false;
-              currentMission.legs.push(currentLeg);
               previousLeg = currentLeg;
               break;
           }
