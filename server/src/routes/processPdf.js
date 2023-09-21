@@ -99,11 +99,11 @@ function render_page(pageData) {
         console.log(concattedArray[0], concattedArray)
      
           if(
-            concattedArray[0].length === 4 &&
+            concattedArray[0 || 1].length === 4 &&
             !rowStarted &&
-            airportCodeRegex.test(concattedArray[0]) &&
-            concattedArray[0] === concattedArray[0].toUpperCase() &&
-            !["NSTR"].includes(concattedArray[0]))
+            airportCodeRegex.test(concattedArray[0 || 1]) &&
+            concattedArray[0 || 1] === concattedArray[0 || 1].toUpperCase() &&
+            !["NSTR"].includes(concattedArray[0 || 1]))
               {
                 currentLeg = {};
                 rowStarted = true;
