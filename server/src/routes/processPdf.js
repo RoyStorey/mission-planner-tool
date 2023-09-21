@@ -200,7 +200,7 @@ function render_page(pageData) {
                 break
               }
             case 12:
-              console.log("Current leg after processing: ", currentLeg)
+              console.log("Current leg after processing CASE 12: ", currentLeg)
               currentLeg.dutyDay = currentString;
               currentCol += 1;
               break;
