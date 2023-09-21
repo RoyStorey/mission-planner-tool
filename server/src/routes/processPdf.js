@@ -201,7 +201,7 @@ function render_page(pageData) {
               }
             case 12:
               console.log("Current leg after processing CASE 12: ", currentLeg)
-              currentLeg.dutyDay = currentString;
+              currentLeg.dutyDay = concattedArray[0];
               currentCol += 1;
               break;
             case 13:
