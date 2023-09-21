@@ -190,8 +190,8 @@ function render_page(pageData) {
                 currentLeg.groundTime = previousLeg.destGroundTime;
                 currentLeg.destGroundTime = currentString;
               } else if (!timeRegex.test(currentString)) {
-                currentLeg.groundTime = "TEST";
-                currentLeg.destGroundTime = "TEST2";
+                currentLeg.groundTime = previousLeg.destGroundTime;
+                currentLeg.destGroundTime = "";
               }
 
               currentMission.legs.push(currentLeg);
