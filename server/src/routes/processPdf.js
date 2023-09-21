@@ -104,7 +104,7 @@ function render_page(pageData) {
             airportCodeRegex.test(concattedArray[0].trim()) &&
             concattedArray[0] === concattedArray[0].toUpperCase() &&
             !["NSTR"].includes(concattedArray[0])){
-              console.log(concattedArray[0])
+              console.log(concattedArray[0], concattedArray)
               currentLeg = {};
               rowStarted = true;
               currentCol += 1;
@@ -118,7 +118,7 @@ function render_page(pageData) {
             airportCodeRegex.test(concattedArray[0].trim()) &&
             concattedArray[0] === concattedArray[0].toUpperCase() &&
             !["NSTR"].includes(concattedArray[0])){
-              console.log(concattedArray[0])
+              console.log(concattedArray[0], concattedArray)
               currentLeg = {};
               rowStarted = true;
               currentCol += 2;
@@ -132,7 +132,7 @@ function render_page(pageData) {
             airportCodeRegex.test(concattedArray[1].trim()) &&
             concattedArray[1] === concattedArray[1].toUpperCase() &&
             !["NSTR"].includes(concattedArray[1])){
-              console.log(concattedArray[1])
+              console.log(concattedArray[1], concattedArray)
               currentLeg = {};
               rowStarted = true;
               currentCol += 2;
