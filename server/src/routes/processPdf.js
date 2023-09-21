@@ -111,7 +111,7 @@ function render_page(pageData) {
           }
         }
 
-        if(concattedArray.length === 2){
+        else if(concattedArray.length === 2){
           if(
             concattedArray[0].trim().length === 4 &&
             !rowStarted &&
@@ -125,7 +125,7 @@ function render_page(pageData) {
           }
         }
 
-        if(concattedArray.length === 3){
+        else if(concattedArray.length === 3){
           if(
             concattedArray[1].trim().length === 4 &&
             !rowStarted &&
