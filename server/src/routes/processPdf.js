@@ -89,13 +89,11 @@ function render_page(pageData) {
             
             (!rowStarted &&
             airportCodeRegex.test(concattedArray[0]) &&
-            !["NSTR"].includes(concattedArray[0])&&
-            !["GSOC"].includes(concattedArray[0]))
+            !["NSTR","GSOC"].includes(concattedArray[0]))
             ||
             (!rowStarted &&
             airportCodeRegex.test(concattedArray[1]) &&
-            !["NSTR"].includes(concattedArray[1])&&
-            !["GSOC"].includes(concattedArray[1]))
+            !["NSTR","GSOC"].includes(concattedArray[1]))
             )
             {
               currentLeg = {};
