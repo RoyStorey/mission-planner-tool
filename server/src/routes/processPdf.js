@@ -96,10 +96,9 @@ function render_page(pageData) {
         //   rowStarted = true;
         //   currentCol += 1;
         // }
+        console.log(concattedArray[0], concattedArray)
 
-        if(concattedArray[0].trim().length === 4){
-          console.log(concattedArray[0], concattedArray)
-
+        if(concattedArray.length === 1){
           if(
             concattedArray[0].trim().length === 4 &&
             !rowStarted &&
@@ -113,7 +112,6 @@ function render_page(pageData) {
         }
 
         else if(concattedArray.length === 2){
-
           if(
             concattedArray[0].trim().length === 4 &&
             !rowStarted &&
