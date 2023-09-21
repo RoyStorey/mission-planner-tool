@@ -163,14 +163,13 @@ function render_page(pageData) {
               if(concattedArray.length === 2){
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
-                currentCol += 2;
-                break
               }
               else{
                 currentLeg.ete = concattedArray[0];
-                currentCol += 1;
-                break;
               }
+              currentCol += concattedArray.length;
+              break
+              
             case 12:
               currentLeg.dutyDay = currentString;
               currentCol += 1;
