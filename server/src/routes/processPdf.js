@@ -17,9 +17,9 @@ let previousLeg = {
   etal: null,
   ete: null,
   dutyDay: null,
-  destGroundTime:null,
+  destGroundTime: null,
   groundTime: "",
-  dvcode:null,
+  dvcode: null,
 };
 
 function render_page(pageData) {
@@ -54,7 +54,7 @@ function render_page(pageData) {
       dutyDay: null,
       destGroundTime: null,
       groundTime: previousLeg.destGroundTime,
-      dvcode:null,
+      dvcode: null,
     };
     let previousString = "";
     let currentCol = 0;
@@ -62,7 +62,6 @@ function render_page(pageData) {
 
     for (let item of textContent.items) {
       const { str: currentString } = item;
-      
 
       if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
         // We know that we are at the start of a page
@@ -81,43 +80,37 @@ function render_page(pageData) {
       }
 
       let airportCodeRegex = /^[A-Z]{4}$/;
-      let concattedArray = currentString.split(/\s+/)
+      let concattedArray = currentString.split(/\s+/);
 
       if (pageStarted) {
-        
-          if(
-              (!rowStarted &&
-              airportCodeRegex.test(concattedArray[0]) &&
-              !["NSTR","GSOC"].includes(concattedArray[0]))
-              ||
-              (!rowStarted &&
-              airportCodeRegex.test(concattedArray[1]) &&
-              !["NSTR","GSOC"].includes(concattedArray[1]))
-            )
-            {
-              currentLeg = {};
-              rowStarted = true;
-              currentCol += 1;
-            }
+        if (
+          (!rowStarted &&
+            airportCodeRegex.test(concattedArray[0]) &&
+            !["NSTR", "GSOC"].includes(concattedArray[0])) ||
+          (!rowStarted &&
+            airportCodeRegex.test(concattedArray[1]) &&
+            !["NSTR", "GSOC"].includes(concattedArray[1]))
+        ) {
+          currentLeg = {};
+          rowStarted = true;
+          currentCol += 1;
+        }
 
         if (rowStarted) {
-          
           switch (currentCol) {
             case 1:
-              
-
               if (previousString === "DH") currentLeg.DH = previousString;
 
-              if(concattedArray.length === 1){
+              if (concattedArray.length === 1) {
                 currentLeg.from = concattedArray[0];
               }
 
-              if(concattedArray.length === 2){
+              if (concattedArray.length === 2) {
                 currentLeg.from = concattedArray[0];
                 currentLeg.ddzulu = concattedArray[1];
               }
 
-              if(concattedArray.length === 3){
+              if (concattedArray.length === 3) {
                 currentLeg.from = concattedArray[1];
                 currentLeg.ddzulu = concattedArray[2];
                 currentCol += 2;
@@ -127,59 +120,48 @@ function render_page(pageData) {
               currentCol += concattedArray.length;
               break;
             case 2:
-              
               currentLeg.ddzulu = currentString;
               currentCol += 1;
               break;
             case 3:
-              
               currentLeg.etdz = currentString;
               currentCol += 1;
               break;
             case 4:
-              
               currentLeg.etdl = currentString;
               currentCol += 1;
               break;
             case 5:
-              
               currentLeg.to = currentString;
               currentCol += 1;
               break;
             case 6:
-              
-              currentLeg.airport = previousLeg.destAirport,
+              currentLeg.airport = previousLeg.destAirport;
               currentLeg.destAirport = currentString;
               currentCol += 1;
               break;
             case 7:
-              
               currentLeg.country = currentString;
               currentCol += 1;
               break;
             case 8:
-              
               currentLeg.arrDate = currentString;
               currentCol += 1;
               break;
             case 9:
-              
               currentLeg.etaz = currentString;
               currentCol += 1;
               break;
             case 10:
-              
               currentLeg.etal = currentString;
               currentCol += 1;
               break;
             case 11:
-              
-              if(concattedArray.length === 2){
+              if (concattedArray.length === 2) {
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
                 currentCol += 2;
-              }
-              else if(concattedArray.length === 1){
+              } else if (concattedArray.length === 1) {
                 currentLeg.ete = currentString;
                 currentCol += 1;
               }
@@ -187,31 +169,37 @@ function render_page(pageData) {
 
             case 12:
               currentLeg.dutyDay = currentString;
-              currentCol += concattedArray.length;
-              
+              currentCol += 1;
+              if (
+                currentString.includes(
+                  currentString.toLowerCase().includes("mission #") &&
+                    pageStarted
+                )
+              ) {
+                currentMission.legs.push(currentLeg);
+                currentCol = 0;
+                rowStarted = false;
+                previousLeg = currentLeg;
+              }
               break;
 
             case 13:
-              
-              // let timeRegex = /^\d+\+\d+$/;
-              // if(timeRegex.test(currentString)){
-              //   currentLeg.groundTime = previousLeg.destGroundTime;
-              //   currentLeg.destGroundTime = currentString;
-              // }
-              // else if (!timeRegex.test(currentString)){
-              //   currentLeg.groundTime = 'TEST';
-              //   currentLeg.destGroundTime = 'TEST2';
-              // }     
-              
+              let timeRegex = /^\d+\+\d+$/;
+              if (timeRegex.test(currentString)) {
+                currentLeg.groundTime = previousLeg.destGroundTime;
+                currentLeg.destGroundTime = currentString;
+              } else if (!timeRegex.test(currentString)) {
+                currentLeg.groundTime = "TEST";
+                currentLeg.destGroundTime = "TEST2";
+              }
+
               currentMission.legs.push(currentLeg);
               currentCol = 0;
               rowStarted = false;
               previousLeg = currentLeg;
               break;
             default:
-              
           }
-          
         }
       }
 
@@ -231,7 +219,6 @@ const processPDF = async (req, res) => {
     const data = await pdf(dataBuffer, options);
     return res.json(listOfMissions);
   } catch (error) {
-    
     res.sendStatus(500);
   }
 };
