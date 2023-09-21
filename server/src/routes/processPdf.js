@@ -101,6 +101,7 @@ function render_page(pageData) {
             }
 
         if (rowStarted) {
+          console.log("this is the current value of currentcol", currentCol)
           switch (currentCol) {
             case 1:
               console.log("Current leg after processing: ", currentLeg)
@@ -193,14 +194,15 @@ function render_page(pageData) {
               console.log('13 hit', currentCol)
               let timeRegex = /^\d+\+\d+$/;
               if(timeRegex.test(currentString)){
-                currentLeg.groundTime = previousLeg.destGroundTime,
+                currentLeg.groundTime = previousLeg.destGroundTime;
                 currentLeg.destGroundTime = currentString;
               currentMission.legs.push(currentLeg);
               }
-                currentLeg.groundTime = previousLeg.destGroundTime,
+              else if (!timeRegex.test(currentString)){
+                currentLeg.groundTime = previousLeg.destGroundTime;
                 currentLeg.destGroundTime = '';
                 currentMission.legs.push(currentLeg);
-    
+              }
               // console.log("Current leg after processing: ", currentLeg)
               // console.log("Previous leg", previousLeg)              
               console.log("current legs",currentMission.legs)
