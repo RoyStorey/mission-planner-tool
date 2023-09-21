@@ -191,7 +191,7 @@ function render_page(pageData) {
               if(concattedArray.length === 2){
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
-                currentCol += 1;
+                currentCol += concattedArray.length;
                 break
               }
               else{
@@ -199,6 +199,7 @@ function render_page(pageData) {
                 currentCol += 1;
                 break
               }
+
             case 12:
               console.log("Current leg after processing: ", currentLeg)
               currentLeg.dutyDay = currentString;
