@@ -97,7 +97,7 @@ function render_page(pageData) {
         //   currentCol += 1;
         // }
 
-        if(concattedArray.length === 1 && concattedArray[0].trim().length === 4){
+        if(concattedArray[0].trim().length === 4){
           console.log(concattedArray[0], concattedArray)
 
           if(
