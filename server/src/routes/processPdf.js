@@ -102,6 +102,8 @@ function render_page(pageData) {
         if (rowStarted) {
           switch (currentCol) {
             case 1:
+              console.log("Current leg after processing: ", currentString)
+
               if (previousString === "DH") currentLeg.DH = previousString;
 
               if(concattedArray.length === 1){
@@ -123,43 +125,53 @@ function render_page(pageData) {
               currentCol += concattedArray.length;
               break;
             case 2:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.ddzulu = currentString;
               currentCol += 1;
               break;
             case 3:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.etdz = currentString;
               currentCol += 1;
               break;
             case 4:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.etdl = currentString;
               currentCol += 1;
               break;
             case 5:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.to = currentString;
               currentCol += 1;
               break;
             case 6:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.airport = previousLeg.destAirport,
               currentLeg.destAirport = currentString;
               currentCol += 1;
               break;
             case 7:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.country = currentString;
               currentCol += 1;
               break;
             case 8:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.arrDate = currentString;
               currentCol += 1;
               break;
             case 9:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.etaz = currentString;
               currentCol += 1;
               break;
             case 10:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.etal = currentString;
               currentCol += 1;
               break;
             case 11:
+              console.log("Current leg after processing: ", currentString)
               if(concattedArray.length === 2){
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
@@ -169,12 +181,14 @@ function render_page(pageData) {
               }
               currentCol += concattedArray.length;
               break
-              
+
             case 12:
+              console.log("Current leg after processing: ", currentString)
               currentLeg.dutyDay = currentString;
               currentCol += 1;
               break;
             case 13:
+              console.log("Current leg after processing: ", currentString)
               let timeRegex = /^\d+\+\d+$/;
               if(timeRegex.test(currentString)){
                 currentLeg.groundTime = previousLeg.destGroundTime,
