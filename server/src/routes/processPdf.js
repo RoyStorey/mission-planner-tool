@@ -195,6 +195,7 @@ function render_page(pageData) {
               else{
                 currentLeg.ete = concattedArray[0];
               }
+              console.log(concattedArray)
               currentCol += concattedArray.length;
               break
 
