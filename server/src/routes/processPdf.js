@@ -83,27 +83,18 @@ function render_page(pageData) {
       let concattedArray = currentString.split(/\s+/)
 
       if (pageStarted) {
-        // if (
-        //   concattedArray.length === 1 &&
-        //   concattedArray[0].trim().length === 4 &&
-        //   !rowStarted &&
-        //   airportCodeRegex.test(concattedArray[0].trim()) &&
-        //   concattedArray[0] === concattedArray[0].toUpperCase() &&
-        //   !["NSTR"].includes(concattedArray[0])
-        // ) {
-        //   console.log(concattedArray[0])
-        //   currentLeg = {};
-        //   rowStarted = true;
-        //   currentCol += 1;
-        // }
         console.log(concattedArray[0], concattedArray)
-     
+
           if(
-            concattedArray[0].length === 4 &&
-            !rowStarted &&
+            
+            (!rowStarted &&
             airportCodeRegex.test(concattedArray[0]) &&
-            concattedArray[0] === concattedArray[0].toUpperCase() &&
             !["NSTR"].includes(concattedArray[0]))
+            ||
+            (!rowStarted &&
+            airportCodeRegex.test(concattedArray[1]) &&
+            !["NSTR"].includes(concattedArray[1]))
+            )
             {
               currentLeg = {};
               rowStarted = true;
