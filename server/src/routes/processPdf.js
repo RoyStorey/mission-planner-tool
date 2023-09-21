@@ -177,7 +177,7 @@ function render_page(pageData) {
               if(concattedArray.length === 2){
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
-                currentCol += concattedArray.length;
+                currentCol += 3;
                 break;
               }
               else if(concattedArray.length === 1){
