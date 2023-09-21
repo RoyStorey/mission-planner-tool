@@ -199,9 +199,10 @@ function render_page(pageData) {
                 currentLeg.groundTime = previousLeg.destGroundTime,
                 currentLeg.destGroundTime = '';
               }
-              console.log("Current leg after processing: ", currentLeg)
-              console.log("Previous leg", previousLeg)              
+              // console.log("Current leg after processing: ", currentLeg)
+              // console.log("Previous leg", previousLeg)              
               currentMission.legs.push(currentLeg);
+              console.log("current legs",currentMission.legs)
               currentCol = 0;
               rowStarted = false;
               previousLeg = currentLeg;
