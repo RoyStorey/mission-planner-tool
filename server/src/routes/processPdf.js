@@ -188,11 +188,11 @@ function render_page(pageData) {
 
             case 12:
               currentLeg.dutyDay = currentString;
-              currentCol += concattedArray.length;
+              currentCol += 2;
               console.log("Current leg after processing CASE 12: ", currentLeg)
               break;
 
-            case 13:
+            case 14:
               console.log('13 hit', currentCol)
               // let timeRegex = /^\d+\+\d+$/;
               // if(timeRegex.test(currentString)){
