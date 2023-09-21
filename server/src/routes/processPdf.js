@@ -84,16 +84,14 @@ function render_page(pageData) {
 
       if (pageStarted) {
         console.log(concattedArray[0], concattedArray)
-
           if(
-            
-            (!rowStarted &&
-            airportCodeRegex.test(concattedArray[0]) &&
-            !["NSTR","GSOC"].includes(concattedArray[0]))
-            ||
-            (!rowStarted &&
-            airportCodeRegex.test(concattedArray[1]) &&
-            !["NSTR","GSOC"].includes(concattedArray[1]))
+              (!rowStarted &&
+              airportCodeRegex.test(concattedArray[0]) &&
+              !["NSTR","GSOC"].includes(concattedArray[0]))
+              ||
+              (!rowStarted &&
+              airportCodeRegex.test(concattedArray[1]) &&
+              !["NSTR","GSOC"].includes(concattedArray[1]))
             )
             {
               currentLeg = {};
@@ -165,11 +163,11 @@ function render_page(pageData) {
               if(concattedArray.length === 2){
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
-                currentCol+=2;
+                currentCol += 2;
                 break
               }
               else{
-                currentLeg.ete = currentString;
+                currentLeg.ete = concattedArray[0];
                 currentCol += 1;
                 break;
               }
