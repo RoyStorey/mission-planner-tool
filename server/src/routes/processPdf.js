@@ -62,7 +62,7 @@ function render_page(pageData) {
 
     for (let item of textContent.items) {
       const { str: currentString } = item;
-      console.log(currentString)
+      
 
       if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
         // We know that we are at the start of a page
@@ -84,7 +84,7 @@ function render_page(pageData) {
       let concattedArray = currentString.split(/\s+/)
 
       if (pageStarted) {
-        console.log(concattedArray[0], concattedArray)
+        
           if(
               (!rowStarted &&
               airportCodeRegex.test(concattedArray[0]) &&
@@ -101,10 +101,10 @@ function render_page(pageData) {
             }
 
         if (rowStarted) {
-          console.log("this is the current value of currentcol", currentCol)
+          
           switch (currentCol) {
             case 1:
-              console.log("Current leg after processing: ", currentLeg)
+              
 
               if (previousString === "DH") currentLeg.DH = previousString;
 
@@ -127,53 +127,53 @@ function render_page(pageData) {
               currentCol += concattedArray.length;
               break;
             case 2:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.ddzulu = currentString;
               currentCol += 1;
               break;
             case 3:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.etdz = currentString;
               currentCol += 1;
               break;
             case 4:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.etdl = currentString;
               currentCol += 1;
               break;
             case 5:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.to = currentString;
               currentCol += 1;
               break;
             case 6:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.airport = previousLeg.destAirport,
               currentLeg.destAirport = currentString;
               currentCol += 1;
               break;
             case 7:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.country = currentString;
               currentCol += 1;
               break;
             case 8:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.arrDate = currentString;
               currentCol += 1;
               break;
             case 9:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.etaz = currentString;
               currentCol += 1;
               break;
             case 10:
-              console.log("Current leg after processing: ", currentLeg)
+              
               currentLeg.etal = currentString;
               currentCol += 1;
               break;
             case 11:
-              console.log("Current leg after processing: ", currentLeg)
+              
               if(concattedArray.length === 2){
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
@@ -188,11 +188,11 @@ function render_page(pageData) {
             case 12:
               currentLeg.dutyDay = currentString;
               currentCol += concattedArray.length;
-              console.log("Current leg after processing CASE 12: ", currentLeg)
+              
               break;
 
             case 13:
-              console.log('13 hit', currentCol)
+              
               // let timeRegex = /^\d+\+\d+$/;
               // if(timeRegex.test(currentString)){
               //   currentLeg.groundTime = previousLeg.destGroundTime;
@@ -202,16 +202,16 @@ function render_page(pageData) {
               //   currentLeg.groundTime = 'TEST';
               //   currentLeg.destGroundTime = 'TEST2';
               // }     
-              console.log("current legs",currentMission.legs)
+              
               currentMission.legs.push(currentLeg);
               currentCol = 0;
               rowStarted = false;
               previousLeg = currentLeg;
               break;
             default:
-              console.log(concattedArray, currentCol)
+              
           }
-          console.log("check for this: ",currentCol)
+          
         }
       }
 
@@ -231,7 +231,7 @@ const processPDF = async (req, res) => {
     const data = await pdf(dataBuffer, options);
     return res.json(listOfMissions);
   } catch (error) {
-    console.log(error, "ERROR");
+    
     res.sendStatus(500);
   }
 };
