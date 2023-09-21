@@ -73,7 +73,9 @@ function render_page(pageData) {
       if (currentString.toLowerCase().includes("mission #") && pageStarted) {
         // we have found the mission number
         // also end of page
-        currentMission.legs.push(currentLeg);
+        if (currentLeg != previousLeg) {
+          currentMission.legs.push(currentLeg);
+        }
         currentMission.missionNumber = currentString.split(":")[1].trim();
         listOfMissions.push(currentMission);
         currentMission = { missionNumber: "", dvcode: "", legs: [] };
@@ -171,17 +173,6 @@ function render_page(pageData) {
             case 12:
               currentLeg.dutyDay = currentString;
               currentCol += 1;
-              // if (
-              //   currentString.includes(
-              //     currentString.toLowerCase().includes("mission #") &&
-              //       pageStarted
-              //   )
-              // ) {
-              //   currentMission.legs.push(currentLeg);
-              //   currentCol = 0;
-              //   rowStarted = false;
-              //   previousLeg = currentLeg;
-              // }
               break;
 
             case 13:
