@@ -80,7 +80,7 @@ function render_page(pageData) {
       }
 
       let airportCodeRegex = /^[A-Z]{4}$/;
-      let concattedArray = currentString.split(" ").map(item=>item.trim())
+      let concattedArray = currentString.split(/\s+/)
 
       if (pageStarted) {
         // if (
