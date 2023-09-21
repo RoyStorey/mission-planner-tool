@@ -83,7 +83,7 @@ function render_page(pageData) {
       let concattedArray = currentString.split(/\s+/)
 
       if (pageStarted) {
-        // console.log(concattedArray[0], concattedArray)
+        console.log(concattedArray[0], concattedArray)
           if(
               (!rowStarted &&
               airportCodeRegex.test(concattedArray[0]) &&
