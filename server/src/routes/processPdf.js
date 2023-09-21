@@ -194,15 +194,15 @@ function render_page(pageData) {
 
             case 13:
               console.log('13 hit', currentCol)
-              let timeRegex = /^\d+\+\d+$/;
-              if(timeRegex.test(currentString)){
-                currentLeg.groundTime = previousLeg.destGroundTime;
-                currentLeg.destGroundTime = currentString;
-              }
-              else if (!timeRegex.test(currentString)){
-                currentLeg.groundTime = 'TEST';
-                currentLeg.destGroundTime = 'TEST2';
-              }     
+              // let timeRegex = /^\d+\+\d+$/;
+              // if(timeRegex.test(currentString)){
+              //   currentLeg.groundTime = previousLeg.destGroundTime;
+              //   currentLeg.destGroundTime = currentString;
+              // }
+              // else if (!timeRegex.test(currentString)){
+              //   currentLeg.groundTime = 'TEST';
+              //   currentLeg.destGroundTime = 'TEST2';
+              // }     
               console.log("current legs",currentMission.legs)
               currentMission.legs.push(currentLeg);
               currentCol = 0;
