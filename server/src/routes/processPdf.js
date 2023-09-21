@@ -179,14 +179,14 @@ function render_page(pageData) {
                 break;
               }
               else if(concattedArray.length === 1){
-                currentLeg.ete = concattedArray[0];
+                currentLeg.ete = currentString;
                 currentCol += 1;
                 break;
               }
             case 12:
-              console.log("Current leg after processing CASE 12: ", currentLeg)
-              currentLeg.dutyDay = concattedArray[0];
+              currentLeg.dutyDay = currentString;
               currentCol += 1;
+              console.log("Current leg after processing CASE 12: ", currentLeg)
               break;
             case 13:
               console.log("Current leg after processing: ", currentLeg)
