@@ -106,7 +106,7 @@ function render_page(pageData) {
               let dvcodeRegex = /^[A-Z]{1}[0-9]{2}$/;
               if (previousString === "DH") currentLeg.DH = previousString;
               if (dvcodeRegex.test(previousString))
-                currentLeg.dvcode = previousString;
+                currentMission.dvcode = previousString;
 
               if (concattedArray.length === 1) {
                 currentLeg.from = concattedArray[0];
