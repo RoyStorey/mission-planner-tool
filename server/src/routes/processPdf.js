@@ -94,23 +94,6 @@ function render_page(pageData) {
               !["NSTR","GSOC"].includes(concattedArray[1]))
             )
             {
-              currentLeg = {      DH: null,
-                from: null,
-                ddzulu: null,
-                etdz: null,
-                etdl: null,
-                to: null,
-                destAirport: null,
-                airport: previousLeg.destAirport,
-                country: null,
-                arrDate: null,
-                etaz: null,
-                etal: null,
-                ete: null,
-                dutyDay: null,
-                destGroundTime: null,
-                groundTime: previousLeg.destGroundTime,
-                dvcode:null,};
               rowStarted = true;
               currentCol += 1;
             }
@@ -192,12 +175,12 @@ function render_page(pageData) {
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
                 currentCol += concattedArray.length;
-                break
+                break;
               }
               else if(concattedArray.length === 1){
                 currentLeg.ete = concattedArray[0];
                 currentCol += 1;
-                break
+                break;
               }
             case 12:
               console.log("Current leg after processing CASE 12: ", currentLeg)
