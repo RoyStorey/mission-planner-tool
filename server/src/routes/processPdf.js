@@ -97,7 +97,7 @@ function render_page(pageData) {
         //   currentCol += 1;
         // }
 
-        if(concattedArray.length === 1){
+        if(concattedArray.length === 1 && concattedArray[0].trim().length === 4){
           console.log(concattedArray[0], concattedArray)
 
           if(
@@ -113,7 +113,6 @@ function render_page(pageData) {
         }
 
         else if(concattedArray.length === 2){
-          console.log(concattedArray[0], concattedArray)
 
           if(
             concattedArray[0].trim().length === 4 &&
@@ -128,7 +127,6 @@ function render_page(pageData) {
         }
 
         else if(concattedArray.length === 3){
-          console.log(concattedArray[1], concattedArray)
 
           if(
             concattedArray[1].trim().length === 4 &&
