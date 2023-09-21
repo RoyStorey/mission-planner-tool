@@ -108,6 +108,16 @@ function render_page(pageData) {
               rowStarted = true;
               currentCol += 1;
           }
+          if(
+            concattedArray[1].length === 4 &&
+            !rowStarted &&
+            airportCodeRegex.test(concattedArray[1]) &&
+            concattedArray[1] === concattedArray[1].toUpperCase() &&
+            !["NSTR"].includes(concattedArray[1])){
+              currentLeg = {};
+              rowStarted = true;
+              currentCol += 1;
+          }
 
         if (rowStarted) {
           switch (currentCol) {
