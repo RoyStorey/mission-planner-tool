@@ -185,31 +185,32 @@ function render_page(pageData) {
                 currentCol += 1;
                 break;
               }
+
             case 12:
               currentLeg.dutyDay = currentString;
               currentCol += 1;
               console.log("Current leg after processing CASE 12: ", currentLeg)
               break;
+
             case 13:
               console.log('13 hit', currentCol)
               let timeRegex = /^\d+\+\d+$/;
               if(timeRegex.test(currentString)){
                 currentLeg.groundTime = previousLeg.destGroundTime;
                 currentLeg.destGroundTime = currentString;
-              currentMission.legs.push(currentLeg);
               }
               else if (!timeRegex.test(currentString)){
-                currentLeg.groundTime = previousLeg.destGroundTime;
-                currentLeg.destGroundTime = '';
-                currentMission.legs.push(currentLeg);
-              }
-              // console.log("Current leg after processing: ", currentLeg)
-              // console.log("Previous leg", previousLeg)              
+                currentLeg.groundTime = 'TEST';
+                currentLeg.destGroundTime = 'TEST2';
+              }     
               console.log("current legs",currentMission.legs)
+              currentMission.legs.push(currentLeg);
               currentCol = 0;
               rowStarted = false;
               previousLeg = currentLeg;
               break;
+            default:
+              console.log(concattedArray, currentCol)
           }
           console.log("check for this: ",currentCol)
         }
