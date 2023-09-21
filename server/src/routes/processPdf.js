@@ -97,46 +97,17 @@ function render_page(pageData) {
         //   currentCol += 1;
         // }
         console.log(concattedArray[0], concattedArray)
-
-        if(concattedArray.length === 1){
+     
           if(
-            concattedArray[0].trim().length === 4 &&
+            concattedArray[0].length === 4 &&
             !rowStarted &&
-            airportCodeRegex.test(concattedArray[0].trim()) &&
+            airportCodeRegex.test(concattedArray[0]) &&
             concattedArray[0] === concattedArray[0].toUpperCase() &&
             !["NSTR"].includes(concattedArray[0])){
               currentLeg = {};
               rowStarted = true;
               currentCol += 1;
           }
-        }
-
-        else if(concattedArray.length === 2){
-          if(
-            concattedArray[0].trim().length === 4 &&
-            !rowStarted &&
-            airportCodeRegex.test(concattedArray[0].trim()) &&
-            concattedArray[0] === concattedArray[0].toUpperCase() &&
-            !["NSTR"].includes(concattedArray[0])){
-              currentLeg = {};
-              rowStarted = true;
-              currentCol += 1;
-          }
-        }
-
-        else if(concattedArray.length === 3){
-
-          if(
-            concattedArray[1].trim().length === 4 &&
-            !rowStarted &&
-            airportCodeRegex.test(concattedArray[1].trim()) &&
-            concattedArray[1] === concattedArray[1].toUpperCase() &&
-            !["NSTR"].includes(concattedArray[1])){
-              currentLeg = {};
-              rowStarted = true;
-              currentCol += 1;
-          }
-        }
 
         if (rowStarted) {
           switch (currentCol) {
