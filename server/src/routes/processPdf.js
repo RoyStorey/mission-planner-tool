@@ -80,17 +80,18 @@ function render_page(pageData) {
       }
 
       let airportCodeRegex = /^[A-Z]{4}$/;
+      let concattedArray = currentString.split(" ")
 
       if (pageStarted) {
         if (
-          currentString.split(" ").length === 1 && 
-          currentString.trim().length === 4 &&
+          concattedArray.length === 1 && 
+          concattedArray[0].trim().length === 4 &&
           !rowStarted &&
-          airportCodeRegex.test(currentString) &&
-          currentString === currentString.toUpperCase() &&
-          !["NSTR"].includes(currentString)
+          airportCodeRegex.test(concattedArray[0].trim()) &&
+          concattedArray[0] === concattedArray[0].toUpperCase() &&
+          !["NSTR"].includes(concattedArray[0])
         ) {
-          console.log(currentString)
+          console.log(concattedArray[0])
           currentLeg = {};
           rowStarted = true;
           currentCol += 1;
@@ -99,8 +100,7 @@ function render_page(pageData) {
           switch (currentCol) {
             case 1:
               if (previousString === "DH") currentLeg.DH = previousString;
-              let airportCodeRegex = /^[A-Z]{4}$/;
-              currentLeg.ddzulu = currentString;
+              currentLeg.from = currentString;
               currentCol += 1;
               break;
             case 2:
