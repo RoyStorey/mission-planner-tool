@@ -170,17 +170,18 @@ function render_page(pageData) {
             case 12:
               currentLeg.dutyDay = currentString;
               currentCol += 1;
-              if (
-                currentString.includes(
-                  currentString.toLowerCase().includes("mission #") &&
-                    pageStarted
-                )
-              ) {
-                currentMission.legs.push(currentLeg);
-                currentCol = 0;
-                rowStarted = false;
-                previousLeg = currentLeg;
-              }
+              console.log(currentString);
+              // if (
+              //   currentString.includes(
+              //     currentString.toLowerCase().includes("mission #") &&
+              //       pageStarted
+              //   )
+              // ) {
+              //   currentMission.legs.push(currentLeg);
+              //   currentCol = 0;
+              //   rowStarted = false;
+              //   previousLeg = currentLeg;
+              // }
               break;
 
             case 13:
