@@ -197,10 +197,7 @@ function render_page(pageData) {
               currentMission.legs.push(currentLeg);
               currentCol = 0;
               rowStarted = false;
-              previousLeg = {
-                groundTime: currentLeg.destGroundTime,
-                airport: currentLeg.destAirport,
-              };
+              previousLeg = currentLeg;
               break;
             default:
           }
