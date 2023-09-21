@@ -210,6 +210,7 @@ function render_page(pageData) {
               previousLeg = currentLeg;
               break;
           }
+          console.log("check for this: ",currentCol)
         }
       }
 
