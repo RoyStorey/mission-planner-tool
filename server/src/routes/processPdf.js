@@ -76,6 +76,7 @@ function render_page(pageData) {
         if (currentLeg != previousLeg) {
           currentMission.legs.push(currentLeg);
         }
+        previousLeg = {};
         currentMission.missionNumber = currentString.split(":")[1].trim();
         listOfMissions.push(currentMission);
         currentMission = { missionNumber: "", dvcode: "", legs: [] };
