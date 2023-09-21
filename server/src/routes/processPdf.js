@@ -197,11 +197,10 @@ function render_page(pageData) {
                 currentLeg.destGroundTime = currentString;
               currentMission.legs.push(currentLeg);
               }
-              else if (!timeRegex.test(currentString)){
                 currentLeg.groundTime = previousLeg.destGroundTime,
                 currentLeg.destGroundTime = '';
                 currentMission.legs.push(currentLeg);
-              }
+    
               // console.log("Current leg after processing: ", currentLeg)
               // console.log("Previous leg", previousLeg)              
               console.log("current legs",currentMission.legs)
