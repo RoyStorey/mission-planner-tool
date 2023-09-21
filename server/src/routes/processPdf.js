@@ -118,6 +118,8 @@ function render_page(pageData) {
               if(concattedArray.length === 3){
                 currentLeg.from = concattedArray[1];
                 currentLeg.ddzulu = concattedArray[2];
+                currentCol += 2;
+                break;
               }
 
               currentCol += concattedArray.length;
