@@ -120,7 +120,7 @@ function render_page(pageData) {
             !["NSTR"].includes(concattedArray[0])){
               currentLeg = {};
               rowStarted = true;
-              currentCol += 2;
+              currentCol += 1;
           }
         }
 
@@ -134,7 +134,7 @@ function render_page(pageData) {
             !["NSTR"].includes(concattedArray[1])){
               currentLeg = {};
               rowStarted = true;
-              currentCol += 2;
+              currentCol += 1;
           }
         }
 
@@ -142,8 +142,22 @@ function render_page(pageData) {
           switch (currentCol) {
             case 1:
               if (previousString === "DH") currentLeg.DH = previousString;
-              currentLeg.from = currentString;
-              currentCol += 1;
+
+              if(concattedArray.length === 1){
+                currentLeg.from = concattedArray[0];
+              }
+
+              if(concattedArray.length === 2){
+                currentLeg.from = concattedArray[0];
+                currentLeg.ddzulu = concattedArray[1];
+              }
+
+              if(concattedArray.length === 3){
+                currentLeg.from = concattedArray[1];
+                currentLeg.ddzulu = concattedArray[2];
+              }
+
+              currentCol += concattedArray.length;
               break;
             case 2:
               currentLeg.ddzulu = currentString;
