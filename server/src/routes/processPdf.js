@@ -94,6 +94,7 @@ function render_page(pageData) {
               !["NSTR","GSOC"].includes(concattedArray[1]))
             )
             {
+              currentLeg = {};
               rowStarted = true;
               currentCol += 1;
             }
