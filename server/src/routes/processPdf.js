@@ -62,6 +62,7 @@ function render_page(pageData) {
 
     for (let item of textContent.items) {
       const { str: currentString } = item;
+      console.log(currentString)
 
       if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
         // We know that we are at the start of a page
