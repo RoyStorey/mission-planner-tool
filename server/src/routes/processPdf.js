@@ -177,22 +177,21 @@ function render_page(pageData) {
               if(concattedArray.length === 2){
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
-                currentCol += 3;
-                break;
+                currentCol += 2;
               }
               else if(concattedArray.length === 1){
                 currentLeg.ete = currentString;
                 currentCol += 1;
-                break;
               }
+              break;
 
             case 12:
               currentLeg.dutyDay = currentString;
-              currentCol += 2;
+              currentCol += concattedArray.length;
               console.log("Current leg after processing CASE 12: ", currentLeg)
               break;
 
-            case 14:
+            case 13:
               console.log('13 hit', currentCol)
               // let timeRegex = /^\d+\+\d+$/;
               // if(timeRegex.test(currentString)){
