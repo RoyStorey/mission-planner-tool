@@ -90,6 +90,7 @@ function render_page(pageData) {
           currentString === currentString.toUpperCase() &&
           !["NSTR"].includes(currentString)
         ) {
+          console.log(currentString)
           currentLeg = {};
           rowStarted = true;
           currentCol += 1;
