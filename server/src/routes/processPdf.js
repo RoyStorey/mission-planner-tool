@@ -2,6 +2,7 @@ import fs from "fs";
 import pdf from "pdf-parse";
 
 let listOfMissions = [];
+let finalMissions = [];
 let previousLeg = {
   DH: null,
   from: null,
@@ -200,7 +201,9 @@ function render_page(pageData) {
 
       previousString = currentString;
     }
-    return listOfMissions;
+    finalMissions = listOfMissions;
+    listOfMissions = [];
+    return finalMissions;
   });
 }
 
@@ -212,7 +215,7 @@ const processPDF = async (req, res) => {
   try {
     let dataBuffer = fs.readFileSync(req.file.path);
     const data = await pdf(dataBuffer, options);
-    return res.json(listOfMissions);
+    return res.json(finalMissions);
   } catch (error) {
     res.sendStatus(500);
   }
