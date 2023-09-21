@@ -94,7 +94,23 @@ function render_page(pageData) {
               !["NSTR","GSOC"].includes(concattedArray[1]))
             )
             {
-              currentLeg = {};
+              currentLeg = {      DH: null,
+                from: null,
+                ddzulu: null,
+                etdz: null,
+                etdl: null,
+                to: null,
+                destAirport: null,
+                airport: previousLeg.destAirport,
+                country: null,
+                arrDate: null,
+                etaz: null,
+                etal: null,
+                ete: null,
+                dutyDay: null,
+                destGroundTime: null,
+                groundTime: previousLeg.destGroundTime,
+                dvcode:null,};
               rowStarted = true;
               currentCol += 1;
             }
