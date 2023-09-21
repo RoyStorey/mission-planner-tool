@@ -179,7 +179,7 @@ function render_page(pageData) {
               else{
                 currentLeg.ete = concattedArray[0];
               }
-              currentCol += 1;
+              currentCol += concattedArray.length;
               break
 
             case 12:
