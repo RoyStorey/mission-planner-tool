@@ -191,7 +191,7 @@ function render_page(pageData) {
               if(concattedArray.length === 2){
                 currentLeg.ete = concattedArray[0];
                 currentLeg.dutyDay = concattedArray[1];
-                currentCol += concattedArray.length;
+                currentCol += 1;
                 break
               }
               else{
