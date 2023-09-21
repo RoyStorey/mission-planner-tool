@@ -190,6 +190,7 @@ function render_page(pageData) {
               console.log("Current leg after processing CASE 12: ", currentLeg)
               break;
             case 13:
+              console.log('13 hit', currentCol)
               let timeRegex = /^\d+\+\d+$/;
               if(timeRegex.test(currentString)){
                 currentLeg.groundTime = previousLeg.destGroundTime,
@@ -199,7 +200,7 @@ function render_page(pageData) {
               else if (!timeRegex.test(currentString)){
                 currentLeg.groundTime = previousLeg.destGroundTime,
                 currentLeg.destGroundTime = '';
-              currentMission.legs.push(currentLeg);
+                currentMission.legs.push(currentLeg);
               }
               // console.log("Current leg after processing: ", currentLeg)
               // console.log("Previous leg", previousLeg)              
