@@ -194,7 +194,6 @@ function render_page(pageData) {
                 currentLeg.destGroundTime = "TEST2";
               }
 
-              currentMission.legs.push(currentLeg);
               currentCol = 0;
               rowStarted = false;
               previousLeg = {
