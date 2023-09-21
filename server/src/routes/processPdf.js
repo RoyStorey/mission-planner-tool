@@ -190,6 +190,7 @@ function render_page(pageData) {
               break;
             case 13:
               console.log("Current leg after processing: ", currentLeg)
+              console.log(previousLeg)
               let timeRegex = /^\d+\+\d+$/;
               if(timeRegex.test(currentString)){
                 currentLeg.groundTime = previousLeg.destGroundTime,
