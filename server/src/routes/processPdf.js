@@ -232,6 +232,11 @@ const processPDF = async (req, res) => {
     let dataBuffer = fs.readFileSync(req.file.path);
     console.log(req.file);
     const data = await pdf(dataBuffer, options);
+    fs.unlink("./" + req.file.path, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
     return res.json(listOfMissions);
   } catch (error) {
     res.sendStatus(500);
