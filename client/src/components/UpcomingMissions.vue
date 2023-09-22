@@ -43,14 +43,6 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
 const createColumns = () => [
-  {
-    title: "ETD (Z)",
-    key: "dd_zulu",
-  },
-  {
-    title: "ETA (Z)",
-    key: "arrival_date",
-  },
   { title: "Mission #", key: "mission_number" },
   { title: "DV Code", key: "dvcode" },
   {
@@ -60,6 +52,14 @@ const createColumns = () => [
   {
     title: "To",
     key: "to",
+  },
+  {
+    title: "ETD (Z)",
+    key: "dd_zulu",
+  },
+  {
+    title: "ETA (Z)",
+    key: "arrival_date",
   },
 ];
 
