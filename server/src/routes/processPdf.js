@@ -64,7 +64,13 @@ function render_page(pageData) {
       let pageNumber = 0;
 
       for await (let item of textContent.items) {
+        const dvRegex = /^[A-Za-z]{2}\d$/;
         const { str: currentString } = item;
+
+        if (dvRegex.test(currentString)) {
+          currentLeg.dvcode = currentString;
+          currentMission.dvcode = currentString;
+        }
 
         if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
           // We know that we are at the start of a page
@@ -82,14 +88,12 @@ function render_page(pageData) {
           previousLeg = {};
           currentMission.missionNumber = currentString.split(":")[1].trim();
           listOfMissions.push(currentMission);
-          currentMission = { missionNumber: "", dvcode: "", legs: [] };
+          currentMission = { missionNumber: "", legs: [] };
           pageStarted = false;
         }
 
         let airportCodeRegex = /^[A-Z]{4}$/;
         let concattedArray = currentString.split(/\s+/);
-
-        const dvRegex = /^[A-Za-z]{2}\d$/;
 
         if (pageStarted) {
           if (
@@ -105,9 +109,6 @@ function render_page(pageData) {
             currentCol += 1;
           }
           if (rowStarted) {
-            console.log(currentString);
-            if (dvRegex.test(currentString)) currentLeg.dvcode = currentString;
-
             switch (currentCol) {
               case 1:
                 if (previousString === "DH") currentLeg.DH = previousString;
