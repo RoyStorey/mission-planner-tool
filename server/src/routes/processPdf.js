@@ -204,7 +204,7 @@ function render_page(pageData) {
                 if (timeRegex.test(currentString)) {
                   currentLeg.destGroundTime = currentString;
                 } else {
-                  currentLeg.destGroundTime = "";
+                  currentLeg.destGroundTime = "0+0";
                 }
                 currentMission.legs.push(currentLeg);
                 currentCol = 0;
