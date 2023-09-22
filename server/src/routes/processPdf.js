@@ -70,7 +70,7 @@ function render_page(pageData) {
         console.log(currentString);
         if (dvRegex.test(currentString)) {
           hopefullyTheDvcode = currentString;
-          console.log(hopefullyTheDvcode);
+          console.log("please help", hopefullyTheDvcode);
         }
 
         if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
