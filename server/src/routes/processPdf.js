@@ -109,6 +109,8 @@ function render_page(pageData) {
                 if (dvcodeRegex.test(currentString)) {
                   currentMission.dvcode = currentString;
                 }
+                currentCol += 1;
+                break;
               case 1:
                 if (previousString === "DH") currentLeg.DH = previousString;
 
