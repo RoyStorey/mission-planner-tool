@@ -161,8 +161,9 @@ function render_page(pageData) {
                 const { name } = (await lookupAirport(currentLeg.from)) || "";
                 if (currentLeg.airport != name) {
                   currentLeg.airport = name;
+                } else if (name.length === 0) {
+                  currentLeg.airport = previousLeg.destAirport;
                 }
-                // currentLeg.airport = previousLeg.destAirport;
                 currentLeg.destAirport = currentString;
                 currentCol += 1;
                 break;
