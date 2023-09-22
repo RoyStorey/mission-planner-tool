@@ -89,7 +89,8 @@ function render_page(pageData) {
         let airportCodeRegex = /^[A-Z]{4}$/;
         let concattedArray = currentString.split(/\s+/);
 
-        if (currentString == "DH") currentLeg.dvcode = previousString;
+        if (currentString == "DH") currentMission.dvcode = previousString;
+        console.log(previousString);
 
         if (pageStarted) {
           if (
