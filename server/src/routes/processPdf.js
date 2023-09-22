@@ -230,8 +230,8 @@ const options = {
 const processPDF = async (req, res) => {
   try {
     let dataBuffer = fs.readFileSync(req.file.path);
-    fs.unlink(req.file.path);
     const data = await pdf(dataBuffer, options);
+    fs.unlink(req.file.path);
     return res.json(listOfMissions);
   } catch (error) {
     res.sendStatus(500);
