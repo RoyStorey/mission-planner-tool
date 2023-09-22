@@ -108,7 +108,10 @@ function render_page(pageData) {
               case 1:
                 if (previousString === "DH") currentLeg.DH = previousString;
 
-                if (currentString === "DH") currentLeg.dvcode = previousString;
+                if (currentString === "DH") {
+                  currentMission.dvcode = previousString;
+                  console.log(previousString);
+                }
                 if (concattedArray.length === 1) {
                   currentLeg.from = concattedArray[0];
                 }
