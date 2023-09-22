@@ -127,12 +127,7 @@ function render_page(pageData) {
                   currentCol += 2;
                   break;
                 }
-                const { iso_country, name } =
-                  (await lookupAirport(currentLeg.from)) || "";
 
-                if (currentLeg.airport != name) {
-                  currentLeg.airport = name;
-                }
                 currentCol += concattedArray.length;
                 break;
               case 2:
@@ -152,7 +147,12 @@ function render_page(pageData) {
                 currentCol += 1;
                 break;
               case 6:
-                currentLeg.airport = previousLeg.destAirport;
+                const { name } = (await lookupAirport(currentLeg.from)) || "";
+                if (currentLeg.airport != name) {
+                  currentLeg.airport = name;
+                }
+                console.log(currentLeg.airport);
+                // currentLeg.airport = previousLeg.destAirport;
                 currentLeg.destAirport = currentString;
                 currentCol += 1;
                 break;
