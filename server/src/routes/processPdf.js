@@ -237,7 +237,6 @@ const processPDF = async (req, res) => {
       }
     });
     res.json(listOfMissions);
-    listOfMissions = [];
   } catch (error) {
     res.sendStatus(500);
   }
