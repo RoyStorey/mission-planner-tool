@@ -100,17 +100,11 @@ function render_page(pageData) {
           ) {
             currentLeg = {};
             rowStarted = true;
+            currentCol += 1;
           }
 
           if (rowStarted) {
             switch (currentCol) {
-              case 0:
-                let dvcodeRegex = /^[A-Z]{1}[0-9]{2}$/;
-                if (dvcodeRegex.test(currentString)) {
-                  currentMission.dvcode = currentString;
-                }
-                currentCol += 1;
-                break;
               case 1:
                 if (previousString === "DH") currentLeg.DH = previousString;
 
@@ -200,6 +194,13 @@ function render_page(pageData) {
                   currentLeg.destGroundTime = "";
                 }
 
+                currentCol += 1;
+                break;
+              case 14:
+                let dvcodeRegex = /^[A-Z]{1}[0-9]{2}$/;
+                if (dvcodeRegex.test(currentString)) {
+                  currentMission.dvcode = currentString;
+                }
                 currentMission.legs.push(currentLeg);
                 currentCol = 0;
                 rowStarted = false;
