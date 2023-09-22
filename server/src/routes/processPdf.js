@@ -104,9 +104,10 @@ function render_page(pageData) {
             rowStarted = true;
             currentCol += 1;
           }
-          if (dvRegex.test(currentString)) currentLeg.dvcode = currentString;
-          console.log(currentLeg.dvcode);
           if (rowStarted) {
+            console.log(currentString);
+            if (dvRegex.test(currentString)) currentLeg.dvcode = currentString;
+
             switch (currentCol) {
               case 1:
                 if (previousString === "DH") currentLeg.DH = previousString;
