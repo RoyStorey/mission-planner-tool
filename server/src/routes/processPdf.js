@@ -206,11 +206,6 @@ function render_page(pageData) {
                 let timeRegex = /^\d+\+\d+$/;
                 if (timeRegex.test(currentString)) {
                   currentLeg.destGroundTime = currentString;
-                  console.log(
-                    currentCol,
-                    "groundtime",
-                    currentLeg.destGroundTime
-                  );
                 } else {
                   currentLeg.destGroundTime = "0+0";
                 }
@@ -237,15 +232,16 @@ const processPDF = async (req, res) => {
   try {
     let dataBuffer = fs.readFileSync(req.file.path);
     const data = await pdf(dataBuffer, options);
+    res.json(listOfMissions);
+    listOfMissions = [];
+  } catch (error) {
+    res.sendStatus(500);
+  } finally {
     fs.unlink("./" + req.file.path, (err) => {
       if (err) {
         console.log(err);
       }
     });
-    res.json(listOfMissions);
-    listOfMissions = [];
-  } catch (error) {
-    res.sendStatus(500);
   }
 };
 
