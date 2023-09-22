@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" style="width: 75vw">
     <n-h1 prefix="bar" style="display: flex; align-items: center">
       <n-icon style="margin-right: 8px">
         <cube />
