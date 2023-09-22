@@ -100,16 +100,17 @@ function render_page(pageData) {
           ) {
             currentLeg = {};
             rowStarted = true;
-            currentCol += 1;
           }
 
           if (rowStarted) {
             switch (currentCol) {
-              case 1:
+              case 0:
                 let dvcodeRegex = /^[A-Z]{1}[0-9]{2}$/;
+                if (dvcodeRegex.test(currentString)) {
+                  currentMission.dvcode = currentString;
+                }
+              case 1:
                 if (previousString === "DH") currentLeg.DH = previousString;
-                if (dvcodeRegex.test(previousString))
-                  currentMission.dvcode = previousString;
 
                 if (concattedArray.length === 1) {
                   currentLeg.from = concattedArray[0];
