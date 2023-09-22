@@ -112,7 +112,7 @@ function render_page(pageData) {
           if (rowStarted) {
             switch (currentCol) {
               case 1:
-                if (hopefullyTheDvcode.length === "") {
+                if (hopefullyTheDvcode.length === 0) {
                   currentLeg.dvcode = "TBD";
                   currentMission.dvcode = "TBD";
                 }
