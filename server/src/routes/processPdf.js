@@ -64,7 +64,7 @@ function render_page(pageData) {
       let pageNumber = 0;
 
       for await (let item of textContent.items) {
-        const dvRegex = /^[A-Z]{2}[0-9]{1}$/;
+        const dvRegex = /^[A-Za-z0-9]{3}$/;
         const { str: currentString } = item;
         let hopefullyTheDvcode = "";
         console.log(currentString);
