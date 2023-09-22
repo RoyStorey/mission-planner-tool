@@ -59,18 +59,18 @@ function render_page(pageData) {
         groundTime: previousLeg.destGroundTime,
         dvcode: null,
       };
+      const dvRegex = /^[A-Za-z]{1,2}[0-9]{1,2}$/;
+
       let previousString = "";
       let currentCol = 0;
       let pageNumber = 0;
+      let hopefullyTheDvcode = "";
 
       for await (let item of textContent.items) {
-        const dvRegex = /^[A-Za-z]{1,2}[0-9]{1,2}$/;
-        let hopefullyTheDvcode = "";
         const { str: currentString } = item;
         console.log(currentString);
         if (dvRegex.test(currentString)) {
           hopefullyTheDvcode = currentString;
-          console.log("please help", hopefullyTheDvcode);
         }
 
         if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
