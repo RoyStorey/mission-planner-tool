@@ -195,7 +195,9 @@ function render_page(pageData) {
 
               case 12:
                 currentLeg.dutyDay = currentString;
-                currentLeg.groundTime = previousLeg.destGroundTime;
+                currentLeg.groundTime = previousLeg.destGroundTime
+                  ? previousLeg.destGroundTime
+                  : "0+0";
                 currentCol += 1;
                 break;
 
@@ -203,9 +205,6 @@ function render_page(pageData) {
                 let timeRegex = /^\d+\+\d+$/;
                 if (timeRegex.test(currentString)) {
                   currentLeg.destGroundTime = currentString;
-                }
-                if (previousLeg.destGroundTime.length == 0) {
-                  currentLeg.destGroundTime = "0+0";
                 } else {
                   currentLeg.destGroundTime = "0+0";
                 }
