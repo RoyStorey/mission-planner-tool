@@ -206,6 +206,11 @@ function render_page(pageData) {
                 let timeRegex = /^\d+\+\d+$/;
                 if (timeRegex.test(currentString)) {
                   currentLeg.destGroundTime = currentString;
+                  console.log(
+                    currentCol,
+                    "groundtime",
+                    currentLeg.destGroundTime
+                  );
                 } else {
                   currentLeg.destGroundTime = "0+0";
                 }
