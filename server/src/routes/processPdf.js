@@ -91,8 +91,6 @@ function render_page(pageData) {
 
         const dvRegex = /^[A-Za-z]{2}\d$/;
 
-        if (dvRegex.test(currentString)) currentMission.dvcode = currentString;
-
         if (pageStarted) {
           if (
             (!rowStarted &&
@@ -106,6 +104,7 @@ function render_page(pageData) {
             rowStarted = true;
             currentCol += 1;
           }
+          if (dvRegex.test(currentString)) currentLeg.dvcode = currentString;
 
           if (rowStarted) {
             switch (currentCol) {
