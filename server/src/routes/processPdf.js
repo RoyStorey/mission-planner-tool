@@ -68,7 +68,7 @@ function render_page(pageData) {
 
       for await (let item of textContent.items) {
         const { str: currentString } = item;
-        console.log(currentString);
+
         if (dvRegex.test(currentString)) {
           hopefullyTheDvcode = currentString;
         }
@@ -112,9 +112,14 @@ function render_page(pageData) {
           if (rowStarted) {
             switch (currentCol) {
               case 1:
-                console.log(hopefullyTheDvcode, "please");
+                if (hopefullyTheDvcode === "") {
+                  currentLeg.dvcode = "TBD";
+                  currentMission.dvcode = "TBD";
+                }
+
                 currentLeg.dvcode = hopefullyTheDvcode;
                 currentMission.dvcode = hopefullyTheDvcode;
+
                 if (previousString === "DH") currentLeg.DH = previousString;
 
                 if (concattedArray.length === 1) {
