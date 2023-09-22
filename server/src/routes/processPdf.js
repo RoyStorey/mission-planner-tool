@@ -212,10 +212,8 @@ function render_page(pageData) {
                 currentMission.legs.push(currentLeg);
                 currentCol = 0;
                 rowStarted = false;
-                previousLeg = { ...currentLeg };
+                previousLeg = currentLeg;
                 break;
-
-              default:
             }
           }
         }
