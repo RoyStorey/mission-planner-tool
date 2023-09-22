@@ -51,6 +51,8 @@ const createColumns = () => [
     title: "ETA (Z)",
     key: "arrival_date",
   },
+  { title: "Mission #", key: "mission_number" },
+  { title: "DV Code", key: "dvcode" },
   {
     title: "From",
     key: "from",
@@ -69,7 +71,7 @@ export default {
 
     onMounted(() => {
       loading.value = true;
-      console.log(process.env.VUE_APP_API)
+      console.log(process.env.VUE_APP_API);
       axios
         .get(`/mpt-api/getMissionsUpcoming`, {
           params: {
