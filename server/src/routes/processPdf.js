@@ -89,6 +89,8 @@ function render_page(pageData) {
         let airportCodeRegex = /^[A-Z]{4}$/;
         let concattedArray = currentString.split(/\s+/);
 
+        if (currentString == "DH") currentLeg.dvcode = previousString;
+
         if (pageStarted) {
           if (
             (!rowStarted &&
@@ -108,10 +110,6 @@ function render_page(pageData) {
               case 1:
                 if (previousString === "DH") currentLeg.DH = previousString;
 
-                if (currentString === "DH") {
-                  currentMission.dvcode = previousString;
-                  console.log(previousString);
-                }
                 if (concattedArray.length === 1) {
                   currentLeg.from = concattedArray[0];
                 }
@@ -152,7 +150,6 @@ function render_page(pageData) {
                 if (currentLeg.airport != name) {
                   currentLeg.airport = name;
                 }
-                console.log(currentLeg.airport);
                 // currentLeg.airport = previousLeg.destAirport;
                 currentLeg.destAirport = currentString;
                 currentCol += 1;
