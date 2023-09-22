@@ -66,7 +66,9 @@ function render_page(pageData) {
       for await (let item of textContent.items) {
         const dvRegex = /^[A-Za-z]{2}\d$/;
         const { str: currentString } = item;
+        currentLeg = {};
 
+        console.log(currentString);
         if (dvRegex.test(currentString)) {
           currentLeg.dvcode = currentString;
           currentMission.dvcode = currentString;
@@ -104,7 +106,6 @@ function render_page(pageData) {
               airportCodeRegex.test(concattedArray[1]) &&
               !["NSTR", "GSOC"].includes(concattedArray[1]))
           ) {
-            currentLeg = {};
             rowStarted = true;
             currentCol += 1;
           }
