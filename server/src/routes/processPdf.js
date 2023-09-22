@@ -105,7 +105,7 @@ function render_page(pageData) {
             currentCol += 1;
           }
           if (dvRegex.test(currentString)) currentLeg.dvcode = currentString;
-
+          console.log(currentLeg.dvcode);
           if (rowStarted) {
             switch (currentCol) {
               case 1:
