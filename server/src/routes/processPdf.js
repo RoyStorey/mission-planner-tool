@@ -203,13 +203,13 @@ function render_page(pageData) {
                 let timeRegex = /^\d+\+\d+$/;
                 if (timeRegex.test(currentString)) {
                   currentLeg.destGroundTime = currentString;
-                } else if (!timeRegex.test(currentString)) {
+                } else {
                   currentLeg.destGroundTime = "";
                 }
                 currentMission.legs.push(currentLeg);
                 currentCol = 0;
                 rowStarted = false;
-                previousLeg = currentLeg;
+                previousLeg = { ...currentLeg };
                 break;
 
               default:
@@ -237,6 +237,7 @@ const processPDF = async (req, res) => {
       }
     });
     res.json(listOfMissions);
+    listOfMissions = [];
   } catch (error) {
     res.sendStatus(500);
   }
