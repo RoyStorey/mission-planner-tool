@@ -211,6 +211,7 @@ function render_page(pageData) {
                 currentCol = 0;
                 rowStarted = false;
                 previousLeg = { ...currentLeg };
+                currentLeg = {};
                 break;
 
               default:
