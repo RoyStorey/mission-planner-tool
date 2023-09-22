@@ -83,7 +83,9 @@ function render_page(pageData) {
         if (currentString.toLowerCase().includes("mission #") && pageStarted) {
           // we have found the mission number
           // also end of page
-
+          if (currentLeg != previousLeg) {
+            currentMission.legs.push(currentLeg);
+          }
           previousLeg = {};
           currentMission.missionNumber = currentString.split(":")[1].trim();
           listOfMissions.push(currentMission);
@@ -207,11 +209,10 @@ function render_page(pageData) {
                 } else {
                   currentLeg.destGroundTime = "0+0";
                 }
-                currentMission.legs.push({ ...currentLeg });
+                currentMission.legs.push(currentLeg);
                 currentCol = 0;
                 rowStarted = false;
                 previousLeg = { ...currentLeg };
-                currentLeg = {};
                 break;
 
               default:
