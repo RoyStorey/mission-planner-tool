@@ -115,10 +115,10 @@ function render_page(pageData) {
                 if (hopefullyTheDvcode.length === 0) {
                   currentLeg.dvcode = "TBD";
                   currentMission.dvcode = "TBD";
+                } else {
+                  currentLeg.dvcode = hopefullyTheDvcode;
+                  currentMission.dvcode = hopefullyTheDvcode;
                 }
-
-                currentLeg.dvcode = hopefullyTheDvcode;
-                currentMission.dvcode = hopefullyTheDvcode;
 
                 if (previousString === "DH") currentLeg.DH = previousString;
 
