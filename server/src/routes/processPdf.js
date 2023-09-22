@@ -65,8 +65,8 @@ function render_page(pageData) {
 
       for await (let item of textContent.items) {
         const dvRegex = /^[A-Za-z]{1,2}[0-9]{1,2}$/;
-        const { str: currentString } = item;
         let hopefullyTheDvcode = "";
+        const { str: currentString } = item;
         console.log(currentString);
         if (dvRegex.test(currentString)) {
           hopefullyTheDvcode = currentString;
@@ -112,9 +112,10 @@ function render_page(pageData) {
           if (rowStarted) {
             switch (currentCol) {
               case 1:
-                if (previousString === "DH") currentLeg.DH = previousString;
+                console.log(hopefullyTheDvcode, "please");
                 currentLeg.dvcode = hopefullyTheDvcode;
                 currentMission.dvcode = hopefullyTheDvcode;
+                if (previousString === "DH") currentLeg.DH = previousString;
 
                 if (concattedArray.length === 1) {
                   currentLeg.from = concattedArray[0];
