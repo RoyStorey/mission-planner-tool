@@ -193,19 +193,12 @@ function render_page(pageData) {
                 } else if (!timeRegex.test(currentString)) {
                   currentLeg.destGroundTime = "";
                 }
-
-                currentCol += 1;
-                break;
-              case 14:
-                let dvcodeRegex = /^[A-Z]{1}[0-9]{2}$/;
-                if (dvcodeRegex.test(currentString)) {
-                  currentMission.dvcode = currentString;
-                }
                 currentMission.legs.push(currentLeg);
                 currentCol = 0;
                 rowStarted = false;
                 previousLeg = currentLeg;
                 break;
+
               default:
             }
           }
