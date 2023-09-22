@@ -5,6 +5,7 @@
       :columns="columns"
       :data="missions"
       :pagination="pagination"
+      shrink-text
     />
     <template #action>
       <router-link :to="{ path: '/missions' }" style="text-decoration: none">
