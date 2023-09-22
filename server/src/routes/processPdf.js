@@ -130,7 +130,7 @@ function render_page(pageData) {
                 const { iso_country, name } =
                   (await lookupAirport(currentLeg.from)) || "";
 
-                if (!currentLeg.airport) {
+                if (currentLeg.airport != name) {
                   currentLeg.airport = name;
                 }
                 currentCol += concattedArray.length;
