@@ -198,6 +198,7 @@ export default {
     const formatData = (data) => data;
 
     const removeLeg = (row) => {
+      console.log(row);
       removeRow.value = row;
     };
 
@@ -293,19 +294,16 @@ export default {
   },
   watch: {
     removeRow(newValue) {
-      console.log(this.missions, 1);
       this.missions.value = this.missions.value.map((mission) => {
         mission.legs = mission.legs.filter((leg) => {
           return leg?.key !== newValue?.key;
         });
         return mission;
       });
-      console.log(this.missions, 2);
 
       this.missions.value = this.missions.value.filter(
         (mission) => mission.legs.length
       );
-      console.log(this.missions, 3);
 
       this.removeRow = null;
     },
