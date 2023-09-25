@@ -37,7 +37,7 @@ function render_page(pageData) {
       let rowStarted = false;
 
       let currentMission = {
-        // key: uuidv4(),
+        key: uuidv4(),
         missionNumber: "",
         dvcode: "",
         legs: [],
@@ -93,7 +93,7 @@ function render_page(pageData) {
           currentMission.missionNumber = currentString.split(":")[1].trim();
           listOfMissions.push(currentMission);
           currentMission = {
-            // key: uuidv4(),
+            key: uuidv4(),
             dvcode: "",
             missionNumber: "",
             legs: [],
@@ -217,7 +217,7 @@ function render_page(pageData) {
                 } else {
                   currentLeg.destGroundTime = "0+0";
                 }
-                // currentLeg.key = uuidv4();
+                currentLeg.key = uuidv4();
                 currentMission.legs.push(currentLeg);
                 currentCol = 0;
                 rowStarted = false;
