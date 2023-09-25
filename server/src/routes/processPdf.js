@@ -36,11 +36,13 @@ function render_page(pageData) {
       let rowStarted = false;
 
       let currentMission = {
+        key: uuidv4(),
         missionNumber: "",
         dvcode: "",
         legs: [],
       };
       let currentLeg = {
+        key: uuidv4(),
         DH: null,
         from: null,
         ddzulu: null,
@@ -89,7 +91,12 @@ function render_page(pageData) {
           previousLeg = {};
           currentMission.missionNumber = currentString.split(":")[1].trim();
           listOfMissions.push(currentMission);
-          currentMission = { missionNumber: "", legs: [] };
+          currentMission = {
+            key: uuidv4(),
+            dvcode: "",
+            missionNumber: "",
+            legs: [],
+          };
           pageStarted = false;
         }
 
