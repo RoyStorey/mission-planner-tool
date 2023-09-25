@@ -294,6 +294,7 @@ export default {
   },
   watch: {
     removeRow(newValue) {
+      console.log(removeRow);
       this.missions.value = this.missions.value.map((mission) => {
         mission.legs = mission.legs.filter((leg) => {
           return leg?.key !== newValue?.key;
