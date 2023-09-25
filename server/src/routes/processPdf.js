@@ -212,6 +212,9 @@ function render_page(pageData) {
                 break;
 
               case 13:
+                currentLeg.groundTime = previousLeg.destGroundTime
+                  ? previousLeg.destGroundTime
+                  : "0+0";
                 let timeRegex = /^\d+\+\d+$/;
                 if (timeRegex.test(currentString)) {
                   currentLeg.destGroundTime = currentString;
