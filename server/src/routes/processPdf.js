@@ -1,6 +1,7 @@
 import fs from "fs";
 import pdf from "pdf-parse";
 import lookupAirport from "../api/lookupAirport";
+import { v4 as uuidv4 } from "uuid";
 
 let listOfMissions = [];
 let previousLeg = {
@@ -42,7 +43,7 @@ function render_page(pageData) {
         legs: [],
       };
       let currentLeg = {
-        // key: uuidv4(),
+        key: uuidv4(),
         DH: null,
         from: null,
         ddzulu: null,
@@ -216,6 +217,7 @@ function render_page(pageData) {
                 } else {
                   currentLeg.destGroundTime = "0+0";
                 }
+                // currentLeg.key = uuidv4();
                 currentMission.legs.push(currentLeg);
                 currentCol = 0;
                 rowStarted = false;
