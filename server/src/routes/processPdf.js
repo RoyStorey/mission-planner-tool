@@ -71,6 +71,7 @@ function render_page(pageData) {
 
       for await (let item of textContent.items) {
         const { str: currentString } = item;
+        console.log(currentString);
 
         if (dvRegex.test(currentString)) {
           confirmedDvCode = currentString;
