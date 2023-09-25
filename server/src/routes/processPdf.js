@@ -67,14 +67,13 @@ function render_page(pageData) {
       let previousString = "";
       let currentCol = 0;
       let pageNumber = 0;
-      let hopefullyTheDvcode = "";
+      let confirmedDvCode = "";
 
       for await (let item of textContent.items) {
         const { str: currentString } = item;
-        console.log(currentString);
 
         if (dvRegex.test(currentString)) {
-          hopefullyTheDvcode = currentString;
+          confirmedDvCode = currentString;
         }
 
         if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
@@ -121,12 +120,12 @@ function render_page(pageData) {
           if (rowStarted) {
             switch (currentCol) {
               case 1:
-                if (hopefullyTheDvcode.length === 0) {
+                if (confirmedDvCode.length === 0) {
                   currentLeg.dvcode = "TBD";
                   currentMission.dvcode = "TBD";
                 } else {
-                  currentLeg.dvcode = hopefullyTheDvcode;
-                  currentMission.dvcode = hopefullyTheDvcode;
+                  currentLeg.dvcode = confirmedDvCode;
+                  currentMission.dvcode = confirmedDvCode;
                 }
 
                 if (previousString === "DH") currentLeg.DH = previousString;
@@ -233,7 +232,6 @@ function render_page(pageData) {
 
         previousString = currentString;
       }
-      console.log(listOfMissions);
       return listOfMissions;
     });
 }
