@@ -42,7 +42,7 @@ function render_page(pageData) {
         legs: [],
       };
       let currentLeg = {
-        key: uuidv4(),
+        // key: uuidv4(),
         DH: null,
         from: null,
         ddzulu: null,
