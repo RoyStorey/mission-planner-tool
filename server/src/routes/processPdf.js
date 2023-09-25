@@ -227,6 +227,7 @@ function render_page(pageData) {
 
         previousString = currentString;
       }
+      console.log(listOfMissions);
       return listOfMissions;
     });
 }
