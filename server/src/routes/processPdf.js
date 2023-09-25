@@ -36,7 +36,7 @@ function render_page(pageData) {
       let rowStarted = false;
 
       let currentMission = {
-        key: uuidv4(),
+        // key: uuidv4(),
         missionNumber: "",
         dvcode: "",
         legs: [],
@@ -92,7 +92,7 @@ function render_page(pageData) {
           currentMission.missionNumber = currentString.split(":")[1].trim();
           listOfMissions.push(currentMission);
           currentMission = {
-            key: uuidv4(),
+            // key: uuidv4(),
             dvcode: "",
             missionNumber: "",
             legs: [],
