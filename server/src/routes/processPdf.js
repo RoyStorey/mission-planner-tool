@@ -68,10 +68,11 @@ function render_page(pageData) {
       let currentCol = 0;
       let pageNumber = 0;
       let confirmedDvCode = "";
+      console.log(textContent.items);
 
       for await (let item of textContent.items) {
         const { str: currentString } = item;
-        console.log(currentString);
+        // console.log(currentString);
 
         if (dvRegex.test(currentString)) {
           // if currentString matches dvcode regex
@@ -143,7 +144,6 @@ function render_page(pageData) {
 
                 if (concattedArray.length === 3) {
                   currentLeg.from = concattedArray[1];
-
                   currentLeg.ddzulu = concattedArray[2];
                   currentCol += 2;
                   break;
