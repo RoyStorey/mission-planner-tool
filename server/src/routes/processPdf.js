@@ -173,8 +173,6 @@ function render_page(pageData) {
                   currentLeg.airport = name;
                 } else if (name.length === 0) {
                   currentLeg.airport = previousLeg.destAirport;
-                } else {
-                  console.log("is this where this breaks?");
                 }
                 currentLeg.destAirport = currentString;
                 currentCol += 1;
