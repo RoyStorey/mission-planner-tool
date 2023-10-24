@@ -77,6 +77,8 @@ function render_page(pageData) {
         if (dvRegex.test(currentString)) {
           // if currentString matches dvcode regex
           confirmedDvCode = currentString;
+        } else if (currentString == "OST") {
+          confirmedDvCode = currentString;
         }
 
         if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
