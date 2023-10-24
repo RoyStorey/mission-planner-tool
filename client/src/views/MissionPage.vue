@@ -46,8 +46,9 @@
           {{ dayjs.utc(missionData?.arrival_date).format("MM/DD/YYYY HH:mm") }}
         </n-descriptions-item>
         <n-descriptions-item label="Locations">
-          {{ missionData?.from }} <n-icon><arrow-forward /></n-icon>
-          {{ missionData?.to }} ({{ missionData?.airport }})
+          ({{ missionData?.airport }}) {{ missionData?.from }}
+          <n-icon><arrow-forward /></n-icon>
+          {{ missionData?.to }}
         </n-descriptions-item>
         <n-descriptions-item label="Dead Head">
           {{ missionData?.dh === "true" ? "YES" : "NO" }}
