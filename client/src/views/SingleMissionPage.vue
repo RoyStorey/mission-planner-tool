@@ -45,10 +45,10 @@
             <n-input v-model:value="formValue.mission_number" />
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="From" path="from">
-            <n-input v-model:value="formValue.from" />
+            <n-input v-model:value="formValue.from" :on-change="fetchAirport"/>
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="To" path="to">
-            <n-input v-model:value="formValue.to" :on-change="fetchAirport" />
+            <n-input v-model:value="formValue.to" />
           </n-form-item-gi>
           <n-form-item-gi :span="5" label="Dep. Airport" path="airport">
             <n-input v-model:value="formValue.airport" />
