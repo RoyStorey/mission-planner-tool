@@ -24,24 +24,26 @@ let previousLeg = {
   dvcode: null,
 };
 
+
 function render_page(pageData) {
+
   let render_options = {
     normalizeWhitespace: true,
     disableCombineTextItems: true,
   };
 
-  return pageData
-    .getTextContent(render_options)
-    .then(async function (textContent) {
+
+  return pageData.getTextContent(render_options).then(async function (textContent) {
       let pageStarted = false;
       let rowStarted = false;
 
       let currentMission = {
         key: uuidv4(),
-        missionNumber: "",
+        missionNumber: "REVIEW",
         dvcode: "",
         legs: [],
       };
+      
       let currentLeg = {
         key: uuidv4(),
         DH: null,
@@ -62,24 +64,24 @@ function render_page(pageData) {
         groundTime: previousLeg.destGroundTime,
         dvcode: null,
       };
-      const dvRegex = /^[A-Za-z]{1,2}[0-9]{1,2}$/;
+
 
       let previousString = "";
       let currentCol = 0;
       let pageNumber = 0;
       let confirmedDvCode = "";
-      console.log(textContent.items);
+
 
       for await (let item of textContent.items) {
         const { str: currentString } = item;
-        // console.log(currentString);
+        // console.log(currentString)
 
-        if (dvRegex.test(currentString)) {
-          // if currentString matches dvcode regex
-          confirmedDvCode = currentString;
-        } else if (currentString == "OST") {
-          confirmedDvCode = currentString;
-        }
+
+        const dvRegex = /^[A-Za-z]{1,2}[0-9]{1,2}$/;
+        if (dvRegex.test(currentString)) confirmedDvCode = currentString
+        else if (currentString == "OST") confirmedDvCode = currentString;
+        else if (currentString == 'TBD') confirmedDvCode = currentString;
+        
 
         if (currentString.toLowerCase().includes("dd zulu") && !pageStarted) {
           // We know that we are at the start of a page
@@ -88,61 +90,61 @@ function render_page(pageData) {
           continue;
         }
 
-        if (currentString.toLowerCase().includes("mission #") && pageStarted) {
-          // we have found the mission number
-          // also end of page
-          if (currentLeg != previousLeg) {
-            currentMission.legs.push(currentLeg);
-          }
-          previousLeg = {};
-          currentMission.missionNumber = currentString.split(":")[1].trim();
-          listOfMissions.push(currentMission);
-          currentMission = {
-            key: uuidv4(),
-            dvcode: "",
-            missionNumber: "",
-            legs: [],
-          };
-          pageStarted = false;
-        }
 
         let airportCodeRegex = /^[A-Z]{4}$/;
         let concattedArray = currentString.split(/\s+/);
-
         if (pageStarted) {
           if (
             (!rowStarted &&
               airportCodeRegex.test(concattedArray[0]) &&
-              !["NSTR", "GSOC"].includes(concattedArray[0])) ||
+              !["NSTR", "GSOC"].includes(concattedArray[0])) 
+              ||
             (!rowStarted &&
               airportCodeRegex.test(concattedArray[1]) &&
               !["NSTR", "GSOC"].includes(concattedArray[1]))
           ) {
-            currentLeg = {};
+            // console.log(concattedArray)
+            currentLeg = {dvcode:confirmedDvCode};
             rowStarted = true;
             currentCol += 1;
           }
+
+          currentMission.dvcode = confirmedDvCode;
+
+
           if (rowStarted) {
             switch (currentCol) {
               case 1:
-                if (confirmedDvCode.length === 0) {
-                  currentLeg.dvcode = "TBD";
-                  currentMission.dvcode = "TBD";
-                } else {
-                  currentLeg.dvcode = confirmedDvCode;
-                  currentMission.dvcode = confirmedDvCode;
+                if (previousString === "DH") {
+                  currentLeg.DH = 'DH'
+                  currentLeg.dvcode = 'DH'
                 }
 
-                if (previousString === "DH") currentLeg.DH = previousString;
 
                 if (concattedArray.length === 1) {
                   currentLeg.from = concattedArray[0];
+                  currentCol += 1;
+                  break;
                 }
 
+
                 if (concattedArray.length === 2) {
-                  currentLeg.from = concattedArray[0];
-                  currentLeg.ddzulu = concattedArray[1];
+                  if(concattedArray[0] == 'DH'){
+                    currentMission.dvcode = 'DH'
+                    currentLeg.dvcode = 'DH'
+                    currentLeg.DH = 'DH';
+                    currentLeg.from = concattedArray[1];
+                    currentCol += 1;
+                    break
+                  }
+                  else{
+                    currentLeg.from = concattedArray[0];
+                    currentLeg.ddzulu = concattedArray[1];
+                    currentCol += 2;
+                    break
+                  }
                 }
+
 
                 if (concattedArray.length === 3) {
                   currentLeg.from = concattedArray[1];
@@ -151,8 +153,6 @@ function render_page(pageData) {
                   break;
                 }
 
-                currentCol += concattedArray.length;
-                break;
               case 2:
                 currentLeg.ddzulu = currentString;
                 currentCol += 1;
@@ -233,7 +233,23 @@ function render_page(pageData) {
             }
           }
         }
-
+        if (currentString.toLowerCase().includes("mission #") && pageStarted) {
+          // we have found the mission number
+          // also end of page
+          if (currentLeg != previousLeg) {
+            currentMission.legs.push(currentLeg);
+          }
+          previousLeg = {};
+          currentMission.missionNumber = currentString.split(":")[1].trim();
+          listOfMissions.push(currentMission);
+          currentMission = {
+            key: uuidv4(),
+            dvcode: "",
+            missionNumber: "",
+            legs: [],
+          };
+          pageStarted = false;
+        }
         previousString = currentString;
       }
       return listOfMissions;
