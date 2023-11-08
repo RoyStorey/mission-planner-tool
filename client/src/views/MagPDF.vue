@@ -83,6 +83,7 @@
           <n-text type="primary"> Mission #{{ mission.missionNumber }} </n-text>
         </n-h2>
         <n-data-table
+          :row-class-name="rowClassName"
           :columns="columns"
           :data="mission.legs"
           :pagination="true"
@@ -199,7 +200,6 @@ export default {
 
     const removeLeg = (row) => {
       console.log(removeRow);
-      // console.log(row);
       removeRow.value = row;
     };
 
@@ -214,6 +214,12 @@ export default {
       removeRow,
       loadingSaved,
       url: `/mpt-api/processPDF`,
+      rowClassName (row){
+        if(row.from.split('')[0] == 'K'){
+          return 'american'
+        }
+        return ''
+      }
     };
   },
   methods: {
@@ -331,6 +337,10 @@ export default {
 </script>
 
 <style>
+.american{
+  background-color:red !important;
+  --n-td-color:red !important;
+}
 .n-upload-trigger {
   width: 100%;
 }
