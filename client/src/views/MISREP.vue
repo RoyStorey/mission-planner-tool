@@ -134,14 +134,11 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        const { data: legs } = await axios.get(
-          `/mpt-api/getLegsByMission`,
-          {
-            params: {
-              mission: this.selectedMission,
-            },
-          }
-        );
+        const { data: legs } = await axios.get(`/mpt-api/getLegsByMission`, {
+          params: {
+            mission: this.selectedMission,
+          },
+        });
 
         if (!legs.length)
           return (this.error = "No legs found for this mission");
@@ -164,14 +161,11 @@ export default {
               }
             );
 
-            const { data: leg } = await axios.get(
-              `/mpt-api/getLeg`,
-              {
-                params: {
-                  id: legId,
-                },
-              }
-            );
+            const { data: leg } = await axios.get(`/mpt-api/getLeg`, {
+              params: {
+                id: legId,
+              },
+            });
 
             const finalText = entries.length
               ? entries.map((entry) => entry.entry).join(" ")

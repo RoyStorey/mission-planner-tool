@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import processTXT from "./processTxt";
-import processPDF from "./processPdf";
+import processPDF from "./processPdfWithOCR/index";
 import addEntryForLeg from "./addEntryForLeg";
 import addOperator from "./addOperator";
 import confirmMissions from "./confirmMissions";
@@ -30,7 +30,7 @@ import updateMission from "./updateMission";
 import updateOperator from "./updateOperator";
 import updateMOTD from "./updateMOTD";
 
-const upload = multer({ dest: "uploads/" }); // dest: "uploads/" for pdfs
+const upload = multer({ dest: "./processPdfWithOCR/pdfs/" }); // dest: "uploads/" for pdfs {deprecated}
 const routes = express.Router();
 
 routes.post("/getAirport", getAirport);

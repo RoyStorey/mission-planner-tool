@@ -1,0 +1,13 @@
+Mission #: 56611 Ver#: 1 (TENTATIVE) Ravens on board: 0  NEW
+Aircraft: C-37A // Tail: 90402 TBD
+DH From DD Zulu ETD (Z) ETD (L) To Airport Ctry Arr Date (Z) ETA (Z) ETA (L) ETE Duty Day GND Time SL  Visa RON Ravens Intel
+KADW 30-Dec-23 14:00 09:00 TIRV ~ JOSE APONTE DE LA TORRE PRI 30-Dec 17:20 13:20 03+20 5+20 0+45
+DH TIRV 30-Dec-23 18:05 14:05 KADW JOINT BASE ANDREWS USA 30-Dec 21:40 16:40 03+35 9+40
+Planned Pax Count: 8 Meds Req:
+REQUIRED Notes: VFR only approach
+REQUIRED ABOVE 6 HOURS
+CONSIDER ABOVE 6 HOURS
+GSOC CYBER Escort
+WHITE = NSTR
+I ~O RON
+Planner:

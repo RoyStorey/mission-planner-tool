@@ -1,0 +1,13 @@
+Mission #: 56620 Ver#: 3 (TENTATIVE) Ravens on board: 0  NEW
+Aircraft: C-40B // Tail: 10015 TBD
+DH From DD Zulu ETD (Z) ETD (L) To Airport Ctry Arr Date (Z) ETA (Z) ETA (L) ETE Duty Day GND Time SL  Visa RON Ravens Intel
+DH KADW 01-Jan-24 11:00 06:00 MKJS SANGSTER INTL JAM 01-Jan 15:00 10:00 04+00 6+00  2+00 6
+MKJS 01-Jan-24 17:00 12:00 KADW JOINT BASE ANDREWS USA 01-Jan 20:50 15:50 03+50 11+50
+Planned Pax Count: None Listed Meds Req:
+REQUIRED Notes:
+REQUIRED ABOVE 6 HOURS
+CONSIDER ABOVE 6 HOURS
+GSOC CYBER Escort
+WHITE = NSTR
+SN O RON
+Planner: CS
